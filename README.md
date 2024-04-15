@@ -1,4 +1,4 @@
-car details approve screen,docs
+
 schedule,filter
 trips,filter
 6.complaints-need to check
@@ -14,4 +14,3 @@ trips,filter
 }
 
 payment details need to update both schedule and trips
-need to call the approve api in approve status part

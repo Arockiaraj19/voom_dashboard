@@ -14,7 +14,11 @@ import ImageUpdateComponent from "@/components/SettingComponents/ImageUpdateComp
 import { useEffect, useState } from "react";
 import { useParams, usePathname } from "next/navigation";
 import { axiosPrivate } from "@/helper/axiosPrivate";
-
+import Link from "next/link";
+import { toast } from "react-toastify";
+import navigateToMap from "@/helper/navigateToMap";
+import CarInformation from "@/components/SettingComponents/CarComponent";
+import DocumentInformation from "@/components/SettingComponents/DocumentComponent";
 
 const Settings = () => {
 
@@ -31,15 +35,14 @@ const Settings = () => {
   const fetchData = async () => {
     try {
       setLoading(true);
-      const result = await axiosPrivate.get("/v1/user/all", {
+      const result = await axiosPrivate.get("/v1/user/admin", {
         params: {
-          offset: 0,
-          limit: 1,
+
           userId: pathname.split("/")[(pathname.split("/").length - 1)]
         }
       });
-      setData(result?.data?.data[0]);
-      console.log(Math.ceil(data?.count ?? 0) / 5);
+      setData(result?.data);
+
     } catch (error: any) {
       setError(error);
     } finally {
@@ -54,6 +57,23 @@ const Settings = () => {
 
   }, []);
 
+  const fetchLocation = async (id: any) => {
+    try {
+
+      const locationResult = await axiosPrivate.get("/v1/location", {
+        params: {
+          userId: id
+        }
+      });
+      if (locationResult.data.length == 0) {
+        return toast.error("Location not updated");
+      }
+      navigateToMap(locationResult.data[0].location.coordinates[0], locationResult.data[0].location.coordinates[1]);
+
+    } catch (error: any) {
+
+    }
+  }
 
 
 
@@ -61,13 +81,31 @@ const Settings = () => {
     <DefaultLayout>
       <div className="mx-auto max-w-270">
         <Breadcrumb pageName="Settings" />
+        {
+          data && data.type == "driver" ? <div className="w-full flex flex-row justify-end gap-6 my-4">
+            <button
+              onClick={(e) => {
+                fetchLocation(data._id);
+              }}
+              className="inline-flex items-center justify-center rounded-md border border-primary px-10 py-4 text-center font-medium text-primary hover:bg-opacity-90 lg:px-8 xl:px-10"
+            >
+              Driver Location
+            </button>
 
+          </div> : <></>
+        }
         <div className="grid grid-cols-5 gap-8 mb-5.5">
-        {data&&  <PersonalInformation  data={data}/>}
-         {data&& <ImageUpdateComponent  data={data}/>}
+          {data && <PersonalInformation data={data} />}
+          {data && <ImageUpdateComponent data={data} />}
         </div>
         <div className="grid grid-cols-5 gap-8 mb-5.5">
-       {data&&   <ApproveInformation data={data}  />}
+          {data && data.type == "driver"? <ApproveInformation data={data} />:<></>}
+        </div>
+        <div className="w-full mb-5.5">
+          {data && data.type == "driver" && data.carDetails != null ? <CarInformation data={data} /> : <></>}
+        </div>
+        <div className="w-full mb-5.5">
+          {data && data.type == "driver" && data.documents != null ? <DocumentInformation data={data} /> : <></>}
         </div>
 
 
