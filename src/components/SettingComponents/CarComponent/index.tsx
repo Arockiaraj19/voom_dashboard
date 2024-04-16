@@ -88,7 +88,7 @@ const CarInformation = ({ data }: { data: any }) => {
 
                         </tbody>
                     </table>
-                    <div className="mb-5.5">
+                    <div className="mb-20 flex gap-10">
                         {
                             (data?.carDetails?.images ?? []).map((e: any, index: number) => <div onClick={(event)=>{
                                 navigateToLink(e);

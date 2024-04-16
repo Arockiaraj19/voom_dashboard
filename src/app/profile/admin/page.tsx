@@ -6,6 +6,7 @@ import DefaultLayout from "@/components/Layouts/DefaultLayout";
 import Pagination from "@/components/common/Pagination";
 import DriverRequestComponent from "@/components/requestComponent/request_component";
 import { axiosPrivate } from "@/helper/axiosPrivate";
+import { LIMIT } from "@/helper/constants";
 import useApi from "@/hooks/useApi";
 import Link from "next/link";
 import { usePathname } from 'next/navigation'
@@ -35,7 +36,7 @@ const AdminPage = () => {
             const result = await axiosPrivate.get("/v1/user/all", {
                 params: {
                     offset: currentPage,
-                    limit: 5,
+                    limit: LIMIT,
                     type: "admin"
                 }
             });
@@ -66,7 +67,7 @@ const AdminPage = () => {
             </Link>
                 <Pagination
                     currentPage={currentPage + 1}
-                    totalPages={Math.ceil(data?.count ?? 0) / 5}
+                    totalPages={Math.ceil(data?.count ?? 0) / LIMIT}
                     onPageChange={onPageChange}
                 />
             </div>

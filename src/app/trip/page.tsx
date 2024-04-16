@@ -8,7 +8,7 @@ import Pagination from "@/components/common/Pagination";
 import ScheduleComponent from "@/components/ScheduleComponent/schedule_component";
 import { axiosPrivate } from "@/helper/axiosPrivate";
 
-import { usePathname } from 'next/navigation'
+import { usePathname, useSearchParams } from 'next/navigation'
 import { useEffect, useState } from "react";
 import TripComponent from "@/components/TripComponent/trip_component";
 import { LIMIT } from "@/helper/constants";
@@ -19,7 +19,8 @@ const TripPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const pathname = usePathname();
-
+  const searchParams = useSearchParams();
+  console.log(searchParams.get("type"));
 
   const onPageChange = (e: any) => {
     console.log("what is the page count");
@@ -34,23 +35,35 @@ const TripPage = () => {
   const fetchData = async () => {
     try {
       setLoading(true);
-      let params:any = {
+      let params: any = {
         offset: currentPage,
         limit: LIMIT
       }
-     
-      if(type){
-        params.type=type;
+      if (searchParams.get("type")) {
+        if (searchParams.get("type") == "driver") {
+          params.driverId = searchParams.get("id");
+        }
+        if (searchParams.get("type") == "user") {
+          params.userId = searchParams.get("id");
+        }
+        if (searchParams.get("type") == "schedule") {
+          params.scheduleId = searchParams.get("id");
+        }
+
+        
       }
-      if(status){
-        params.status=status!.toString().toLowerCase();
+      if (type) {
+        params.type = type;
       }
-      if(time){
-        params.time=time!.toString().toLowerCase();
+      if (status) {
+        params.status = status!.toString().toLowerCase();
+      }
+      if (time) {
+        params.time = time!.toString().toLowerCase();
       }
 
       const result = await axiosPrivate.get("/v1/trip/all", {
-        params:params
+        params: params
       });
       setData(result.data ?? []);
       console.log(Math.ceil(data?.count ?? 0) / 5);
@@ -72,10 +85,10 @@ const TripPage = () => {
     fetchData();
 
 
-  }, [currentPage,  type, status, time]);
+  }, [currentPage, type, status, time]);
   return (
     <DefaultLayout>
-      <Breadcrumb pageName="Trip" />
+      <Breadcrumb pageName={searchParams.get("name") ? `${searchParams.get("name")} Trips` : `Trip`} />
       <div className="w-full flex flex-row items-end justify-between my-5 gap-5">
 
         <Dropdown onSelect={(e) => {
@@ -92,7 +105,7 @@ const TripPage = () => {
           console.log("what is the onSelect");
           console.log(e);
           setStatus(e);
-        }} options={['Pending','Started', 'Nearby','Reached','OnProgress','Completed']} title="Select Status" heading="Status" selected={status ?? ""} />
+        }} options={['Pending', 'Started', 'Nearby', 'Reached', 'OnProgress', 'Completed']} title="Select Status" heading="Status" selected={status ?? ""} />
         <button
           onClick={(e) => {
             setCurrentPage(0);

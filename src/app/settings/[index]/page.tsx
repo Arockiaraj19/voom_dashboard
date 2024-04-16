@@ -89,7 +89,41 @@ const Settings = () => {
               }}
               className="inline-flex items-center justify-center rounded-md border border-primary px-10 py-4 text-center font-medium text-primary hover:bg-opacity-90 lg:px-8 xl:px-10"
             >
-              Driver Location
+              Current Location            </button>
+            <button
+              onClick={(e) => {
+              
+              }}
+              className="inline-flex items-center justify-center rounded-md border border-primary px-10 py-4 text-center font-medium text-primary hover:bg-opacity-90 lg:px-8 xl:px-10"
+            >
+              Schedules            </button>
+            <button
+              onClick={(e) => {
+                window.location.href=`/trip?type=driver&id=${data._id}&name=${data.first_name}`;
+              }}
+              className="inline-flex items-center justify-center rounded-md border border-primary px-10 py-4 text-center font-medium text-primary hover:bg-opacity-90 lg:px-8 xl:px-10"
+            >
+              Trips           </button>
+
+          </div> : <></>
+        }
+        {
+          data && data.type == "user" ? <div className="w-full flex flex-row justify-end gap-6 my-4">
+            <button
+              onClick={(e) => {
+                window.location.href=`/schedule?type=user&id=${data._id}&name=${data.first_name}`;
+              }}
+              className="inline-flex items-center justify-center rounded-md border border-primary px-10 py-4 text-center font-medium text-primary hover:bg-opacity-90 lg:px-8 xl:px-10"
+            >
+              Schedules
+            </button>
+            <button
+              onClick={(e) => {
+                window.location.href=`/trip?type=user&id=${data._id}&name=${data.first_name}`;
+              }}
+              className="inline-flex items-center justify-center rounded-md border border-primary px-10 py-4 text-center font-medium text-primary hover:bg-opacity-90 lg:px-8 xl:px-10"
+            >
+              Trips
             </button>
 
           </div> : <></>
@@ -99,7 +133,7 @@ const Settings = () => {
           {data && <ImageUpdateComponent data={data} />}
         </div>
         <div className="grid grid-cols-5 gap-8 mb-5.5">
-          {data && data.type == "driver"? <ApproveInformation data={data} />:<></>}
+          {data && data.type == "driver" ? <ApproveInformation data={data} /> : <></>}
         </div>
         <div className="w-full mb-5.5">
           {data && data.type == "driver" && data.carDetails != null ? <CarInformation data={data} /> : <></>}

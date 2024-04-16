@@ -8,11 +8,12 @@ import Pagination from "@/components/common/Pagination";
 import ScheduleComponent from "@/components/ScheduleComponent/schedule_component";
 import { axiosPrivate } from "@/helper/axiosPrivate";
 
-import { usePathname } from 'next/navigation'
+import { usePathname, useSearchParams } from 'next/navigation'
 import { useEffect, useState } from "react";
 import { LIMIT } from "@/helper/constants";
 
 const SchedulePage = () => {
+  const searchParams=useSearchParams();
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -35,6 +36,12 @@ const SchedulePage = () => {
       let params:any = {
         offset: currentPage,
         limit: LIMIT
+      }
+      if (searchParams.get("type")) {
+       
+        if (searchParams.get("type") == "user") {
+          params.userId = searchParams.get("id");
+        }
       }
       if(scheduleStatus){
         params.schedule_status=scheduleStatus=="Accepted"?"Both":"S2D";
@@ -77,7 +84,7 @@ const SchedulePage = () => {
   }, [currentPage, scheduleStatus, type, status, time]);
   return (
     <DefaultLayout>
-      <Breadcrumb pageName="Schedule" />
+      <Breadcrumb pageName={searchParams.get("name") ? `${searchParams.get("name")} Schedule` : `Schedule`} />
       <div className="w-full flex flex-row items-end justify-between my-5 gap-5">
         <Dropdown onSelect={(e) => {
 
