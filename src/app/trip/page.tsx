@@ -11,6 +11,7 @@ import { axiosPrivate } from "@/helper/axiosPrivate";
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from "react";
 import TripComponent from "@/components/TripComponent/trip_component";
+import { LIMIT } from "@/helper/constants";
 
 
 const TripPage = () => {
@@ -33,11 +34,23 @@ const TripPage = () => {
   const fetchData = async () => {
     try {
       setLoading(true);
+      let params:any = {
+        offset: currentPage,
+        limit: LIMIT
+      }
+     
+      if(type){
+        params.type=type;
+      }
+      if(status){
+        params.status=status!.toString().toLowerCase();
+      }
+      if(time){
+        params.time=time!.toString().toLowerCase();
+      }
+
       const result = await axiosPrivate.get("/v1/trip/all", {
-        params: {
-          offset: currentPage,
-          limit: 5
-        }
+        params:params
       });
       setData(result.data ?? []);
       console.log(Math.ceil(data?.count ?? 0) / 5);
@@ -48,22 +61,56 @@ const TripPage = () => {
     }
   }
 
+
+
+
+  const [type, setType] = useState(null);
+  const [status, setStatus] = useState(null);
+  const [time, setTime] = useState(null);
   useEffect(() => {
 
     fetchData();
 
 
-  }, [currentPage]);
-
-
+  }, [currentPage,  type, status, time]);
   return (
     <DefaultLayout>
       <Breadcrumb pageName="Trip" />
-      <div className="flex flex-row items-center justify-between">
-       
+      <div className="w-full flex flex-row items-end justify-between my-5 gap-5">
+
+        <Dropdown onSelect={(e) => {
+          console.log("what is the onSelect");
+          console.log(e);
+          setType(e);
+        }} options={['S2D', 'D2S']} title="Select type" heading="Type" selected={type ?? ""} />
+        <Dropdown onSelect={(e) => {
+          console.log("what is the onSelect");
+          console.log(e);
+          setTime(e);
+        }} options={["Upcoming", "Past", "Today"]} title="Select time" heading="Time" selected={time ?? ""} />
+        <Dropdown onSelect={(e) => {
+          console.log("what is the onSelect");
+          console.log(e);
+          setStatus(e);
+        }} options={['Pending','Started', 'Nearby','Reached','OnProgress','Completed']} title="Select Status" heading="Status" selected={status ?? ""} />
+        <button
+          onClick={(e) => {
+            setCurrentPage(0);
+
+            setType(null);
+            setStatus(null);
+            setTime(null);
+          }}
+          className="inline-flex items-center justify-center rounded-md border border-primary px-10 py-4 text-center font-medium text-primary hover:bg-opacity-90 lg:px-8 xl:px-10"
+        >
+          Clear
+        </button>
+      </div>
+      <div className="w-full flex flex-row items-center justify-end my-5">
+
         <Pagination
           currentPage={currentPage + 1}
-          totalPages={Math.ceil(data?.count ?? 0) / 5}
+          totalPages={Math.ceil(data?.count ?? 0) / LIMIT}
           onPageChange={onPageChange}
         />
       </div>

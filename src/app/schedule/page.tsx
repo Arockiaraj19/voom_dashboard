@@ -10,6 +10,7 @@ import { axiosPrivate } from "@/helper/axiosPrivate";
 
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from "react";
+import { LIMIT } from "@/helper/constants";
 
 const SchedulePage = () => {
   const [data, setData] = useState<any>(null);
@@ -31,14 +32,28 @@ const SchedulePage = () => {
   const fetchData = async () => {
     try {
       setLoading(true);
+      let params:any = {
+        offset: currentPage,
+        limit: LIMIT
+      }
+      if(scheduleStatus){
+        params.schedule_status=scheduleStatus=="Accepted"?"Both":"S2D";
+      }
+      if(type){
+        params.type=type=="One way"?'one_way':'two_way';
+      }
+      if(status){
+        params.status=status=="Active"?'active':'cancelled';
+      }
+      if(time){
+        params.time=time!.toString().toLowerCase();
+      }
+
       const result = await axiosPrivate.get("/v1/schedule/all", {
-        params: {
-          offset: currentPage,
-          limit: 5
-        }
+        params: params
       });
       setData(result.data ?? []);
-      console.log(Math.ceil(data?.count ?? 0) / 5);
+
     } catch (error: any) {
       setError(error);
     } finally {
@@ -46,29 +61,70 @@ const SchedulePage = () => {
     }
   }
 
+
+
+
+
+  const [scheduleStatus, setScheduleStatus] = useState(null);
+  const [type, setType] = useState(null);
+  const [status, setStatus] = useState(null);
+  const [time, setTime] = useState(null);
   useEffect(() => {
 
     fetchData();
 
 
-  }, [currentPage]);
-
-  const [scheduleStatus, setScheduleStatus] = useState(null);
+  }, [currentPage, scheduleStatus, type, status, time]);
   return (
     <DefaultLayout>
       <Breadcrumb pageName="Schedule" />
-      <div className="flex flex-row items-center justify-between">
+      <div className="w-full flex flex-row items-end justify-between my-5 gap-5">
         <Dropdown onSelect={(e) => {
+
           console.log("what is the onSelect");
           console.log(e);
           setScheduleStatus(e);
-        }} options={["Accepted", "Non Accepted"]} title="Schedule Status" />
-        <Pagination
-          currentPage={currentPage + 1}
-          totalPages={Math.ceil(data?.count ?? 0) / 5}
-          onPageChange={onPageChange}
-        />
+        }} options={["Accepted", "Non Accepted"]} title="Select Schedule Status" heading="Schedule Status" selected={scheduleStatus ?? ""} />
+        <Dropdown onSelect={(e) => {
+          console.log("what is the onSelect");
+          console.log(e);
+          setType(e);
+        }} options={["One way", "Two Way"]} title="Select type" heading="Type" selected={type ?? ""} />
+        <Dropdown onSelect={(e) => {
+          console.log("what is the onSelect");
+          console.log(e);
+          setTime(e);
+        }} options={["Upcoming", "Past", "Today"]} title="Select time" heading="Time" selected={time ?? ""} />
+        <Dropdown onSelect={(e) => {
+          console.log("what is the onSelect");
+          console.log(e);
+          setStatus(e);
+        }} options={["Active", "Cancelled"]} title="Select Status" heading="Status" selected={status ?? ""} />
+        <button
+          onClick={(e) => {
+            setCurrentPage(0);
+            setScheduleStatus(null);
+            setType(null);
+            setStatus(null);
+            setTime(null);
+          }}
+          className="inline-flex items-center justify-center rounded-md border border-primary px-10 py-4 text-center font-medium text-primary hover:bg-opacity-90 lg:px-8 xl:px-10"
+        >
+          Clear
+        </button>
       </div>
+
+
+   {
+    (Math.ceil(data?.count ?? 0) / LIMIT)>1? <div className="flex flex-row items-center justify-end my-5">
+
+    <Pagination
+      currentPage={currentPage + 1}
+      totalPages={Math.ceil(data?.count ?? 0) / LIMIT}
+      onPageChange={onPageChange}
+    />
+  </div>:<></>
+   }  
       <ScheduleComponent data={data?.data ?? []} />
     </DefaultLayout>
   );

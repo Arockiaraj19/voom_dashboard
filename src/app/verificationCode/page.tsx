@@ -11,6 +11,7 @@ import { axiosPrivate } from "@/helper/axiosPrivate";
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from "react";
 import VerificationCodeComponent from "@/components/VerificationCodeComponent";
+import { LIMIT } from "@/helper/constants";
 
 const VerificationCodePage = () => {
   const [data, setData] = useState<any>(null);
@@ -35,7 +36,7 @@ const VerificationCodePage = () => {
       const result = await axiosPrivate.get("/v1/user/otp", {
         params: {
           offset: currentPage,
-          limit: 5
+          limit: LIMIT
         }
       });
       setData(result.data ?? []);
@@ -58,11 +59,11 @@ const VerificationCodePage = () => {
   return (
     <DefaultLayout>
       <Breadcrumb pageName="Verificaiton code" />
-      <div className="flex flex-row items-center justify-between">
+      <div className="w-full flex flex-row items-center justify-end mb-5">
       
         <Pagination
           currentPage={currentPage + 1}
-          totalPages={Math.ceil(data?.count ?? 0) / 5}
+          totalPages={Math.ceil(data?.count ?? 0) / LIMIT}
           onPageChange={onPageChange}
         />
       </div>

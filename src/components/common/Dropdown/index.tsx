@@ -38,7 +38,7 @@ useEffect(() => {
   
 
     return (
-        <div>
+        <div className='w-full'>
       <label className="mb-3 block text-sm font-medium text-black dark:text-white">
        {heading}
       </label>
@@ -47,7 +47,7 @@ useEffect(() => {
      
 
         <select
-          value={selectedOption}
+          value={selected!=null?selected: selectedOption}
           onChange={(e) => {
             handleSelectOption(e.target.value);
             changeTextColor();

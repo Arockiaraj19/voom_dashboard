@@ -19,16 +19,16 @@ const ScheduleComponent = ({ data }: { data: any }) => {
                                 Dates
                             </th>
                             <th className="min-w-[150px] px-4 py-4 font-medium text-black dark:text-white">
-                                Time
+                               Pickup Time
                             </th>
                             <th className="min-w-[150px] px-4 py-4 font-medium text-black dark:text-white">
                                 CreatedAt
                             </th>
                             <th className="min-w-[150px] px-4 py-4 font-medium text-black dark:text-white">
-                                type
+                                Type
                             </th>
-                            {/* <th className="min-w-[150px] px-4 py-4 font-medium text-black dark:text-white">
-                                status
+                            <th className="min-w-[150px] px-4 py-4 font-medium text-black dark:text-white">
+                                Status
                             </th>
                             <th className="min-w-[150px] px-4 py-4 font-medium text-black dark:text-white">
                                Schedule status
@@ -41,7 +41,13 @@ const ScheduleComponent = ({ data }: { data: any }) => {
                             </th>
                             <th className="px-4 py-4 font-medium text-black dark:text-white">
                                 Drivers
-                            </th> */}
+                            </th>
+                            <th className="px-4 py-4 font-medium text-black dark:text-white">
+                               WeekDays
+                            </th>
+                            <th className="px-4 py-4 font-medium text-black dark:text-white">
+                        Locations
+                            </th>
                         </tr>
                     </thead>
                     <tbody>

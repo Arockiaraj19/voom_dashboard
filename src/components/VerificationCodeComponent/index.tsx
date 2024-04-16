@@ -53,12 +53,12 @@ const VerificationCodeComponent = ({ data }: { data: any }) => {
                                 </td>
                                 <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
                                     <p className="text-black dark:text-white">
-                                        {moment(item.expiry_time).format('YYYY-MM-DD')}
+                                        {moment(item.expiry_time).format('LLL')}
                                     </p>
                                 </td>
                                 <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
                                     <p className="text-black dark:text-white">
-                                        {moment(item.createdAt).format('YYYY-MM-DD')}
+                                        {moment(item.createdAt).format('LLL')}
                                     </p>
                                 </td>
 

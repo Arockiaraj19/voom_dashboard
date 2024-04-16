@@ -5,59 +5,52 @@ import moment from "moment"
 const TripTableItemCard = ({ item, index }: { item: any, index: number }) => {
     return <tr key={index}>
         <td className="border-b border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11">
-           
-        </td>
-        <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
-            <p className="text-black dark:text-white">
+        <p className="text-black dark:text-white">
+               {item?.user?.first_name}
                
             </p>
         </td>
         <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
             <p className="text-black dark:text-white">
-                {moment(item?.pickup_time).format('YYYY-MM-DD HH:mm:ss')} <br />
-               
+            {item?.driver?.first_name}
             </p>
         </td>
         <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
             <p className="text-black dark:text-white">
-                time
+                {moment(item?.pickup_time).format('LLL')}
             </p>
         </td>
         <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
             <p className="text-black dark:text-white">
-                {moment(item.createdAt).format('YYYY-MM-DD')}
+            {item?.locations[0].name}
             </p>
         </td>
         <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
             <p className="text-black dark:text-white">
-               pickup locaiton
+            {item?.locations[1].name}
             </p>
         </td>
         <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
             <p className="text-black dark:text-white">
-               drop locaiton
+            {item?.type.toUpperCase()}
+            </p>
+        </td>
+        <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
+            <p className="text-black font-medium dark:text-white">
+            {item?.status.toUpperCase()}
             </p>
         </td>
         <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
             <p className="text-black dark:text-white">
-              {item?.type??""}
+            {item?.start_time==null?"": moment(item?.start_time).format('LLL')}
             </p>
         </td>
         <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
             <p className="text-black dark:text-white">
-              {item?.status??""}
+            {item?.end_time==null?"": moment(item?.end_time).format('LLL')}
             </p>
         </td>
-        <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
-            <p className="text-black dark:text-white">
-              start time
-            </p>
-        </td>
-        <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
-            <p className="text-black dark:text-white">
-              end time
-            </p>
-        </td>
+        
       
     </tr>
 }

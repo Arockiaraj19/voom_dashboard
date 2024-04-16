@@ -25,16 +25,16 @@ const TripComponent = ({ data }: { data: any }) => {
                                Drop Location
                             </th>
                             <th className="min-w-[150px] px-4 py-4 font-medium text-black dark:text-white">
-                                type
+                                Type
                             </th>
                             <th className="min-w-[150px] px-4 py-4 font-medium text-black dark:text-white">
-                                status
+                                Status
                             </th>
                             <th className="min-w-[150px] px-4 py-4 font-medium text-black dark:text-white">
-                                start time
+                                Start Time
                             </th>
                             <th className="min-w-[150px] px-4 py-4 font-medium text-black dark:text-white">
-                              end time
+                              End Time
                             </th>
                            
                         </tr>
