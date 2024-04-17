@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect } from "react";
+import React, { useEffect,useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
@@ -8,12 +8,14 @@ import { useFormik } from "formik";
 import * as Yup from 'yup';
 import usePostApi from "@/hooks/usePostApi";
 import LoadingOverlay from "@/components/common/LoadingOverlay";
+import { axiosPrivate } from "@/helper/axiosPrivate";
+import { toast } from "react-toastify";
 
 
 
 
 const SignIn: React.FC = () => {
-  const { data, loading, error, postData } = usePostApi('/v1/auth/admin/login');
+  const [loading, setLoading] = useState(false);
   const formik = useFormik({
     initialValues: {
       password: '',
@@ -30,17 +32,19 @@ const SignIn: React.FC = () => {
     onSubmit: async (values, { resetForm }) => {
 
   try {
-    const result=  await postData({
+    setLoading(true);
+    const result=  await axiosPrivate.post('/v1/auth/admin/login', {
       "mobileNumber": values.number,
       "password": values.password
     });
     resetForm();
-    localStorage.setItem("session", JSON.stringify(result));
+    localStorage.setItem("session", JSON.stringify(result.data));
 
     window.location.href = "/";
-
+    setLoading(false);
   } catch (error) {
-    
+    toast.error(error?.response?.data?.error?.message ?? "Something went wrong");
+    setLoading(false);
   }
 
       // 
