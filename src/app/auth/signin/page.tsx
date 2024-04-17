@@ -42,7 +42,7 @@ const SignIn: React.FC = () => {
 
     window.location.href = "/";
     setLoading(false);
-  } catch (error) {
+  } catch (error:any) {
     toast.error(error?.response?.data?.error?.message ?? "Something went wrong");
     setLoading(false);
   }
