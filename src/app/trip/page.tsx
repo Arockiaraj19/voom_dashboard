@@ -77,9 +77,9 @@ const TripPage = () => {
 
 
 
-  const [type, setType] = useState(null);
-  const [status, setStatus] = useState(null);
-  const [time, setTime] = useState(null);
+  const [type, setType] = useState<any>(null);
+  const [status, setStatus] = useState<any>(null);
+  const [time, setTime] = useState<any>(null);
   useEffect(() => {
 
     fetchData();

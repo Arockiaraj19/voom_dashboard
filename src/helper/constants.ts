@@ -1,3 +1,3 @@
-export const baseUrl="http://localhost:5000";
+export const baseUrl="http://dev.heroes-ride.com";
 
 export const LIMIT=20;

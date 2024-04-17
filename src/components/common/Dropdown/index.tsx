@@ -60,8 +60,8 @@ useEffect(() => {
            {title}
           </option>
          {
-            options.map((e)=>{
-                return   <option value={e} className="text-body dark:text-bodydark">
+            options.map((e,index)=>{
+                return   <option key={index} value={e} className="text-body dark:text-bodydark">
                {e}
               </option>
             })

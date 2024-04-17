@@ -36,22 +36,22 @@ const ScheduleComponent = ({ data }: { data: any }) => {
                             <th className="min-w-[120px] px-4 py-4 font-medium text-black dark:text-white">
                                 Trips
                             </th>
-                            <th className="px-4 py-4 font-medium text-black dark:text-white">
+                            <th className="min-w-[200px] px-4 py-4 font-medium text-black dark:text-white">
                                 User
                             </th>
-                            <th className="px-4 py-4 font-medium text-black dark:text-white">
+                            <th className="min-w-[200px] px-4 py-4 font-medium text-black dark:text-white">
                                 Drivers
                             </th>
-                            <th className="px-4 py-4 font-medium text-black dark:text-white">
+                            <th className="min-w-[200px] px-4 py-4 font-medium text-black dark:text-white">
                                WeekDays
                             </th>
-                            <th className="px-4 py-4 font-medium text-black dark:text-white">
+                            <th className="min-w-[200px] px-4 py-4 font-medium text-black dark:text-white">
                         Locations
                             </th>
                         </tr>
                     </thead>
                     <tbody>
-                        {data.map((item: any, index: number) => <ScheduleTableItemCard index={index} item={item} />)}
+                        {data.map((item: any, index: number) => <ScheduleTableItemCard key={index} index={index} item={item} />)}
                     </tbody>
                 </table>
             </div>

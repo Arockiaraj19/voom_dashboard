@@ -41,8 +41,8 @@ const Notification = () => {
                 }
 
             } catch (error: any) {
-                console.log(error);
-                toast.error(error?.error?.message ?? "Something went wrong");
+                console.log(error.response.data.error.message);
+                toast.error(error?.response?.data?.error?.message ?? "Something went wrong");
             }
 
             // 

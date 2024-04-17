@@ -19,6 +19,7 @@ import { toast } from "react-toastify";
 import navigateToMap from "@/helper/navigateToMap";
 import CarInformation from "@/components/SettingComponents/CarComponent";
 import DocumentInformation from "@/components/SettingComponents/DocumentComponent";
+import useUserData from "@/hooks/userData";
 
 const Settings = () => {
 
@@ -92,7 +93,7 @@ const Settings = () => {
               Current Location            </button>
             <button
               onClick={(e) => {
-              
+                window.location.href=`/schedule?type=driver&id=${data._id}&name=${data.first_name}`;
               }}
               className="inline-flex items-center justify-center rounded-md border border-primary px-10 py-4 text-center font-medium text-primary hover:bg-opacity-90 lg:px-8 xl:px-10"
             >

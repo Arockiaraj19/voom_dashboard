@@ -7,6 +7,7 @@ import { Metadata } from "next";
 import { useFormik } from "formik";
 import * as Yup from 'yup';
 import usePostApi from "@/hooks/usePostApi";
+import LoadingOverlay from "@/components/common/LoadingOverlay";
 
 
 
@@ -52,6 +53,7 @@ const SignIn: React.FC = () => {
 
 
     <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+      <LoadingOverlay show={loading}/>
       <div className="flex flex-wrap items-center">
         <div className="hidden w-full xl:block xl:w-1/2">
           <div className="px-26 py-17.5 text-center">

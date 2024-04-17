@@ -13,11 +13,13 @@ import { axiosPrivate } from "@/helper/axiosPrivate";
 import { toast } from "react-toastify";
 import moment from "moment";
 import LoadingOverlay from "@/components/common/LoadingOverlay";
+import useUserData from "@/hooks/userData";
 
 const PersonalInformation = ({ data }: { data: any }) => {
     const [loading,setLoading]=useState(false);
     const pathname = usePathname();
     const [selectedDate, setSelectedDate] = useState<any>(data.date_of_birth);
+    const { userData, isLoading }=useUserData();
     useEffect(() => {
         // Init flatpickr
         flatpickr(".form-datepicker", {
@@ -45,7 +47,7 @@ const PersonalInformation = ({ data }: { data: any }) => {
     const changeTextColor = () => {
         setIsOptionSelected(true);
     };
-    const formik = useFormik({
+    const formik:any = useFormik({
         initialValues: {
             first_name: data.first_name,
             last_name: data.last_name,
@@ -81,8 +83,13 @@ const PersonalInformation = ({ data }: { data: any }) => {
                    ...payload,
                     userId: pathname.split("/")[(pathname.split("/").length - 1)]
                   });
+                 
                   toast.success("Status updated successfully");
                   setLoading(false);
+                  if(userData?._id==pathname.split("/")[(pathname.split("/").length - 1)]){
+                    localStorage.removeItem('userData');
+                    window.location.href="/";
+                  }
             } catch (error) {
                 setLoading(false);
             }
@@ -143,7 +150,7 @@ const PersonalInformation = ({ data }: { data: any }) => {
 
                                 />
                                 {formik.errors.first_name ? (
-                                    <div className="text-sm text-black mt-2 ml-2">{formik.errors.first_name}</div>
+                                    <div className="text-sm text-black mt-2 ml-2">{formik?.errors?.first_name??""}</div>
                                 ) : null}
                             </div>
                         </div>
@@ -163,7 +170,7 @@ const PersonalInformation = ({ data }: { data: any }) => {
 
                             />
                             {formik.errors.last_name ? (
-                                <div className="text-sm text-black mt-2 ml-2">{formik.errors.last_name}</div>
+                                <div className="text-sm text-black mt-2 ml-2">{formik?.errors?.last_name??""}</div>
                             ) : null}
                         </div>
                     </div>
@@ -182,7 +189,7 @@ const PersonalInformation = ({ data }: { data: any }) => {
 
                         />
                         {formik.errors.mobile_number ? (
-                            <div className="text-sm text-black mt-2 ml-2">{formik.errors.mobile_number}</div>
+                            <div className="text-sm text-black mt-2 ml-2">{formik?.errors?.mobile_number??""}</div>
                         ) : null}
                     </div>
                     <div className="mb-5.5">

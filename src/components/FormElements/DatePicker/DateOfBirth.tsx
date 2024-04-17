@@ -1,8 +1,8 @@
 import flatpickr from "flatpickr";
-import { useEffect } from "react";
+import { useEffect,useState } from "react";
 
 const DateOfBirth = () => {
-  const [selectedDate, setSelectedDate] = useState('');
+  const [selectedDate, setSelectedDate] = useState<any>(null);
   useEffect(() => {
     // Init flatpickr
     flatpickr(".form-datepicker", {

@@ -33,7 +33,7 @@ const DriverRequestComponent = ({ data }: { data: any }) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {data.map((item: any, index: number) =><UserTableItemCard index={index} item={item}/>)}
+                        {data.map((item: any, index: number) =><UserTableItemCard key={index} index={index} item={item}/>)}
                     </tbody>
                 </table>
             </div>

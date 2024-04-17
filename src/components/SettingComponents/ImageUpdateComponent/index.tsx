@@ -1,5 +1,6 @@
 
 import { axiosPrivate } from "@/helper/axiosPrivate";
+import useUserData from "@/hooks/userData";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
@@ -8,7 +9,7 @@ import { toast } from "react-toastify";
 
 const ImageUpdateComponent = ({data}:{data:any}) => {
     const [image, setImage] = useState(null);
-
+    const { userData, isLoading }=useUserData();
     const handleImageUpload = (e:any) => {
       const file = e.target.files[0];
      
@@ -32,6 +33,10 @@ const ImageUpdateComponent = ({data}:{data:any}) => {
              userId: pathname.split("/")[(pathname.split("/").length - 1)]
            });
          toast.success('Image updated successfully!');
+         if(userData?._id==pathname.split("/")[(pathname.split("/").length - 1)]){
+            localStorage.removeItem('userData');
+            window.location.href="/";
+          }
         } catch (error) {
           console.error('Error uploading image:', error);
          toast.error('Error uploading image');

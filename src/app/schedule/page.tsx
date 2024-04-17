@@ -55,8 +55,18 @@ const SchedulePage = () => {
       if(time){
         params.time=time!.toString().toLowerCase();
       }
-
-      const result = await axiosPrivate.get("/v1/schedule/all", {
+      if (searchParams.get("type")) {
+       
+        if (searchParams.get("type") == "driver") {
+        
+          params= {
+            offset: currentPage,
+            limit: LIMIT,
+            driverId: searchParams.get("id")
+          }
+        }
+      }
+      const result = await axiosPrivate.get(searchParams.get("type")&&searchParams.get("type") == "driver"?"/v1/schedule/driver/admin": "/v1/schedule/all", {
         params: params
       });
       setData(result.data ?? []);
@@ -72,10 +82,10 @@ const SchedulePage = () => {
 
 
 
-  const [scheduleStatus, setScheduleStatus] = useState(null);
-  const [type, setType] = useState(null);
-  const [status, setStatus] = useState(null);
-  const [time, setTime] = useState(null);
+  const [scheduleStatus, setScheduleStatus] = useState<any>(null);
+  const [type, setType] = useState<any>(null);
+  const [status, setStatus] = useState<any>(null);
+  const [time, setTime] = useState<any>(null);
   useEffect(() => {
 
     fetchData();
@@ -85,9 +95,9 @@ const SchedulePage = () => {
   return (
     <DefaultLayout>
       <Breadcrumb pageName={searchParams.get("name") ? `${searchParams.get("name")} Schedule` : `Schedule`} />
-      <div className="w-full flex flex-row items-end justify-between my-5 gap-5">
+      {
+        searchParams.get("type")&&searchParams.get("type") == "driver"?<></>:  <div className="w-full flex flex-row items-end justify-between my-5 gap-5">
         <Dropdown onSelect={(e) => {
-
           console.log("what is the onSelect");
           console.log(e);
           setScheduleStatus(e);
@@ -122,6 +132,8 @@ const SchedulePage = () => {
       </div>
 
 
+      }
+    
    {
     (Math.ceil(data?.count ?? 0) / LIMIT)>1? <div className="flex flex-row items-center justify-end my-5">
 

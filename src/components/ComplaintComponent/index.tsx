@@ -15,7 +15,7 @@ const ComplaintComponent = ({ data }: { data: any }) => {
                     <thead>
                         <tr className="bg-gray-2 text-left dark:bg-meta-4">
                             <th className="min-w-[220px] px-4 py-4 font-medium text-black dark:text-white xl:pl-11">
-                                Name
+                                Name/Mobile Number
                             </th>
                             <th className="min-w-[150px] px-4 py-4 font-medium text-black dark:text-white">
                                Title
@@ -40,7 +40,7 @@ const ComplaintComponent = ({ data }: { data: any }) => {
                             <tr key={index}>
                                 <td className="border-b border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11">
                                     <h5 className="font-medium text-black dark:text-white">
-                                        {item?.user?.first_name}
+                                        {item?.user?.first_name??item?.user?.mobile_number??""}
                                     </h5>
 
                                 </td>

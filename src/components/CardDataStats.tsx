@@ -1,22 +1,53 @@
-import React, { ReactNode } from "react";
+import { axiosPrivate } from "@/helper/axiosPrivate";
+import React, { ReactNode,useState,useEffect } from "react";
 
 interface CardDataStatsProps {
   title: string;
-  total: string;
-  rate: string;
-  levelUp?: boolean;
-  levelDown?: boolean;
+ 
   children: ReactNode;
 }
 
 const CardDataStats: React.FC<CardDataStatsProps> = ({
   title,
-  total,
-  rate,
-  levelUp,
-  levelDown,
+ 
   children,
 }) => {
+  const [data, setData] = useState<any>(null);
+  const fetchData = async () => {
+    try {
+     let url;
+     if(title=="Total Users"){
+      url="/v1/user/count?type=user"
+     }
+if(title=="Total Drivers"){
+  url="/v1/user/count?type=driver"
+}
+if(title=="Total Schedule"){
+  url="/v1/schedule/count"
+}if(title=="Total Trips"){
+  url="/v1/trip/count"
+}
+      const result = await axiosPrivate.get(url!);
+      setData(result?.data?.count??0);
+    
+    } catch (error: any) {
+      
+    } finally {
+     
+    }
+  }
+
+
+
+
+
+  useEffect(() => {
+
+    fetchData();
+
+
+  }, []);
+
   return (
     <div className="rounded-sm border border-stroke bg-white px-7.5 py-6 shadow-default dark:border-strokedark dark:bg-boxdark">
       <div className="flex h-11.5 w-11.5 items-center justify-center rounded-full bg-meta-2 dark:bg-meta-4">
@@ -26,12 +57,12 @@ const CardDataStats: React.FC<CardDataStatsProps> = ({
       <div className="mt-4 flex items-end justify-between">
         <div>
           <h4 className="text-title-md font-bold text-black dark:text-white">
-            {total}
+            {data??0}
           </h4>
           <span className="text-sm font-medium">{title}</span>
         </div>
 
-        <span
+        {/* <span
           className={`flex items-center gap-1 text-sm font-medium ${
             levelUp && "text-meta-3"
           } ${levelDown && "text-meta-5"} `}
@@ -68,7 +99,7 @@ const CardDataStats: React.FC<CardDataStatsProps> = ({
               />
             </svg>
           )}
-        </span>
+        </span> */}
       </div>
     </div>
   );
