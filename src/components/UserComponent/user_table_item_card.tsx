@@ -14,6 +14,11 @@ const UserTableItemCard=({item,index}:{item:any,index:number})=>{
     </td>
     <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
         <p className="text-black dark:text-white">
+            {item?.type=="admin" ? "Admin":item?.type=="superAdmin"?"Super Admin":item?.type}
+        </p>
+    </td>
+    <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
+        <p className="text-black dark:text-white">
             {item?.email ?? ""}
         </p>
     </td>

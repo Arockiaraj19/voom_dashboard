@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect,useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
@@ -16,10 +16,12 @@ import { toast } from "react-toastify";
 
 const SignIn: React.FC = () => {
   const [loading, setLoading] = useState(false);
+  const [selectedOption, setSelectedOption] = useState<string>("Super Admin");
   const formik = useFormik({
     initialValues: {
       password: '',
       number: '',
+
     },
     validationSchema: Yup.object({
 
@@ -27,25 +29,26 @@ const SignIn: React.FC = () => {
         .required('No password provided.')
         .min(8, 'Password is too short - should be 8 chars minimum.')
       ,
-      number: Yup.string().required('Required'),
+      number: Yup.string().required('Required')
     }),
     onSubmit: async (values, { resetForm }) => {
 
-  try {
-    setLoading(true);
-    const result=  await axiosPrivate.post('/v1/auth/admin/login', {
-      "mobileNumber": values.number,
-      "password": values.password
-    });
-    resetForm();
-    localStorage.setItem("session", JSON.stringify(result.data));
+      try {
+        setLoading(true);
+        const result = await axiosPrivate.post('/v1/auth/admin/login', {
+          "mobileNumber": values.number,
+          "password": values.password,
+          "type":selectedOption=="Admin"?"admin":'superAdmin'
+        });
+        resetForm();
+        localStorage.setItem("session", JSON.stringify(result.data));
 
-    window.location.href = "/";
-    setLoading(false);
-  } catch (error:any) {
-    toast.error(error?.response?.data?.error?.message ?? "Something went wrong");
-    setLoading(false);
-  }
+        window.location.href = "/";
+        setLoading(false);
+      } catch (error: any) {
+        toast.error(error?.response?.data?.error?.message ?? "Something went wrong");
+        setLoading(false);
+      }
 
       // 
     },
@@ -57,13 +60,13 @@ const SignIn: React.FC = () => {
 
 
     <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-      <LoadingOverlay show={loading}/>
+      <LoadingOverlay show={loading} />
       <div className="flex flex-wrap items-center">
         <div className="hidden w-full xl:block xl:w-1/2">
           <div className="px-26 py-17.5 text-center">
-           
 
-        
+
+
 
             <span className="mt-15 inline-block">
               <svg
@@ -192,7 +195,7 @@ const SignIn: React.FC = () => {
 
         <div className="w-full border-stroke dark:border-strokedark xl:w-1/2 xl:border-l-2">
           <div className="w-full p-4 sm:p-12.5 xl:p-17.5">
-           
+
             <h2 className="mb-9 text-2xl font-bold text-black dark:text-white sm:text-title-xl2">
               Sign In to Voom Admin
             </h2>
@@ -269,7 +272,29 @@ const SignIn: React.FC = () => {
                   </span>
                 </div>
               </div>
-
+              <div className="mb-5">
+              <label className="mb-2.5 block font-medium text-black dark:text-white">
+               Select Role
+                </label>
+                <select
+                  value={selectedOption}
+                  onChange={(e) => {
+                    setSelectedOption(e.target.value);
+                    
+                  }}
+                  className={`relative z-20 w-full appearance-none rounded border border-stroke bg-transparent px-4 py-3 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input  text-black dark:text-white
+                    }`}
+                >
+                
+                  <option value="Super Admin" className="text-body dark:text-bodydark">
+                   Super Admin
+                  </option>
+                  <option value="Admin" className="text-body dark:text-bodydark">
+                  Admin
+                  </option>
+                 
+                </select>
+              </div>
               <div className="mb-5">
                 <input
                   type="submit"

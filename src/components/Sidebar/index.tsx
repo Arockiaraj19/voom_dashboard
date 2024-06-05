@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import SidebarLinkGroup from "./SidebarLinkGroup";
+import useUserData from "@/hooks/userData";
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -22,7 +23,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   const [sidebarExpanded, setSidebarExpanded] = useState(
     storedSidebarExpanded === null ? false : storedSidebarExpanded === "true",
   );
-
+const {userData,isLoading}= useUserData();
   // close on click outside
   useEffect(() => {
     const clickHandler = ({ target }: MouseEvent) => {
@@ -198,7 +199,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                Notification
                 </Link>
               </li>
-              <li>
+              {
+                userData?.type=="superAdmin"? <li>
                 <Link
                   href="/helper"
                   className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
@@ -209,7 +211,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                
               Payment Helper
                 </Link>
-              </li>
+              </li>:<></>
+              }
+             
               {/* <!-- Menu Item Calendar --> */}
 
           
@@ -279,17 +283,20 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                         }`}
                       >
                         <ul className="mb-5.5 mt-4 flex flex-col gap-2.5 pl-6">
-                          <li>
-                            <Link
-                              href="/profile/admin"
-                              className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
-                                pathname === "/profile/admin" &&
-                                "text-white"
-                              }`}
-                            >
-                            Admin
-                            </Link>
-                          </li>
+                          {
+                             userData?.type=="superAdmin"?<li>
+                             <Link
+                               href="/profile/admin"
+                               className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
+                                 pathname === "/profile/admin" &&
+                                 "text-white"
+                               }`}
+                             >
+                             Admin
+                             </Link>
+                           </li>:<></>
+                          }
+                          
                           <li>
                             <Link
                               href="/profile/user"

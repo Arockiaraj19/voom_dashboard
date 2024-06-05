@@ -91,6 +91,13 @@ const Settings = () => {
               className="inline-flex items-center justify-center rounded-md border border-primary px-10 py-4 text-center font-medium text-primary hover:bg-opacity-90 lg:px-8 xl:px-10"
             >
               Current Location            </button>
+              <button
+              onClick={(e) => {
+                window.location.href=`/notification?type=driver&id=${data._id}&name=${data.first_name}`;
+              }}
+              className="inline-flex items-center justify-center rounded-md border border-primary px-10 py-4 text-center font-medium text-primary hover:bg-opacity-90 lg:px-8 xl:px-10"
+            >
+             Send Notification        </button>
             <button
               onClick={(e) => {
                 window.location.href=`/schedule?type=driver&id=${data._id}&name=${data.first_name}`;
@@ -118,6 +125,13 @@ const Settings = () => {
             >
               Schedules
             </button>
+            <button
+              onClick={(e) => {
+                window.location.href=`/notification?type=driver&id=${data._id}&name=${data.first_name}`;
+              }}
+              className="inline-flex items-center justify-center rounded-md border border-primary px-10 py-4 text-center font-medium text-primary hover:bg-opacity-90 lg:px-8 xl:px-10"
+            >
+             Send Notification        </button>
             <button
               onClick={(e) => {
                 window.location.href=`/trip?type=user&id=${data._id}&name=${data.first_name}`;

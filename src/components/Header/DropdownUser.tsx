@@ -48,7 +48,7 @@ const DropdownUser = () => {
           <span className="block text-sm font-medium text-black dark:text-white">
             {userData?.first_name?? userData?.mobile_number??""}
           </span>
-          <span className="block text-xs">Admin</span>
+          <span className="block text-xs">  {userData?.type=="admin"?"Admin":"Super Admin" }</span>
         </span>
 
         <span className="h-12 w-12 rounded-full object-cover">

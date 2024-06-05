@@ -7,10 +7,11 @@ import { useFormik } from "formik";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import * as Yup from 'yup';
-
+import { usePathname, useSearchParams } from 'next/navigation'
 
 
 const Notification = () => {
+    const searchParams = useSearchParams();
     const [isDriverChecked, setDriverChecked] = useState<boolean>(true);
     const [isUserChecked, setUserChecked] = useState<boolean>(false);
     const [isOtherChecked, setOtherChecked] = useState<boolean>(false);
@@ -30,10 +31,18 @@ const Notification = () => {
 
             try {
                 if (isDriverChecked || isUserChecked) {
-                    await axiosPrivate.post("/v1/push_notification/", {
-                        ...values,
-                        type: isDriverChecked == true ? "driver" : "user"
-                    })
+                    if(searchParams.get("id")){
+                        await axiosPrivate.post("/v1/push_notification/device", {
+                            ...values,
+                            users: [searchParams.get("id")]
+                        })
+                    }else{
+                        await axiosPrivate.post("/v1/push_notification/", {
+                            ...values,
+                            type: isDriverChecked == true ? "driver" : "user"
+                        })
+                    }
+                    
                     resetForm();
                     toast.success("Notification broadcasted successfully.")
                 } else {
@@ -98,7 +107,8 @@ const Notification = () => {
                       <div className="text-sm text-black mt-2 ml-2">{formik.errors.body}</div>
                     ) : null}
                                 </div>
-                                <div className="mb-6 flex flex-row justify-between">
+                                {
+                                    searchParams.get("id")?<></>: <div className="mb-6 flex flex-row justify-between">
                                     <label
                                         htmlFor="checkboxLabelFive"
                                         className="flex cursor-pointer select-none items-center"
@@ -173,6 +183,8 @@ const Notification = () => {
                                        Others
                                     </label> */}
                                 </div>
+                                }
+                               
                                 {/* { isOtherChecked &&   <MultiSelect id="multiSelect" />} */}
                                 <button type="submit" className="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray hover:bg-opacity-90">
                                     Send Message

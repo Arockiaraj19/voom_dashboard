@@ -16,6 +16,9 @@ const DriverRequestComponent = ({ data }: { data: any }) => {
                                 Mobile Number
                             </th>
                             <th className="min-w-[150px] px-4 py-4 font-medium text-black dark:text-white">
+                               Type
+                            </th>
+                            <th className="min-w-[150px] px-4 py-4 font-medium text-black dark:text-white">
                                 Email
                             </th>
                             <th className="min-w-[150px] px-4 py-4 font-medium text-black dark:text-white">

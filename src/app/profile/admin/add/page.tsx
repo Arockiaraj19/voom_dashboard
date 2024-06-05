@@ -13,7 +13,7 @@ import { axiosPrivate } from "@/helper/axiosPrivate";
 import { usePathname } from 'next/navigation'
 
 const AddAdmin = () => {
-
+    const [selectedOption, setSelectedOption] = useState<string>("Super Admin");
     const formik = useFormik({
         initialValues: {
             mobilenumber: '',
@@ -28,9 +28,15 @@ const AddAdmin = () => {
         onSubmit: async (values, { resetForm }) => {
 
             try {
+                console.log("what is the payload", {
+                    "mobileNumber": values.mobilenumber,
+                    "password": values.password,
+                    "type": selectedOption == "Admin" ? "admin" : 'superAdmin'
+                });
                 await axiosPrivate.post("/v1/user/admin", {
                     "mobileNumber": values.mobilenumber,
-                    "password": values.password
+                    "password": values.password,
+                    "type": selectedOption == "Admin" ? "admin" : 'superAdmin'
                 })
                 resetForm();
                 window.location.href = `/profile/admin`;
@@ -60,7 +66,7 @@ const AddAdmin = () => {
                                             Mobile Number
                                         </label>
                                         <input
-                                            {...formik.getFieldProps('mobileNumber')}
+                                            {...formik.getFieldProps('mobilenumber')}
                                             type="text"
                                             placeholder="Enter your mobile number"
                                             className="w-full rounded border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
@@ -93,7 +99,28 @@ const AddAdmin = () => {
 
 
 
+                                <div className="mb-5">
+                                    <label className="mb-2.5 block font-medium text-black dark:text-white">
+                                        Select Role
+                                    </label>
+                                    <select
+                                        value={selectedOption}
+                                        onChange={(e) => {
+                                            setSelectedOption(e.target.value);
+                                        }}
+                                        className={`relative z-20 w-full appearance-none rounded border border-stroke bg-transparent px-4 py-3 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input  text-black dark:text-white
+                    }`}
+                                    >
 
+                                        <option value="Super Admin" className="text-body dark:text-bodydark">
+                                            Super Admin
+                                        </option>
+                                        <option value="Admin" className="text-body dark:text-bodydark">
+                                            Admin
+                                        </option>
+
+                                    </select>
+                                </div>
 
 
 
