@@ -17,7 +17,7 @@ const SchedulePaymentMode = ({ data }: { data: any }) => {
             return;
         }
         try {
-            const result = await axiosPrivate.put("/v1/schedule/payment", {
+           await axiosPrivate.put("/v1/schedule/payment", {
 
                 user_id: data.user_id._id.toString(), schedule_id: data._id.toString(), 
             });
