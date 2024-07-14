@@ -69,7 +69,7 @@ Payment
 
                          
                    { (data?.transactions??[]).map((e:any,index:any)=>{
-                         return (   <tr >
+                         return (   <tr key={index} >
                             <td className="border-b border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11">
                                 <p className="text-black dark:text-white">
                                     {index+1}
