@@ -43,6 +43,12 @@ const SchedulePage = () => {
           params.userId = searchParams.get("id");
         }
       }
+      if(mode){
+        params.payment_mode=mode;
+      }
+      if(paymentStatus){
+        params.payment_status=paymentStatus;
+      }
       if(scheduleStatus){
         params.schedule_status=scheduleStatus=="Accepted"?"Both":"S2D";
       }
@@ -55,6 +61,7 @@ const SchedulePage = () => {
       if(time){
         params.time=time!.toString().toLowerCase();
       }
+      
       if (searchParams.get("type")) {
        
         if (searchParams.get("type") == "driver") {
@@ -83,20 +90,22 @@ const SchedulePage = () => {
 
 
   const [scheduleStatus, setScheduleStatus] = useState<any>(null);
+  const [paymentStatus, setPaymentStatus] = useState<any>(null);
   const [type, setType] = useState<any>(null);
   const [status, setStatus] = useState<any>(null);
+  const [mode, setPaymentMode] = useState<any>(null);
   const [time, setTime] = useState<any>(null);
   useEffect(() => {
 
     fetchData();
 
 
-  }, [currentPage, scheduleStatus, type, status, time]);
+  }, [currentPage, scheduleStatus, type, status, time,mode,paymentStatus]);
   return (
     <DefaultLayout>
       <Breadcrumb pageName={searchParams.get("name") ? `${searchParams.get("name")} Schedule` : `Schedule`} />
       {
-        searchParams.get("type")&&searchParams.get("type") == "driver"?<></>:  <div className="w-full flex flex-row items-end justify-between my-5 gap-5">
+        searchParams.get("type")&&searchParams.get("type") == "driver"?<></>:  <div className="w-full grid grid-cols-4 gap-5">
         <Dropdown onSelect={(e) => {
           console.log("what is the onSelect");
           console.log(e);
@@ -112,11 +121,21 @@ const SchedulePage = () => {
           console.log(e);
           setTime(e);
         }} options={["Upcoming", "Past", "Today"]} title="Select time" heading="Time" selected={time ?? ""} />
+         <Dropdown onSelect={(e) => {
+          console.log("what is the onSelect");
+          console.log(e);
+          setPaymentMode(e);
+        }} options={['online', 'cash']} title="Select Payment Mode" heading="Payment Mode" selected={mode ?? ""} />
         <Dropdown onSelect={(e) => {
           console.log("what is the onSelect");
           console.log(e);
           setStatus(e);
         }} options={["Active", "Cancelled"]} title="Select Status" heading="Status" selected={status ?? ""} />
+          <Dropdown onSelect={(e) => {
+          console.log("what is the onSelect");
+          console.log(e);
+          setPaymentStatus(e);
+        }} options={['pending', 'completed','cancelled']} title="Select Payment Status" heading="Payment Status" selected={paymentStatus ?? ""} />
         <button
           onClick={(e) => {
             setCurrentPage(0);
@@ -124,8 +143,10 @@ const SchedulePage = () => {
             setType(null);
             setStatus(null);
             setTime(null);
+            setPaymentMode(null);
+            setPaymentStatus(null);
           }}
-          className="inline-flex items-center justify-center rounded-md border border-primary px-10 py-4 text-center font-medium text-primary hover:bg-opacity-90 lg:px-8 xl:px-10"
+          className="inline-flex items-center justify-center rounded-md border border-primary h-10 w-30 mt-10 text-center font-medium text-primary hover:bg-opacity-90"
         >
           Clear
         </button>
@@ -135,11 +156,11 @@ const SchedulePage = () => {
       }
     
    {
-    (Math.ceil(data?.count ?? 0) / LIMIT)>1? <div className="flex flex-row items-center justify-end my-5">
+    (Math.ceil((data?.count ?? 0)/LIMIT))>1? <div className="flex flex-row items-center justify-end my-5">
 
     <Pagination
       currentPage={currentPage + 1}
-      totalPages={Math.ceil(data?.count ?? 0) / LIMIT}
+      totalPages={Math.ceil((data?.count ?? 0)/LIMIT)}
       onPageChange={onPageChange}
     />
   </div>:<></>

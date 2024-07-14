@@ -11,6 +11,7 @@ interface PaginationProps {
 }
 
 const Pagination: FC<PaginationProps> = ({ currentPage, totalPages, onPageChange, maxPagesToShow = 5 }) => {
+  console.log("what is the pagination data",currentPage,totalPages);
   const getPageNumbers = (): number[] => {
     const pageNumbers: number[] = [];
     const maxVisiblePages = Math.min(totalPages, maxPagesToShow);
