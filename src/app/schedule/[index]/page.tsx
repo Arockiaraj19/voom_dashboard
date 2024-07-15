@@ -20,7 +20,7 @@ import navigateToMap from "@/helper/navigateToMap";
 import CarInformation from "@/components/SettingComponents/CarComponent";
 import DocumentInformation from "@/components/SettingComponents/DocumentComponent";
 import useUserData from "@/hooks/userData";
-import SchedulePaymentMode from "@/components/SettingComponents/ApproveComponent";
+import SchedulePaymentMode from "@/components/SettingComponents/SchedulePaymentModeComponent";
 
 
 
