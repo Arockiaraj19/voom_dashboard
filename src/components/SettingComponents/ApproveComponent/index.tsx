@@ -18,7 +18,7 @@ const ApproveInformation = ({ data }: { data: any }) => {
         }
         try {
             const result = await axiosPrivate.put("/v1/user/approve", {
-                statusReason: "Good",
+                statusReason: status == 'rejected'?reason: "Good",
                 status: status,
                 userId: pathname.split("/")[(pathname.split("/").length - 1)]
             });
@@ -29,6 +29,9 @@ const ApproveInformation = ({ data }: { data: any }) => {
         }
     }
     const [status, setStatus] = useState(data?.status);
+    const [reason, setReason] = useState(data?.status_reason??'');
+
+
     return <div className="col-span-5 xl:col-span-3">
         <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
 
@@ -45,7 +48,17 @@ const ApproveInformation = ({ data }: { data: any }) => {
                         }} options={['pending', 'approved', 'rejected']} selected={status} />
                     </div>
 
-
+                    {
+                        status == 'rejected' && <div className="mb-5.5">
+                            <input
+                                value={reason}
+                                onChange={(e) => setReason(e.target.value)}
+                                type="text"
+                                placeholder="Please enter the reason for rejection"
+                                className="w-full rounded border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                            />
+                        </div>
+                    }
 
 
 
