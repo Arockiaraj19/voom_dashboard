@@ -61,6 +61,9 @@ const TripPage = () => {
       if (time) {
         params.time = time!.toString().toLowerCase();
       }
+      if (paymentStatus) {
+        params.payment_status= paymentStatus;
+      }
 
       const result = await axiosPrivate.get("/v1/trip/all", {
         params: params
@@ -80,6 +83,7 @@ const TripPage = () => {
   const [type, setType] = useState<any>(null);
   const [status, setStatus] = useState<any>(null);
   const [time, setTime] = useState<any>(null);
+  const [paymentStatus, setPaymentStatus] = useState<any>(null);
   useEffect(() => {
 
     fetchData();
@@ -90,12 +94,17 @@ const TripPage = () => {
     <DefaultLayout>
       <Breadcrumb pageName={searchParams.get("name") ? `${searchParams.get("name")} Trips` : `Trip`} />
       <div className="w-full flex flex-row items-end justify-between my-5 gap-5">
-
+      <Dropdown onSelect={(e) => {
+          console.log("what is the onSelect");
+          console.log(e);
+          setPaymentStatus(e);
+        }} options={['pending', 'completed']} title="Select status" heading="Driver Payment Status" selected={paymentStatus ?? ""} />
         <Dropdown onSelect={(e) => {
           console.log("what is the onSelect");
           console.log(e);
           setType(e);
         }} options={['S2D', 'D2S']} title="Select type" heading="Type" selected={type ?? ""} />
+
         <Dropdown onSelect={(e) => {
           console.log("what is the onSelect");
           console.log(e);
@@ -113,6 +122,7 @@ const TripPage = () => {
             setType(null);
             setStatus(null);
             setTime(null);
+            setPaymentStatus(null);
           }}
           className="inline-flex items-center justify-center rounded-md border border-primary px-10 py-4 text-center font-medium text-primary hover:bg-opacity-90 lg:px-8 xl:px-10"
         >

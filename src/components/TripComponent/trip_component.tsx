@@ -36,6 +36,15 @@ const TripComponent = ({ data }: { data: any }) => {
                             <th className="min-w-[150px] px-4 py-4 font-medium text-black dark:text-white">
                               End Time
                             </th>
+                            <th className="min-w-[150px] px-4 py-4 font-medium text-black dark:text-white">
+                         Payment
+                            </th>
+                            <th className="min-w-[150px] px-4 py-4 font-medium text-black dark:text-white">
+                      Driver Received Payment
+                            </th>
+                            <th className="min-w-[150px] px-4 py-4 font-medium text-black dark:text-white">
+                     Pay
+                            </th>
                            
                         </tr>
                     </thead>

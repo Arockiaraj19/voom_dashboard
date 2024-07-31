@@ -42,6 +42,8 @@ const Settings = () => {
           userId: pathname.split("/")[(pathname.split("/").length - 1)]
         }
       });
+      console.log("admin result");
+      console.log(result?.data);
       setData(result?.data);
 
     } catch (error: any) {
@@ -84,6 +86,15 @@ const Settings = () => {
         <Breadcrumb pageName="Settings" />
         {
           data && data.type == "driver" ? <div className="w-full flex flex-row justify-end gap-6 my-4">
+            <button
+              onClick={(e) => {
+              //  fetchLocation(data._id);
+              }}
+              className="inline-flex items-center justify-center rounded-md border border-primary px-10 py-4 text-center font-medium text-primary hover:bg-opacity-90 lg:px-8 xl:px-10"
+            >
+            Wallet  {
+              data?.wallet?.amount.toFixed(2)??"0"
+             }          </button>
             <button
               onClick={(e) => {
                 fetchLocation(data._id);

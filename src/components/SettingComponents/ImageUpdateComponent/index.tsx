@@ -54,7 +54,7 @@ const ImageUpdateComponent = ({data}:{data:any}) => {
                 <form >
                     <div className="mb-4 flex items-center gap-3">
                         <div className="h-14 w-14 rounded-full">
-                            <Image
+                            <img
                                src={image!=null? URL.createObjectURL(image):data?.image==null?"/images/user/default.png":data?.image}
                                 width={55}
                                 height={55}

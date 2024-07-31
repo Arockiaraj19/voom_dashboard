@@ -40,6 +40,14 @@ const SchedulePaymentMode = ({ data }: { data: any }) => {
                     Notes
                 </label>
                 <p className="mb-3">{data?.note ?? ""}</p>
+                <label className=" block text-sm font-medium text-black dark:text-white">
+                    Alies
+                </label>
+                <p className="mb-3">{data?.alias ?? ""}</p>
+                <label className=" block text-sm font-medium text-black dark:text-white">
+                    Alies Number
+                </label>
+                <p className="mb-3">{data?.alias_number ?? ""}</p>
                 <label className="mb-3 block text-sm font-medium text-black dark:text-white">
                     Transactions
                 </label>
