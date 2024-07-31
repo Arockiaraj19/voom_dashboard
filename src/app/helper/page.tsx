@@ -17,6 +17,7 @@ const HelperPage = () => {
       surge: "",
       other: "",
       driverPercentage: "",
+      passengerPercentage :"",
     },
     validationSchema: Yup.object({
       basefare: Yup.string().required("Required"),
@@ -26,6 +27,7 @@ const HelperPage = () => {
       surge: Yup.string().required("Required"),
       other: Yup.string().required("Required"),
       driverPercentage: Yup.string().required("Required"),
+      passengerPercentage :Yup.string().required("Required"),
     }),
     onSubmit: async (values, { resetForm }) => {
       try {
@@ -37,6 +39,7 @@ const HelperPage = () => {
           surge: Number(values.surge),
           other: Number(values.other),
           driver_payment_charge: Number(values.driverPercentage),
+          passenger_payment_charge: Number(values.passengerPercentage),
         });
 
         toast.success("Payment updated successfully.");
@@ -61,6 +64,9 @@ const HelperPage = () => {
         timeRate: result.data[0].timeRate.toString(),
         driverPercentage: result.data[0]?.driver_payment_charge
           ? result.data[0]?.driver_payment_charge.toString()
+          : "",
+          passengerPercentage: result.data[0]?.passenger_payment_charge
+          ? result.data[0]?.passenger_payment_charge.toString()
           : "",
       });
     } catch (error: any) {
@@ -202,7 +208,22 @@ const HelperPage = () => {
                     </div>
                   ) : null}
                 </div>
-
+                <div className="mb-4.5">
+                  <label className="mb-3 block text-sm font-medium text-black dark:text-white">
+              Passenger Payment Percentage
+                  </label>
+                  <input
+                    {...formik.getFieldProps("passengerPercentage")}
+                    type="text"
+                    placeholder="Passenger Payment Percentage"
+                    className="w-full rounded border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                  />
+                  {formik.errors.passengerPercentage ? (
+                    <div className="ml-2 mt-2 text-sm text-black">
+                      {formik.errors.passengerPercentage }
+                    </div>
+                  ) : null}
+                </div>
                 <button
                   type="submit"
                   className="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray hover:bg-opacity-90"
