@@ -86,6 +86,16 @@ const Settings = () => {
         <Breadcrumb pageName="Settings" />
         {
           data && data.type == "driver" ? <div className="w-full flex flex-row justify-end gap-6 my-4">
+              {
+              data.obsolete&& <button
+              onClick={(e) => {
+               // window.location.href=`/schedule?type=user&id=${data._id}&name=${data.first_name}`;
+              }}
+              className="inline-flex items-center justify-center rounded-md border border-red px-10 py-4 text-center font-medium text-red hover:bg-opacity-90 lg:px-8 xl:px-10"
+            >
+            Account Deleted
+            </button>
+            }
             <button
               onClick={(e) => {
               //  fetchLocation(data._id);
@@ -128,6 +138,16 @@ const Settings = () => {
         }
         {
           data && data.type == "user" ? <div className="w-full flex flex-row justify-end gap-6 my-4">
+            {
+              data.obsolete&& <button
+              onClick={(e) => {
+               // window.location.href=`/schedule?type=user&id=${data._id}&name=${data.first_name}`;
+              }}
+              className="inline-flex items-center justify-center rounded-md border border-red px-10 py-4 text-center font-medium text-red hover:bg-opacity-90 lg:px-8 xl:px-10"
+            >
+            Account Deleted
+            </button>
+            }
             <button
               onClick={(e) => {
                 window.location.href=`/schedule?type=user&id=${data._id}&name=${data.first_name}`;

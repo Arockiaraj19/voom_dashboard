@@ -86,7 +86,7 @@ const ScheduleTableItemCard = ({ item, index }: { item: any, index: number }) =>
             window.location.href = `/settings/${item?.user[0]._id}`;
         }} className="border-b cursor-pointer border-[#eee] px-4 py-5 dark:border-strokedark">
             <p className="text-black dark:text-white">
-                {searchParams.get("type") && searchParams.get("type") == "driver" ? item?.schedule.user[0].first_name : item?.user[0].first_name}
+                {searchParams.get("type") && searchParams.get("type") == "driver" ?item?.schedule.user.length==0?"Account Deleted": item?.schedule.user[0].first_name :item?.user.length==0?"Account Deleted": item?.user[0].first_name}
             </p>
         </td>
         <td className="w-full border-b border-[#eee] px-4 py-5 dark:border-strokedark ">

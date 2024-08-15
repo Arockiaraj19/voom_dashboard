@@ -68,8 +68,11 @@ const TripPage = () => {
       const result = await axiosPrivate.get("/v1/trip/all", {
         params: params
       });
+      console.log(params);
+ console.log(result.data);
       setData(result.data ?? []);
-      console.log(Math.ceil(data?.count ?? 0) / 5);
+      console.log("what is the trip data count", (result.data ?? []).length);
+    
     } catch (error: any) {
       setError(error);
     } finally {
