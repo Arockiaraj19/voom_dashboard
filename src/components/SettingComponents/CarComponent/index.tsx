@@ -65,7 +65,7 @@ const CarInformation = ({ data }: { data: any }) => {
                             <tr >
                                 <td className="border-b border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11">
                                     <p className="text-black dark:text-white">
-                                        {data?.carDetails?.brand}
+                                        {data?.carDetails?.brand?.name??"N/A"}
                                     </p>
                                 </td>
                                 <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
@@ -80,7 +80,7 @@ const CarInformation = ({ data }: { data: any }) => {
                                 </td>
                                 <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
                                     <p className="text-black dark:text-white">
-                                        {data?.carDetails?.model}
+                                        {data?.carDetails?.model?.name??"N/A"}
                                     </p>
                                 </td>
 
