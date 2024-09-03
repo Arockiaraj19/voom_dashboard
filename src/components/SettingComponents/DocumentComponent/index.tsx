@@ -46,7 +46,7 @@ const DocumentInformation = ({ data }: { data: any }) => {
                         <p>ID card</p>
                             <div onClick={(event) => {
                                 navigateToLink(data?.documents?.id_card?.frontSide);
-                            }} className="h-12.5 w-15 rounded-md">
+                            }} className=" w-15 rounded-md">
                                 <Image
                                     src={data?.documents?.id_card?.frontSide}
                                     width={60}
@@ -61,7 +61,7 @@ const DocumentInformation = ({ data }: { data: any }) => {
                         <p>Driving license</p>
                             <div onClick={(event) => {
                                 navigateToLink(data?.documents?.driving_license?.frontSide);
-                            }} className="h-12.5 w-15 rounded-md">
+                            }} className=" w-15 rounded-md">
                                 <Image
                                     src={data?.documents?.driving_license?.frontSide}
                                     width={60}
@@ -77,7 +77,7 @@ const DocumentInformation = ({ data }: { data: any }) => {
                         <p>Car license</p>
                             <div onClick={(event) => {
                                 navigateToLink(data?.documents?.car_license?.frontSide);
-                            }} className="h-12.5 w-15 rounded-md">
+                            }} className=" w-15 rounded-md">
                                 <Image
                                     src={data?.documents?.car_license?.frontSide}
                                     width={60}
@@ -92,7 +92,7 @@ const DocumentInformation = ({ data }: { data: any }) => {
                         <p>Non Criminal Certificate</p>
                             <div onClick={(event) => {
                                 navigateToLink(data?.documents?.non_criminal_certificate?.frontSide);
-                            }} className="h-12.5 w-15 rounded-md">
+                            }} className="w-15 rounded-md">
                                 <Image
                                     src={data?.documents?.non_criminal_certificate?.frontSide}
                                     width={60}
