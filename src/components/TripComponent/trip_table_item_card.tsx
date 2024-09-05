@@ -6,9 +6,11 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 
 const TripTableItemCard = ({ item, index }: { item: any, index: number }) => {
-
-const [tripItem,setItem]=useState(item);
-    return <tr key={index}>
+console.log("trip table",item);
+const [tripItem,setItem]=useState({
+    ...item
+});
+    return <tr key={item._id}>
         <td onClick={(e)=>{
                  window.location.href = `/settings/${tripItem?.user?._id}`;
             }} className="cursor-pointer border-b border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11">
@@ -27,6 +29,11 @@ const [tripItem,setItem]=useState(item);
         <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
             <p className="text-black dark:text-white">
                 {moment(tripItem?.pickup_time).format('LLL')}
+            </p>
+        </td>
+        <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
+            <p className="text-black dark:text-white">
+                {moment(tripItem?.drop_time).format('LLL')}
             </p>
         </td>
         <td onClick={(event)=>{
@@ -96,7 +103,18 @@ const [tripItem,setItem]=useState(item);
             {tripItem?.payment_status??"N/A"}
             </p>
         </td>
-      
+        <td  onClick={(e)=>{
+              if(tripItem?.payment_status=="pending"){
+                window.location.href = `/trip/transfer?driver_id=${tripItem?.driver?._id}&id=${tripItem?._id}`;
+            }else{
+                toast.error("We can only transfer pending trips.");
+            }
+                
+            }} className="border-b cursor-pointer border-[#eee] px-4 py-5 dark:border-strokedark">
+            <p className="text-blue-600 dark:text-white">
+           Transfer
+            </p>
+        </td>
     </tr>
 }
 

@@ -16,7 +16,10 @@ const TripComponent = ({ data }: { data: any }) => {
                                Driver
                             </th>
                             <th className="min-w-[150px] px-4 py-4 font-medium text-black dark:text-white">
-                              Time
+                            Pickup Time
+                            </th>
+                            <th className="min-w-[150px] px-4 py-4 font-medium text-black dark:text-white">
+                             Drop Time
                             </th>
                             <th className="min-w-[150px] px-4 py-4 font-medium text-black dark:text-white">
                               Pickup Location
@@ -45,11 +48,14 @@ const TripComponent = ({ data }: { data: any }) => {
                             <th className="min-w-[150px] px-4 py-4 font-medium text-black dark:text-white">
                      Pay
                             </th>
+                            <th className="min-w-[150px] px-4 py-4 font-medium text-black dark:text-white">
+Transfer
+                            </th>
                            
                         </tr>
                     </thead>
                     <tbody>
-                        {data.map((item: any, index: number) => <TripTableItemCard key={index} index={index} item={item} />)}
+                        {data.map((item: any, index: number) => <TripTableItemCard key={item._id} index={index} item={item} />)}
                     </tbody>
                 </table>
             </div>

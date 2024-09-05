@@ -16,9 +16,11 @@ const ScheduleTableItemCard = ({
         onClick={(e) => {
           if (!searchParams.get("type")) {
             window.location.href = `/schedule/${item._id}`;
+          }else{
+
           }
         }}
-        className="border-b border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11"
+        className="border-b cursor-pointer border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11"
       >
         <p className="text-sm">
           {searchParams.get("type") && searchParams.get("type") == "driver"
@@ -33,7 +35,7 @@ const ScheduleTableItemCard = ({
             : item?.note ?? ""}
         </p>
       </td>
-      {!searchParams.get("type") && (
+      {!searchParams.get("type") ? (
         <td  onClick={(e) => {
             if (!searchParams.get("type")) {
               window.location.href = `/schedule/${item._id}`;
@@ -52,8 +54,15 @@ const ScheduleTableItemCard = ({
               {Math.round(item?.payment)}
             </p>
           </div>
-        </td>
-      )}
+        </td>):( <td  onClick={(e)=>{
+              window.location.href = `/schedule/transfer?driver_id=${item.driver_id}&id=${item?.schedule._id}`;
+                
+            }} className="border-b cursor-pointer border-[#eee] px-4 py-5 dark:border-strokedark">
+            <p className="text-blue-600 dark:text-white">
+           Transfer
+            </p>
+        </td>)
+      }
       <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
         <p className="text-black dark:text-white">
           {searchParams.get("type") && searchParams.get("type") == "driver"
@@ -187,7 +196,7 @@ const ScheduleTableItemCard = ({
       </td>
       <td className="w-full border-b border-[#eee] px-4 py-5 dark:border-strokedark ">
         <div className="flex h-full w-full cursor-pointer flex-wrap ">
-          {item?.locations.map((e: any, index: number) => (
+          {(item?.locations??item?.schedule?.locations??[]).map((e: any, index: number) => (
             <p
               onClick={(event) => {
                 navigateToMap(

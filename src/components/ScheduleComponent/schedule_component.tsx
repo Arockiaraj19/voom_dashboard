@@ -17,8 +17,10 @@ const ScheduleComponent = ({ data }: { data: any }) => {
                                 Notes
                             </th>
                            {
-                          !searchParams.get("type") &&   <th className="min-w-[200px] px-4 py-4 font-medium text-black dark:text-white">
+                          !searchParams.get("type") ?  <th className="min-w-[200px] px-4 py-4 font-medium text-black dark:text-white">
                              Payment
+                          </th>:<th className="min-w-[200px] px-4 py-4 font-medium text-black dark:text-white">
+                         Transfer
                           </th>
                            }
                            
@@ -58,7 +60,7 @@ const ScheduleComponent = ({ data }: { data: any }) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {data.map((item: any, index: number) => <ScheduleTableItemCard key={index} index={index} item={item} />)}
+                        {data.map((item: any, index: number) => <ScheduleTableItemCard key={item._id} index={index} item={item} />)}
                     </tbody>
                 </table>
             </div>
