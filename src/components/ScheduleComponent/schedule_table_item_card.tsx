@@ -75,9 +75,7 @@ const ScheduleTableItemCard = ({
         </p>
       </td>
       <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
-        {searchParams.get("type") && searchParams.get("type") == "driver" ? (
-          item?.schedule.time.length == 1
-        ) : item.time.length == 1 ? (
+        {(item?.schedule?.time?? item?.time).length == 1 ? (
           <p className="text-black dark:text-white">
             {searchParams.get("type") && searchParams.get("type") == "driver"
               ? moment(item?.schedule.time[0]).format("HH:mm:ss")
