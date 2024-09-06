@@ -20,6 +20,7 @@ import navigateToMap from "@/helper/navigateToMap";
 import CarInformation from "@/components/SettingComponents/CarComponent";
 import DocumentInformation from "@/components/SettingComponents/DocumentComponent";
 import useUserData from "@/hooks/userData";
+import DeleteModel from "@/components/DeleteModel";
 
 const Settings = () => {
 
@@ -79,11 +80,12 @@ const Settings = () => {
   }
 
 
-
+  let [isOpen, setIsOpen] = useState(false)
   return (
     <DefaultLayout>
       <div className="mx-auto max-w-270">
         <Breadcrumb pageName="Settings" />
+        <DeleteModel isOpen={isOpen} setIsOpen={setIsOpen} id={pathname.split("/")[(pathname.split("/").length - 1)]}/>
         {
           data && data.type == "driver" ? <div className="w-full flex flex-row justify-end gap-6 my-4">
               {
@@ -133,6 +135,13 @@ const Settings = () => {
               className="inline-flex items-center justify-center rounded-md border border-primary px-10 py-4 text-center font-medium text-primary hover:bg-opacity-90 lg:px-8 xl:px-10"
             >
               Trips           </button>
+              <button
+              onClick={(e) => {
+                setIsOpen(true);
+              }}
+              className="inline-flex items-center justify-center rounded-md border border-red px-10 py-4 text-center font-medium text-red hover:bg-opacity-90 lg:px-8 xl:px-10"
+            >
+           Delete         </button>
 
           </div> : <></>
         }

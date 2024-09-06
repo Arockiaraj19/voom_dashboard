@@ -3,7 +3,8 @@ import React, { ReactNode,useState,useEffect } from "react";
 
 interface CardDataStatsProps {
   title: string;
- 
+ startDate:string|null,
+ endDate:string|null,
   children: ReactNode;
 }
 
@@ -11,10 +12,13 @@ const CardDataStats: React.FC<CardDataStatsProps> = ({
   title,
  
   children,
+  startDate,
+  endDate
 }) => {
   const [data, setData] = useState<any>(null);
   const fetchData = async () => {
     try {
+      let params:any={};
      let url;
      if(title=="Total Users"){
       url="/v1/user/count?type=user"
@@ -27,7 +31,15 @@ if(title=="Total Schedule"){
 }if(title=="Total Trips"){
   url="/v1/trip/count"
 }
-      const result = await axiosPrivate.get(url!);
+if(startDate){
+  params.startDate=startDate;
+}
+if(endDate){
+  params.endDate=endDate;
+}
+      const result = await axiosPrivate.get(url!,{
+        params:params
+      });
       setData(result?.data?.count??0);
     
     } catch (error: any) {
@@ -46,7 +58,7 @@ if(title=="Total Schedule"){
     fetchData();
 
 
-  }, []);
+  }, [startDate,endDate]);
 
   return (
     <div className="rounded-sm border border-stroke bg-white px-7.5 py-6 shadow-default dark:border-strokedark dark:bg-boxdark">

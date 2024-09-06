@@ -16,10 +16,10 @@ const TripComponent = ({ data }: { data: any }) => {
                                Driver
                             </th>
                             <th className="min-w-[150px] px-4 py-4 font-medium text-black dark:text-white">
-                            Pickup Time
+                            Pickup Time(UTC)
                             </th>
                             <th className="min-w-[150px] px-4 py-4 font-medium text-black dark:text-white">
-                             Drop Time
+                             Drop Time(UTC)
                             </th>
                             <th className="min-w-[150px] px-4 py-4 font-medium text-black dark:text-white">
                               Pickup Location

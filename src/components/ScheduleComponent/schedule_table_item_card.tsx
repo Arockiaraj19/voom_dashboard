@@ -148,7 +148,7 @@ const ScheduleTableItemCard = ({
         }}
         className="cursor-pointer border-b border-[#eee] px-4 py-5 dark:border-strokedark"
       >
-        <p className="text-blue-400 dark:text-white">Trips</p>
+        <p className="text-blue-400 dark:text-white">{item.trip_count.length==0?0:item.trip_count[0].count}</p>
       </td>
       <td
         onClick={(e) => {

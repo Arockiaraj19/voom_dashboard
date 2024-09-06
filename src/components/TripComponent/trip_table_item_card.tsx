@@ -28,12 +28,12 @@ const [tripItem,setItem]=useState({
         </td>
         <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
             <p className="text-black dark:text-white">
-                {moment(tripItem?.pickup_time).format('LLL')}
+                {moment(tripItem?.pickup_time).utc().format('LLL')}
             </p>
         </td>
         <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
             <p className="text-black dark:text-white">
-                {moment(tripItem?.drop_time).format('LLL')}
+                {moment(tripItem?.drop_time).utc().format('LLL')}
             </p>
         </td>
         <td onClick={(event)=>{
