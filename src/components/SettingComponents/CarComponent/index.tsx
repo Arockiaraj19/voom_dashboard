@@ -33,9 +33,14 @@ const CarInformation = ({ data }: { data: any }) => {
     const [status, setStatus] = useState(data?.carDetails?.status);
     return <div className="w-full">
         <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-            <div className="border-b border-stroke px-7 py-4 dark:border-strokedark">
+            <div className="border-b border-stroke flex justify-between px-7 py-4 dark:border-strokedark">
                 <h3 className="font-medium text-black dark:text-white">
                     Car Information
+                </h3>
+                <h3 onClick={(e)=>{
+                    window.location.href=`${pathname}/car_info`;
+                }} className="cursor-pointer font-medium text-blue-600 dark:text-white">
+                   Edit Images
                 </h3>
             </div>
             <div className="w-full p-7 mb-5.5">

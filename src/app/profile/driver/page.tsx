@@ -36,7 +36,8 @@ const DriverPage = () => {
             let params: any = {
                 offset: currentPage,
                 limit: LIMIT,
-                type: "driver"
+                type: "driver",
+                status:'approved'
             }
             if (search.length != 0) {
                 if (search.startsWith("+")) {

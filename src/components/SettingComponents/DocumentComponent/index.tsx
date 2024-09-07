@@ -33,9 +33,14 @@ const DocumentInformation = ({ data }: { data: any }) => {
     const [status, setStatus] = useState(data?.documents?.status);
     return <div className="w-full">
         <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-            <div className="border-b border-stroke px-7 py-4 dark:border-strokedark">
+            <div className="flex justify-between border-b border-stroke px-7 py-4 dark:border-strokedark">
                 <h3 className="font-medium text-black dark:text-white">
                     Document Information
+                </h3>
+                <h3 onClick={(e)=>{
+                    window.location.href=`${pathname}/documents`;
+                }} className="cursor-pointer font-medium text-blue-600 dark:text-white">
+                   Edit
                 </h3>
             </div>
             <div className="w-full p-7 mb-5.5">
