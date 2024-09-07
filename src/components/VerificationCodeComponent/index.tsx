@@ -34,7 +34,7 @@ const VerificationCodeComponent = ({ data }: { data: any }) => {
                     </thead>
                     <tbody>
                         {data.map((item: any, index: number) => (
-                            <tr key={index}>
+                            <tr key={item._id}>
                                 <td className="border-b border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11">
                                     <h5 className="font-medium text-black dark:text-white">
                                         {item.mobile_number}

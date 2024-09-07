@@ -64,6 +64,7 @@ const TripPage = () => {
       if (paymentStatus) {
         params.payment_status= paymentStatus;
       }
+      console.log("params",params);
 
       const result = await axiosPrivate.get("/v1/trip/all", {
         params: params
@@ -92,7 +93,7 @@ const TripPage = () => {
     fetchData();
 
 
-  }, [currentPage, type, status, time]);
+  }, [currentPage, type, status, time,paymentStatus]);
   return (
     <DefaultLayout>
       <Breadcrumb pageName={searchParams.get("name") ? `${searchParams.get("name")} Trips` : `Trip`} />

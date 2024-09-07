@@ -3,7 +3,7 @@ import moment from "moment"
 
 
 const UserTableItemCard=({item,index}:{item:any,index:number})=>{
-    return   <tr key={index}>
+    return   <tr key={item._id}>
     <td className="border-b border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11">
         <p className="text-sm">{item?.first_name ?? ""} {item?.last_name ?? ""}</p>
     </td>

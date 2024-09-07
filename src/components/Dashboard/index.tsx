@@ -1,13 +1,53 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import CardDataStats from "../CardDataStats";
+import CommonPicker from "../commonPicker";
+import CommonPickerOne from "../commonPickerOne";
 
 
 const Dashboard: React.FC = () => {
+  const [startDate,setStartDate]=useState(null);
+  const [endDate,setEndDate]=useState(null);
+
   return (
     <>
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
-        <CardDataStats title="Total Users" >
+    <div className="flex flex-row gap-10 m-5 items-end">
+    <CommonPicker
+                    value={startDate}
+                   
+                      heading={"Start Date"}
+                      onChange={(e: any) => {
+                        console.log("end date",e);
+                        
+                       setStartDate(e);
+                      }}
+                    />
+                       <CommonPickerOne
+                    value={endDate}
+                   
+                    heading={"End Date"}
+                    onChange={(e: any) => {
+                      console.log("end date",e);
+                      
+                     setEndDate(e);
+                    }}
+                  />
+                   <button
+          onClick={(e) => {
+
+            setEndDate(null);
+            setStartDate(null);
+
+          }}
+          className="inline-flex items-center justify-center rounded-md border border-primary px-10 h-10 py-4 text-center font-medium text-primary hover:bg-opacity-90 lg:px-8 xl:px-10"
+        >
+          Clear
+        </button>
+    </div>
+      <div  className="cursor-pointer grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
+        <CardDataStats onClick={()=>{
+        window.location.href='/profile/user';
+      }} title="Total Users" startDate={startDate} endDate={endDate} >
         <svg
             className="fill-primary dark:fill-white"
             width="22"
@@ -30,7 +70,9 @@ const Dashboard: React.FC = () => {
             />
           </svg>
         </CardDataStats>
-        <CardDataStats title="Total Drivers" >
+        <CardDataStats onClick={()=>{
+        window.location.href='/profile/driver';
+      }} title="Total Drivers" startDate={startDate} endDate={endDate} >
         <svg
             className="fill-primary dark:fill-white"
             width="22"
@@ -53,7 +95,9 @@ const Dashboard: React.FC = () => {
             />
           </svg>
         </CardDataStats>
-        <CardDataStats title="Total Schedule"  >
+        <CardDataStats onClick={()=>{
+        window.location.href='/schedule';
+      }} title="Total Schedule" startDate={startDate} endDate={endDate} >
           <svg
             className="fill-primary dark:fill-white"
             width="22"
@@ -72,7 +116,9 @@ const Dashboard: React.FC = () => {
             />
           </svg>
         </CardDataStats>
-        <CardDataStats title="Total Trips" >
+        <CardDataStats onClick={()=>{
+        window.location.href='/trip';
+      }} title="Total Trips" startDate={startDate} endDate={endDate}>
         <svg
             className="fill-primary dark:fill-white"
             width="22"
