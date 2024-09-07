@@ -115,6 +115,16 @@ const [tripItem,setItem]=useState({
            Transfer
             </p>
         </td>
+        <td   className="border-b cursor-pointer border-[#eee] px-4 py-5 dark:border-strokedark">
+            <p className="text-black dark:text-white">
+            {(tripItem?.review??[]).length==0?"N/A":(tripItem?.review??[])[0].rating.toString()}
+            </p>
+        </td>
+        <td  className="border-b cursor-pointer border-[#eee] px-4 py-5 dark:border-strokedark">
+            <p className="text-black dark:text-white">
+            {(tripItem?.review??[]).length==0?"N/A":(tripItem?.review??[])[0].feedback}
+            </p>
+        </td>
     </tr>
 }
 

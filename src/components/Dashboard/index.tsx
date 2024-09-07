@@ -44,8 +44,10 @@ const Dashboard: React.FC = () => {
           Clear
         </button>
     </div>
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
-        <CardDataStats title="Total Users" startDate={startDate} endDate={endDate} >
+      <div  className="cursor-pointer grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
+        <CardDataStats onClick={()=>{
+        window.location.href='/profile/user';
+      }} title="Total Users" startDate={startDate} endDate={endDate} >
         <svg
             className="fill-primary dark:fill-white"
             width="22"
@@ -68,7 +70,9 @@ const Dashboard: React.FC = () => {
             />
           </svg>
         </CardDataStats>
-        <CardDataStats title="Total Drivers" startDate={startDate} endDate={endDate} >
+        <CardDataStats onClick={()=>{
+        window.location.href='/profile/driver';
+      }} title="Total Drivers" startDate={startDate} endDate={endDate} >
         <svg
             className="fill-primary dark:fill-white"
             width="22"
@@ -91,7 +95,9 @@ const Dashboard: React.FC = () => {
             />
           </svg>
         </CardDataStats>
-        <CardDataStats title="Total Schedule" startDate={startDate} endDate={endDate} >
+        <CardDataStats onClick={()=>{
+        window.location.href='/schedule';
+      }} title="Total Schedule" startDate={startDate} endDate={endDate} >
           <svg
             className="fill-primary dark:fill-white"
             width="22"
@@ -110,7 +116,9 @@ const Dashboard: React.FC = () => {
             />
           </svg>
         </CardDataStats>
-        <CardDataStats title="Total Trips" startDate={startDate} endDate={endDate}>
+        <CardDataStats onClick={()=>{
+        window.location.href='/trip';
+      }} title="Total Trips" startDate={startDate} endDate={endDate}>
         <svg
             className="fill-primary dark:fill-white"
             width="22"
