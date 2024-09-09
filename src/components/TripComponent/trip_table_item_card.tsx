@@ -4,13 +4,16 @@ import moment from "moment"
 import { useState } from "react";
 
 import { toast } from "react-toastify";
+import TripCancelModel from "../TripCancelModel";
 
 const TripTableItemCard = ({ item, index }: { item: any, index: number }) => {
 console.log("trip table",item);
 const [tripItem,setItem]=useState({
     ...item
 });
+let [isOpen, setIsOpen] = useState(false)
     return <tr key={item._id}>
+         <TripCancelModel isOpen={isOpen} setIsOpen={setIsOpen} id={tripItem?._id}/>
         <td onClick={(e)=>{
                  window.location.href = `/settings/${tripItem?.user?._id}`;
             }} className="cursor-pointer border-b border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11">
@@ -123,6 +126,11 @@ const [tripItem,setItem]=useState({
         <td  className="border-b cursor-pointer border-[#eee] px-4 py-5 dark:border-strokedark">
             <p className="text-black dark:text-white">
             {(tripItem?.review??[]).length==0?"N/A":(tripItem?.review??[])[0].feedback}
+            </p>
+        </td>
+        <td onClick={(ev)=>setIsOpen(true)} className="border-b cursor-pointer border-[#eee] px-4 py-5 dark:border-strokedark">
+            <p className="text-red dark:text-white">
+          Cancel 
             </p>
         </td>
     </tr>
