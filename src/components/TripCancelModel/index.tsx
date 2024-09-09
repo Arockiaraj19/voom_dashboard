@@ -30,7 +30,8 @@ function TripCancelModel({
 
       toast.success("Trip Cancelled successfully.");
       setTimeout(() => {
-      window.location.href=pathname;
+        window.location.reload();
+
       }, 1000);
     } catch (error: any) {
       console.log(error.response.data.error.message);
