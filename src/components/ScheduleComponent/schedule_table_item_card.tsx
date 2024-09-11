@@ -40,9 +40,8 @@ const ScheduleTableItemCard = ({
             if (!searchParams.get("type")) {
               window.location.href = `/schedule/${item._id}`;
             }
-          }} className="felx-col flex cursor-pointer border-b border-[#eee] px-4 py-5 capitalize dark:border-strokedark">
-          <div className="flex flex-col">
-            <p
+          }} className=" cursor-pointer border-b border-[#eee] px-4 py-5 capitalize dark:border-strokedark">
+        <p
               className={
                 item?.payment_mode == "cash" &&
                 item?.payment_status == "pending"
@@ -50,10 +49,8 @@ const ScheduleTableItemCard = ({
                   : "text-black dark:text-white"
               }
             >
-              {item?.payment_mode ?? "online"}- {item?.payment_status ?? ""} - $
-              {Math.round(item?.payment)}
+           {item?.payment_mode ?? "online"}
             </p>
-          </div>
         </td>):( <td  onClick={(e)=>{
               window.location.href = `/schedule/transfer?driver_id=${item.driver_id}&id=${item?.schedule._id}`;
                 
@@ -62,6 +59,38 @@ const ScheduleTableItemCard = ({
            Transfer
             </p>
         </td>)
+      }
+      {!searchParams.get("type") && 
+        <td  onClick={(e) => {
+            if (!searchParams.get("type")) {
+              window.location.href = `/schedule/${item._id}`;
+            }
+          }} className=" cursor-pointer border-b border-[#eee] px-4 py-5 capitalize dark:border-strokedark">
+         <p
+              className={
+                item?.payment_mode == "cash" &&
+                item?.payment_status == "pending"
+                  ? "text-blue-500 "
+                  : "text-black dark:text-white"
+              }
+            >
+             
+              {Math.round(item?.payment)}
+            </p>
+        </td>
+      }
+         {!searchParams.get("type") && 
+        <td  onClick={(e) => {
+            if (!searchParams.get("type")) {
+              window.location.href = `/schedule/${item._id}`;
+            }
+          }} className="cursor-pointer border-b border-[#eee] px-4 py-5 capitalize dark:border-strokedark">
+          <p
+              className="text-black dark:text-white"
+            >
+            {item?.payment_status ?? ""}
+            </p>
+        </td>
       }
       <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
         <p className="text-black dark:text-white">
@@ -78,18 +107,18 @@ const ScheduleTableItemCard = ({
         {(item?.schedule?.time?? item?.time).length == 1 ? (
           <p className="text-black dark:text-white">
             {searchParams.get("type") && searchParams.get("type") == "driver"
-              ? moment(item?.schedule.time[0]).format("HH:mm:ss")
-              : moment(item?.time[0]).format("HH:mm:ss")}
+              ? moment(item?.schedule.time[0]).utc().format("HH:mm:ss")
+              : moment(item?.time[0]).utc().format("HH:mm:ss")}
           </p>
         ) : (
           <p className="text-black dark:text-white">
             {searchParams.get("type") && searchParams.get("type") == "driver"
-              ? moment(item?.schedule.time[0]).format("HH:mm:ss")
-              : moment(item?.time[0]).format("HH:mm:ss")}{" "}
+              ? moment(item?.schedule.time[0]).utc().format("HH:mm:ss")
+              : moment(item?.time[0]).utc().format("HH:mm:ss")}{" "}
             <br />
             {searchParams.get("type") && searchParams.get("type") == "driver"
-              ? moment(item?.schedule.time[1]).format("HH:mm:ss")
-              : moment(item?.time[1]).format("HH:mm:ss")}
+              ? moment(item?.schedule.time[1]).utc().format("HH:mm:ss")
+              : moment(item?.time[1]).utc().format("HH:mm:ss")}
           </p>
         )}
       </td>
@@ -146,7 +175,7 @@ const ScheduleTableItemCard = ({
         }}
         className="cursor-pointer border-b border-[#eee] px-4 py-5 dark:border-strokedark"
       >
-        <p className="text-blue-400 dark:text-white">{item.trip_count.length==0?0:item.trip_count[0].count}</p>
+        <p className="text-blue-400 dark:text-white">{item?.schedule?.trip_count?? item?.trip_count}</p>
       </td>
       <td
         onClick={(e) => {

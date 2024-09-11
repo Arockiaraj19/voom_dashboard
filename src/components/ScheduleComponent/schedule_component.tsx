@@ -18,9 +18,19 @@ const ScheduleComponent = ({ data }: { data: any }) => {
                             </th>
                            {
                           !searchParams.get("type") ?  <th className="min-w-[200px] px-4 py-4 font-medium text-black dark:text-white">
-                             Payment
+                             Payment Mode
                           </th>:<th className="min-w-[200px] px-4 py-4 font-medium text-black dark:text-white">
                          Transfer
+                          </th>
+                           }
+                             {
+                          !searchParams.get("type") &&  <th className="min-w-[200px] px-4 py-4 font-medium text-black dark:text-white">
+                             Payment
+                          </th>
+                           }
+                             {
+                          !searchParams.get("type") &&  <th className="min-w-[200px] px-4 py-4 font-medium text-black dark:text-white">
+                             Payment Status
                           </th>
                            }
                            
@@ -28,7 +38,7 @@ const ScheduleComponent = ({ data }: { data: any }) => {
                                 Dates
                             </th>
                             <th className="min-w-[100px] px-4 py-4 font-medium text-black dark:text-white">
-                               Pickup Time
+                               Pickup Time (UTC)
                             </th>
                             <th className="min-w-[150px] px-4 py-4 font-medium text-black dark:text-white">
                                 CreatedAt

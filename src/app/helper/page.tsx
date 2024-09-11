@@ -194,12 +194,12 @@ const HelperPage = () => {
                 </div>
                 <div className="mb-4.5">
                   <label className="mb-3 block text-sm font-medium text-black dark:text-white">
-                  Driver Payment Percentage
+                  Voom Payment Percentage
                   </label>
                   <input
                     {...formik.getFieldProps("driverPercentage")}
                     type="text"
-                    placeholder="Driver Payment Percentage"
+                    placeholder="Voom Payment Percentage"
                     className="w-full rounded border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                   />
                   {formik.errors.driverPercentage ? (
@@ -210,12 +210,12 @@ const HelperPage = () => {
                 </div>
                 <div className="mb-4.5">
                   <label className="mb-3 block text-sm font-medium text-black dark:text-white">
-              Passenger Payment Percentage
+              Percentage increase Per passenger
                   </label>
                   <input
                     {...formik.getFieldProps("passengerPercentage")}
                     type="text"
-                    placeholder="Passenger Payment Percentage"
+                    placeholder="Percentage increase Per passenger"
                     className="w-full rounded border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                   />
                   {formik.errors.passengerPercentage ? (
