@@ -88,9 +88,9 @@ let [isOpen, setIsOpen] = useState(false)
         </td>
         <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
             <p className={
-             `${(tripItem?.user_transactions??[]).length!=0?"text-green-600":"text-blue-600"} dark:text-white`
+             `${(tripItem?.user_transactions??[]).filter((e:any)=>e.amount&&e.type=='credit').length!=0?"text-green-600":"text-blue-600"} dark:text-white`
             }>
-            {(tripItem?.user_transactions??[]).length!=0?"Received":"Pending"}
+            {(tripItem?.user_transactions??[]).filter((e:any)=>e.amount&&e.type=='credit').length!=0?"Received":"Pending"}
             </p>
         </td>
         <td onClick={async(e)=>{
