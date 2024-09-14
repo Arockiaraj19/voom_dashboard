@@ -62,6 +62,7 @@ const VerificationCodePage = () => {
       <div className="w-full flex flex-row items-center justify-end mb-5">
       
         <Pagination
+         totalCount={(data?.count ?? 0)}
           currentPage={currentPage + 1}
           totalPages={Math.ceil((data?.count ?? 0)/LIMIT)}
           onPageChange={onPageChange}

@@ -70,6 +70,7 @@ const UserPage = () => {
             <div className="flex flex-row items-center justify-end">
 
                 <Pagination
+                 totalCount={(data?.count ?? 0)}
                     currentPage={currentPage + 1}
                     totalPages={Math.ceil((data?.count ?? 0)/LIMIT)}
                     onPageChange={onPageChange}

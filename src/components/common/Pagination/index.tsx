@@ -4,13 +4,14 @@ import { FC } from 'react';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 
 interface PaginationProps {
+  totalCount:number,
   currentPage: number;
   totalPages: number;
   onPageChange: (page: number) => void;
   maxPagesToShow?: number; // Optional prop to limit the number of page numbers displayed
 }
 
-const Pagination: FC<PaginationProps> = ({ currentPage, totalPages, onPageChange, maxPagesToShow = 5 }) => {
+const Pagination: FC<PaginationProps> = ({totalCount, currentPage, totalPages, onPageChange, maxPagesToShow = 5 }) => {
   console.log("what is the pagination data",currentPage,totalPages);
   const getPageNumbers = (): number[] => {
     const pageNumbers: number[] = [];
@@ -41,8 +42,12 @@ const Pagination: FC<PaginationProps> = ({ currentPage, totalPages, onPageChange
   };
 
   return (
-    <nav className="flex justify-center mt-8">
-      <ul className="flex">
+    <nav className="w-full flex justify-center mt-8">
+      <div className=''>
+      <p>Total Count - <span className='text-blue-600'>{totalCount}</span></p>
+      </div>
+      <ul className="flex-1 flex justify-end">
+       
         <li>
           <button
             className="bg-gray-200 text-gray-700 font-semibold py-2 px-4 rounded-l inline-flex items-center"
