@@ -46,6 +46,9 @@ const CardDataStats: React.FC<CardDataStatsProps> = ({
       if (title == "Upcoming Trips") {
         url = "/v1/trip/count?time=upcoming";
       }
+      if(title=="Cancelled Trips"){
+        url = "/v1/trip/count?status=cancelled";
+      }
       if (startDate) {
         params.startDate = startDate;
       }

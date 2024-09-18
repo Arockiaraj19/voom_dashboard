@@ -130,7 +130,7 @@ const TripPage = () => {
           console.log("what is the onSelect");
           console.log(e);
           setStatus(e);
-        }} options={['Pending', 'Started', 'Nearby', 'Reached', 'OnProgress', 'Completed']} title="Select Status" heading="Status" selected={status ?? ""} />
+        }} options={['Pending', 'Started', 'Nearby', 'Reached', 'OnProgress', 'Completed','Cancelled']} title="Select Status" heading="Status" selected={status ?? ""} />
         <CommonPicker
                     value={startDate}
                    

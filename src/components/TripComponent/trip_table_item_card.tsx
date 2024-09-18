@@ -142,9 +142,13 @@ let [isOpen, setIsOpen] = useState(false)
             {(tripItem?.review??[]).length==0?"N/A":(tripItem?.review??[])[0].feedback}
             </p>
         </td>
-        <td onClick={(ev)=>setIsOpen(true)} className="border-b cursor-pointer border-[#eee] px-4 py-5 dark:border-strokedark">
+        <td onClick={(ev)=>{
+            if(tripItem.status=="pending"){
+                setIsOpen(true)
+            }
+        }} className="border-b cursor-pointer border-[#eee] px-4 py-5 dark:border-strokedark">
             <p className="text-red dark:text-white">
-          Cancel 
+          {tripItem.status=="cancelled"?"Already Cancelled":"Cancel" }
             </p>
         </td>
     </tr>
