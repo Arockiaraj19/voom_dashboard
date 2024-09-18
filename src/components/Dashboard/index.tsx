@@ -11,7 +11,7 @@ const Dashboard: React.FC = () => {
 
   return (
     <>
-    <div className="flex flex-row gap-10 m-5 items-end">
+    {/* <div className="flex flex-row gap-10 m-5 items-end">
     <CommonPicker
                     value={startDate}
                    
@@ -43,7 +43,7 @@ const Dashboard: React.FC = () => {
         >
           Clear
         </button>
-    </div>
+    </div> */}
       <div  className="cursor-pointer grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
         <CardDataStats onClick={()=>{
         window.location.href='/profile/user';
