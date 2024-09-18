@@ -1,71 +1,77 @@
 import { axiosPrivate } from "@/helper/axiosPrivate";
-import React, { ReactNode,useState,useEffect } from "react";
+import React, { ReactNode, useState, useEffect } from "react";
 
 interface CardDataStatsProps {
   title: string;
- startDate:string|null,
- endDate:string|null,
+  startDate: string | null;
+  endDate: string | null;
   children: ReactNode;
-  onClick:any
+  onClick: any;
 }
 
 const CardDataStats: React.FC<CardDataStatsProps> = ({
   title,
- 
+
   children,
   startDate,
   endDate,
-  onClick
+  onClick,
 }) => {
   const [data, setData] = useState<any>(null);
   const fetchData = async () => {
     try {
-      let params:any={};
-     let url;
-     if(title=="Total Users"){
-      url="/v1/user/count?type=user"
-     }
-if(title=="Total Drivers"){
-  url="/v1/user/count?type=driver"
-}
-if(title=="Total Schedule"){
-  url="/v1/schedule/count"
-}if(title=="Total Trips"){
-  url="/v1/trip/count"
-}
-if(startDate){
-  params.startDate=startDate;
-}
-if(endDate){
-  params.endDate=endDate;
-}
-      const result = await axiosPrivate.get(url!,{
-        params:params
+      let params: any = {};
+      let url;
+      if (title == "Total Users") {
+        url = "/v1/user/count?type=user";
+      }
+      if (title == "Total Accepted Drivers") {
+        url = "/v1/user/count?type=driver&status=approved";
+      }
+      if (title == "Total Driver Requests") {
+        url = "/v1/user/count?type=driver&status=pending";
+      }
+      if (title == "Total Active Schedule") {
+        url = "/v1/schedule/count?status=active";
+      }
+      if (title == "Total Cancelled Schedule") {
+        url = "/v1/schedule/count?status=cancelled";
+      }
+      if (title == "Total Trips") {
+        url = "/v1/trip/count";
+      }
+      if (title == "Today Trips") {
+        url = "/v1/trip/count?time=today";
+      }
+      if (title == "Upcoming Trips") {
+        url = "/v1/trip/count?time=upcoming";
+      }
+      if (startDate) {
+        params.startDate = startDate;
+      }
+      if (endDate) {
+        params.endDate = endDate;
+      }
+      const result = await axiosPrivate.get(url!, {
+        params: params,
       });
-      setData(result?.data?.count??0);
-    
+      setData(result?.data?.count ?? 0);
     } catch (error: any) {
-      
     } finally {
-     
     }
-  }
-
-
-
-
+  };
 
   useEffect(() => {
-
     fetchData();
-
-
-  }, [startDate,endDate]);
+  }, [startDate, endDate]);
 
   return (
-    <div onClick={(e)=>{
-onClick();
-    }} className="rounded-sm border border-stroke bg-white px-7.5 py-6 shadow-default dark:border-strokedark dark:bg-boxdark">
+    <div
+      onClick={(e) => {
+        onClick();
+      }}
+      className="rounded-sm border border-stroke bg-white px-7.5 py-6 shadow-default dark:border-strokedark dark:bg-boxdark"
+    >
       <div className="flex h-11.5 w-11.5 items-center justify-center rounded-full bg-meta-2 dark:bg-meta-4">
         {children}
       </div>
@@ -73,7 +79,7 @@ onClick();
       <div className="mt-4 flex items-end justify-between">
         <div>
           <h4 className="text-title-md font-bold text-black dark:text-white">
-            {data??0}
+            {data ?? 0}
           </h4>
           <span className="text-sm font-medium">{title}</span>
         </div>

@@ -6,7 +6,7 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import TripCancelModel from "../TripCancelModel";
 
-const TripTableItemCard = ({ item, index }: { item: any, index: number }) => {
+const TripTableItemCard = ({payedAmount,setPayedAmount, item, index }: {payedAmount:any,setPayedAmount:any, item: any, index: number }) => {
 console.log("trip table",item);
 const [tripItem,setItem]=useState({
     ...item
@@ -94,6 +94,10 @@ let [isOpen, setIsOpen] = useState(false)
             </p>
         </td>
         <td onClick={async(e)=>{
+            // if((tripItem?.user_transactions??[]).filter((e:any)=>e.amount&&e.type=='credit').length==0){
+            //     toast.error("Driver is not completed");
+            //     return ;
+            // }
             if(tripItem?.payment_status=="completed"){
                 return;
             }
@@ -101,6 +105,8 @@ let [isOpen, setIsOpen] = useState(false)
             try {
                
                 const result = await axiosPrivate.patch(`/v1/trip/update_driver_payment/${tripItem._id.toString()}`);
+                setPayedAmount((prevCount:any) => prevCount + (tripItem?.driver_payment?? (tripItem.payment -
+                    tripItem.payment * (10 / 100))))
                 setItem({
                     ...tripItem,payment_status:"completed"
                 });
@@ -110,7 +116,7 @@ let [isOpen, setIsOpen] = useState(false)
               
               }
         }} className="border-b border-[#eee] px-4 py-5 cursor-pointer  dark:border-strokedark">
-            <p className="text-blue-600 dark:text-blue-600">
+            <p className={tripItem.payment_status=="completed"?"text-green-600 dark:text-green-600":"text-blue-600 dark:text-blue-600"}>
             {tripItem?.payment_status??"N/A"}
             </p>
         </td>
