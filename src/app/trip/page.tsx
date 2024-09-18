@@ -12,7 +12,8 @@ import { usePathname, useSearchParams } from 'next/navigation'
 import { useEffect, useState } from "react";
 import TripComponent from "@/components/TripComponent/trip_component";
 import { LIMIT } from "@/helper/constants";
-
+import CommonPicker from "../../components/commonPicker";
+import CommonPickerOne from "../../components/commonPickerOne";
 
 const TripPage = () => {
   const [data, setData] = useState<any>(null);
@@ -64,6 +65,12 @@ const TripPage = () => {
       if (paymentStatus) {
         params.payment_status= paymentStatus;
       }
+      if(startDate){
+        params.startDate=startDate;
+      }
+      if(endDate){
+        params.endDate=endDate;
+      }
       console.log("params",params);
 
       const result = await axiosPrivate.get("/v1/trip/all", {
@@ -88,21 +95,26 @@ const TripPage = () => {
   const [status, setStatus] = useState<any>(null);
   const [time, setTime] = useState<any>(null);
   const [paymentStatus, setPaymentStatus] = useState<any>(null);
+  const [startDate,setStartDate]=useState(null);
+  const [endDate,setEndDate]=useState(null);
+  const [payedAmount,setPayedAmount]=useState(null);
   useEffect(() => {
 
     fetchData();
 
 
-  }, [currentPage, type, status, time,paymentStatus]);
+  }, [currentPage, type, status, time,paymentStatus,startDate,endDate]);
   return (
     <DefaultLayout>
       <Breadcrumb pageName={searchParams.get("name") ? `${searchParams.get("name")} Trips` : `Trip`} />
-      <div className="w-full flex flex-row items-end justify-between my-5 gap-5">
-      <Dropdown onSelect={(e) => {
+      <div className="w-full grid grid-cols-4 justify-between my-5 gap-5">
+
+        <Dropdown onSelect={(e) => {
           console.log("what is the onSelect");
           console.log(e);
           setPaymentStatus(e);
         }} options={['pending', 'completed']} title="Select status" heading="Driver Payment Status" selected={paymentStatus ?? ""} />
+
         <Dropdown onSelect={(e) => {
           console.log("what is the onSelect");
           console.log(e);
@@ -119,19 +131,53 @@ const TripPage = () => {
           console.log(e);
           setStatus(e);
         }} options={['Pending', 'Started', 'Nearby', 'Reached', 'OnProgress', 'Completed']} title="Select Status" heading="Status" selected={status ?? ""} />
+        <CommonPicker
+                    value={startDate}
+                   
+                      heading={"Start Date"}
+                      onChange={(e: any) => {
+                        console.log("end date",e);
+                        
+                       setStartDate(e);
+                      }}
+                    />
+        
+                       <CommonPickerOne
+                    value={endDate}
+                   
+                    heading={"End Date"}
+                    onChange={(e: any) => {
+                      console.log("end date",e);
+                      
+                     setEndDate(e);
+                    }}
+                  />
         <button
           onClick={(e) => {
             setCurrentPage(0);
-
+setStartDate(null);
+setEndDate(null);
             setType(null);
             setStatus(null);
             setTime(null);
             setPaymentStatus(null);
+            
           }}
           className="inline-flex items-center justify-center rounded-md border border-primary px-10 py-4 text-center font-medium text-primary hover:bg-opacity-90 lg:px-8 xl:px-10"
         >
           Clear
         </button>
+      {
+        payedAmount&& <button
+        onClick={(e) => {
+          setPayedAmount(null);
+          
+        }}
+        className="inline-flex items-center justify-center rounded-md border border-primary px-10 py-4 text-center font-medium text-primary hover:bg-opacity-90 lg:px-8 xl:px-10"
+      >
+        Need to Pay - {payedAmount}
+      </button>
+      }
       </div>
       <div className="w-full flex flex-row items-center justify-end my-5">
 
@@ -142,7 +188,7 @@ const TripPage = () => {
           onPageChange={onPageChange}
         />
       </div>
-      <TripComponent data={data?.data ?? []} />
+      <TripComponent payedAmount={payedAmount} setPayedAmount={setPayedAmount} data={data?.data ?? []} />
     </DefaultLayout>
   );
 };

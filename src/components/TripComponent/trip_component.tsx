@@ -2,7 +2,7 @@ import { Package } from "@/types/package";
 import moment from "moment";
 import TripTableItemCard from "./trip_table_item_card";
 
-const TripComponent = ({ data }: { data: any }) => {
+const TripComponent = ({payedAmount,setPayedAmount, data }: {payedAmount:any,setPayedAmount:any, data: any }) => {
   return (
     <div className="rounded-sm border border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
       <div className="max-w-full overflow-x-auto">
@@ -67,7 +67,7 @@ const TripComponent = ({ data }: { data: any }) => {
           </thead>
           <tbody>
             {data.map((item: any, index: number) => (
-              <TripTableItemCard key={item._id} index={index} item={item} />
+              <TripTableItemCard payedAmount={payedAmount} setPayedAmount={setPayedAmount} key={item._id} index={index} item={item} />
             ))}
           </tbody>
         </table>
