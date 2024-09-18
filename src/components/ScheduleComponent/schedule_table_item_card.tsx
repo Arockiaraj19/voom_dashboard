@@ -175,7 +175,10 @@ const ScheduleTableItemCard = ({
         }}
         className="cursor-pointer border-b border-[#eee] px-4 py-5 dark:border-strokedark"
       >
-        <p className="text-blue-400 dark:text-white">{item?.schedule?.trip_count?? item?.trip_count}</p>
+       {
+         searchParams.get("type") &&
+         searchParams.get("type") == "driver"?<p className="text-blue-400 dark:text-white">{(item?.trips_trip_count??[]).length!=0?(item?.trips_trip_count??[])[0].count:  item?.schedule?.trip_count}</p>:<p className="text-blue-400 dark:text-white">{  (item?.trips_trip_count??[]).length!=0?(item?.trips_trip_count??[])[0].count: item?.trip_count}</p>
+       } 
       </td>
       <td
         onClick={(e) => {
