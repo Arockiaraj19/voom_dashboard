@@ -156,7 +156,7 @@ const SchedulePage = () => {
       }
     
    {
-    (Math.ceil((data?.count ?? 0)/LIMIT))>1? <div className="flex flex-row items-center justify-end my-5">
+    <div className="flex flex-row items-center justify-end my-5">
 
     <Pagination
      totalCount={(data?.count ?? 0)}
@@ -164,7 +164,7 @@ const SchedulePage = () => {
       totalPages={Math.ceil((data?.count ?? 0)/LIMIT)}
       onPageChange={onPageChange}
     />
-  </div>:<></>
+  </div>
    }  
       <ScheduleComponent data={data?.data ?? []} />
     </DefaultLayout>
