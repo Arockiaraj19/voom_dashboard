@@ -18,7 +18,7 @@ const ScheduleComponent = ({ data }: { data: any }) => {
                             </th>
                            {
                           !searchParams.get("type") ?  <th className="min-w-[200px] px-4 py-4 font-medium text-black dark:text-white">
-                             Payment Mode
+                             Method
                           </th>:<th className="min-w-[200px] px-4 py-4 font-medium text-black dark:text-white">
                          Transfer
                           </th>

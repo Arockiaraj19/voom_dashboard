@@ -11,7 +11,7 @@ const ScheduleTableItemCard = ({
 }) => {
   const searchParams = useSearchParams();
   return (
-    <tr key={index}>
+    <tr key={item._id}>
       <td
         onClick={(e) => {
           if (!searchParams.get("type")) {
