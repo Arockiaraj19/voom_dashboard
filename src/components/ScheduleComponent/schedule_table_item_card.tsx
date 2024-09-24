@@ -88,7 +88,18 @@ const ScheduleTableItemCard = ({
           <p
               className="text-black dark:text-white"
             >
-            {item?.payment_status ?? ""}
+            {item?.payment_status=="completed"?"Paid":"UnPaid"}
+            </p>
+        </td>
+      }
+       {!searchParams.get("type") && 
+        <td  onClick={(e) => {
+           
+          }} className="cursor-pointer border-b border-[#eee] px-4 py-5 capitalize dark:border-strokedark">
+          <p
+              className="text-black dark:text-white"
+            >
+            {item?.settlement_date? moment(item?.settlement_date).format("YYYY-MM-DD HH:mm:ss"):"N/A"}
             </p>
         </td>
       }

@@ -33,6 +33,11 @@ const ScheduleComponent = ({ data }: { data: any }) => {
                              Payment Status
                           </th>
                            }
+                            {
+                          !searchParams.get("type") &&  <th className="min-w-[200px] px-4 py-4 font-medium text-black dark:text-white">
+                             Settlement Date
+                          </th>
+                           }
                            
                             <th className="min-w-[150px] px-4 py-4 font-medium text-black dark:text-white">
                                 Dates

@@ -18,8 +18,10 @@ const HelperPage = () => {
       other: "",
       driverPercentage: "",
       passengerPercentage :"",
+      minimumCharge:""
     },
     validationSchema: Yup.object({
+      minimumCharge:Yup.string().required("Required"),
       basefare: Yup.string().required("Required"),
       timeRate: Yup.string().required("Required"),
       distanceRate: Yup.string().required("Required"),
@@ -32,6 +34,7 @@ const HelperPage = () => {
     onSubmit: async (values, { resetForm }) => {
       try {
         await axiosPrivate.put("/v1/helper", {
+          minimumCharge: Number(values.minimumCharge) ,
           basefare: Number(values.basefare),
           timeRate: Number(values.timeRate),
           distanceRate: Number(values.distanceRate),
@@ -55,6 +58,7 @@ const HelperPage = () => {
   const fetchData = async () => {
     try {
       const result = await axiosPrivate.get("/v1/helper");
+    
       formik.setValues({
         basefare: result.data[0].basefare.toString(),
         bookingFee: result.data[0].bookingFee.toString(),
@@ -68,6 +72,7 @@ const HelperPage = () => {
           passengerPercentage: result.data[0]?.passenger_payment_charge
           ? result.data[0]?.passenger_payment_charge.toString()
           : "",
+          minimumCharge: result.data[0]?.minimumCharge?"":result.data[0]?.minimumCharge.toString(),
       });
     } catch (error: any) {
     } finally {
@@ -91,6 +96,22 @@ const HelperPage = () => {
             </div>
             <form onSubmit={formik.handleSubmit}>
               <div className="p-6.5">
+              <div className="mb-4.5">
+                  <label className="mb-3 block text-sm font-medium text-black dark:text-white">
+                   Minimum Wage
+                  </label>
+                  <input
+                    {...formik.getFieldProps("minimumCharge")}
+                    type="text"
+                    placeholder="Minimum Wage"
+                    className="w-full rounded border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                  />
+                  {formik.errors.minimumCharge ? (
+                    <div className="ml-2 mt-2 text-sm text-black">
+                      {formik.errors.minimumCharge}
+                    </div>
+                  ) : null}
+                </div>
                 <div className="mb-4.5">
                   <label className="mb-3 block text-sm font-medium text-black dark:text-white">
                     Basefare
