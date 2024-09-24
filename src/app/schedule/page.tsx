@@ -135,7 +135,7 @@ const SchedulePage = () => {
           console.log("what is the onSelect");
           console.log(e);
           setPaymentStatus(e);
-        }} options={['pending', 'completed','cancelled']} title="Select Payment Status" heading="Payment Status" selected={paymentStatus ?? ""} />
+        }} options={['pending', 'completed','cancelled','approved']} title="Select Payment Status" heading="Payment Status" selected={paymentStatus ?? ""} />
         <button
           onClick={(e) => {
             setCurrentPage(0);
