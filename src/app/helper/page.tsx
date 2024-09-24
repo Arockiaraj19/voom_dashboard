@@ -17,11 +17,11 @@ const HelperPage = () => {
       surge: "",
       other: "",
       driverPercentage: "",
-      passengerPercentage :"",
-      minimumCharge:""
+      passengerPercentage: "",
+      minimumCharge: "",
     },
     validationSchema: Yup.object({
-      minimumCharge:Yup.string().required("Required"),
+      minimumCharge: Yup.string().required("Required"),
       basefare: Yup.string().required("Required"),
       timeRate: Yup.string().required("Required"),
       distanceRate: Yup.string().required("Required"),
@@ -29,12 +29,12 @@ const HelperPage = () => {
       surge: Yup.string().required("Required"),
       other: Yup.string().required("Required"),
       driverPercentage: Yup.string().required("Required"),
-      passengerPercentage :Yup.string().required("Required"),
+      passengerPercentage: Yup.string().required("Required"),
     }),
     onSubmit: async (values, { resetForm }) => {
       try {
         await axiosPrivate.put("/v1/helper", {
-          minimumCharge: Number(values.minimumCharge) ,
+          minimumCharge: Number(values.minimumCharge),
           basefare: Number(values.basefare),
           timeRate: Number(values.timeRate),
           distanceRate: Number(values.distanceRate),
@@ -58,21 +58,23 @@ const HelperPage = () => {
   const fetchData = async () => {
     try {
       const result = await axiosPrivate.get("/v1/helper");
-    
+let paymentHelper=result.data[0];
       formik.setValues({
-        basefare: result.data[0].basefare.toString(),
-        bookingFee: result.data[0].bookingFee.toString(),
-        distanceRate: result.data[0].distanceRate.toString(),
-        other: result.data[0].other.toString(),
-        surge: result.data[0].surge.toString(),
-        timeRate: result.data[0].timeRate.toString(),
-        driverPercentage: result.data[0]?.driver_payment_charge
-          ? result.data[0]?.driver_payment_charge.toString()
+        basefare: paymentHelper.basefare.toString(),
+        bookingFee: paymentHelper.bookingFee.toString(),
+        distanceRate: paymentHelper.distanceRate.toString(),
+        other: paymentHelper.other.toString(),
+        surge: paymentHelper.surge.toString(),
+        timeRate: paymentHelper.timeRate.toString(),
+        driverPercentage: paymentHelper?.driver_payment_charge
+          ? paymentHelper?.driver_payment_charge.toString()
           : "",
-          passengerPercentage: result.data[0]?.passenger_payment_charge
-          ? result.data[0]?.passenger_payment_charge.toString()
+        passengerPercentage: paymentHelper?.passenger_payment_charge
+          ? paymentHelper?.passenger_payment_charge.toString()
           : "",
-          minimumCharge: result.data[0]?.minimumCharge?"":result.data[0]?.minimumCharge.toString(),
+        minimumCharge: paymentHelper?.minimumCharge
+          ?paymentHelper?.minimumCharge.toString()
+          : "",
       });
     } catch (error: any) {
     } finally {
@@ -96,9 +98,9 @@ const HelperPage = () => {
             </div>
             <form onSubmit={formik.handleSubmit}>
               <div className="p-6.5">
-              <div className="mb-4.5">
+                <div className="mb-4.5">
                   <label className="mb-3 block text-sm font-medium text-black dark:text-white">
-                   Minimum Wage
+                    Minimum Wage
                   </label>
                   <input
                     {...formik.getFieldProps("minimumCharge")}
@@ -215,7 +217,7 @@ const HelperPage = () => {
                 </div>
                 <div className="mb-4.5">
                   <label className="mb-3 block text-sm font-medium text-black dark:text-white">
-                  Voom Payment Percentage
+                    Voom Payment Percentage
                   </label>
                   <input
                     {...formik.getFieldProps("driverPercentage")}
@@ -231,7 +233,7 @@ const HelperPage = () => {
                 </div>
                 <div className="mb-4.5">
                   <label className="mb-3 block text-sm font-medium text-black dark:text-white">
-              Percentage increase Per passenger
+                    Percentage increase Per passenger
                   </label>
                   <input
                     {...formik.getFieldProps("passengerPercentage")}
@@ -241,7 +243,7 @@ const HelperPage = () => {
                   />
                   {formik.errors.passengerPercentage ? (
                     <div className="ml-2 mt-2 text-sm text-black">
-                      {formik.errors.passengerPercentage }
+                      {formik.errors.passengerPercentage}
                     </div>
                   ) : null}
                 </div>
