@@ -93,7 +93,7 @@ const TripPage = () => {
 
   const [type, setType] = useState<any>(null);
   const [status, setStatus] = useState<any>(null);
-  const [time, setTime] = useState<any>(null);
+  const [time, setTime] = useState<any>("Today");
   const [paymentStatus, setPaymentStatus] = useState<any>(null);
   const [startDate,setStartDate]=useState(null);
   const [endDate,setEndDate]=useState(null);

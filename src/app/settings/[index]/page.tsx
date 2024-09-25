@@ -87,7 +87,7 @@ const Settings = () => {
         <Breadcrumb pageName="Settings" />
         <DeleteModel isOpen={isOpen} setIsOpen={setIsOpen} id={pathname.split("/")[(pathname.split("/").length - 1)]}/>
         {
-          data && data.type == "driver" ? <div className="w-full flex flex-row justify-end gap-6 my-4">
+          data && data.type == "driver" ? <div className="w-full flex flex-row flex-wrap justify-end gap-6 my-4">
               {
               data.obsolete&& <button
               onClick={(e) => {
@@ -147,7 +147,7 @@ const Settings = () => {
           </div> : <></>
         }
         {
-          data && data.type == "user" ? <div className="w-full flex flex-row justify-end gap-6 my-4">
+          data && data.type == "user" ? <div className="w-full flex flex-row flex-wrap justify-end gap-6 my-4">
             {
               data.obsolete&& <button
               onClick={(e) => {

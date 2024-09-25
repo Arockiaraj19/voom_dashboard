@@ -19,6 +19,9 @@ const HelperPage = () => {
       driverPercentage: "",
       passengerPercentage: "",
       minimumCharge: "",
+  cancel_driver_charge:"",
+  cancel_user_charge:""
+
     },
     validationSchema: Yup.object({
       minimumCharge: Yup.string().required("Required"),
@@ -30,6 +33,8 @@ const HelperPage = () => {
       other: Yup.string().required("Required"),
       driverPercentage: Yup.string().required("Required"),
       passengerPercentage: Yup.string().required("Required"),
+      cancel_driver_charge:Yup.string().required("Required"),
+      cancel_user_charge:Yup.string().required("Required"),
     }),
     onSubmit: async (values, { resetForm }) => {
       try {
@@ -43,6 +48,8 @@ const HelperPage = () => {
           other: Number(values.other),
           driver_payment_charge: Number(values.driverPercentage),
           passenger_payment_charge: Number(values.passengerPercentage),
+          cancel_driver_charge: Number(values.cancel_driver_charge),
+          cancel_user_charge: Number(values.cancel_user_charge)
         });
 
         toast.success("Payment updated successfully.");
@@ -74,6 +81,12 @@ let paymentHelper=result.data[0];
           : "",
         minimumCharge: paymentHelper?.minimumCharge
           ?paymentHelper?.minimumCharge.toString()
+          : "",
+          cancel_driver_charge: paymentHelper?.cancel_driver_charge
+          ?paymentHelper?.cancel_driver_charge.toString()
+          : "",
+          cancel_user_charge: paymentHelper?.cancel_user_charge
+          ?paymentHelper?.cancel_user_charge.toString()
           : "",
       });
     } catch (error: any) {
@@ -244,6 +257,38 @@ let paymentHelper=result.data[0];
                   {formik.errors.passengerPercentage ? (
                     <div className="ml-2 mt-2 text-sm text-black">
                       {formik.errors.passengerPercentage}
+                    </div>
+                  ) : null}
+                </div>
+                <div className="mb-4.5">
+                  <label className="mb-3 block text-sm font-medium text-black dark:text-white">
+                  Parent percentage when the user cancels the trip
+                  </label>
+                  <input
+                    {...formik.getFieldProps("cancel_user_charge")}
+                    type="text"
+                    placeholder="Parent percentage when the user cancels the trip"
+                    className="w-full rounded border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                  />
+                  {formik.errors.cancel_user_charge ? (
+                    <div className="ml-2 mt-2 text-sm text-black">
+                      {formik.errors.cancel_user_charge}
+                    </div>
+                  ) : null}
+                </div>
+                <div className="mb-4.5">
+                  <label className="mb-3 block text-sm font-medium text-black dark:text-white">
+                  Driver percentage when the user cancels the trip
+                  </label>
+                  <input
+                    {...formik.getFieldProps("cancel_driver_charge")}
+                    type="text"
+                    placeholder="Driver percentage when the user cancels the trip"
+                    className="w-full rounded border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                  />
+                  {formik.errors.cancel_driver_charge ? (
+                    <div className="ml-2 mt-2 text-sm text-black">
+                      {formik.errors.cancel_driver_charge}
                     </div>
                   ) : null}
                 </div>
