@@ -24,7 +24,7 @@ function TripCancelModel({
     try {
       await axiosPrivate.patch(`/v1/trip/${id}/cancel`, {
       
-          type:enabled?"refund":"no_refund" ,
+          type: enabled?percentage?"full_refund": "half_refund":"no_refund" ,
         
       });
 
@@ -40,7 +40,10 @@ function TripCancelModel({
       );
     }
   };
+ 
   const [enabled, setEnabled] = useState(false);
+  const [percentage, setPercentage] = useState(false);
+
   return (
     <>
      
@@ -60,6 +63,12 @@ function TripCancelModel({
                     Refund
                     </label>
                     <Switch enabled={enabled} setEnabled={setEnabled} />
+                  </div>
+                  <div className="w-full mb-3">
+                    <label className="mb-3 block text-sm font-medium text-black dark:text-white">
+                    If you choose to pay the full amount, enable this option. Otherwise, the user will receive half the payment
+                    </label>
+                    <Switch enabled={percentage} setEnabled={setPercentage} />
                   </div>
             <div className="flex gap-4">
               <button onClick={() => setIsOpen(false)}>Cancel</button>

@@ -11,16 +11,15 @@ const ScheduleTableItemCard = ({
 }) => {
   const searchParams = useSearchParams();
   return (
-    <tr key={index}>
+    <tr key={item._id}>
       <td
         onClick={(e) => {
           if (!searchParams.get("type")) {
             window.location.href = `/schedule/${item._id}`;
-          }else{
-
+          } else {
           }
         }}
-        className="border-b cursor-pointer border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11"
+        className="cursor-pointer border-b border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11"
       >
         <p className="text-sm">
           {searchParams.get("type") && searchParams.get("type") == "driver"
@@ -36,75 +35,100 @@ const ScheduleTableItemCard = ({
         </p>
       </td>
       {!searchParams.get("type") ? (
-        <td  onClick={(e) => {
+        <td
+          onClick={(e) => {
             if (!searchParams.get("type")) {
               window.location.href = `/schedule/${item._id}`;
             }
-          }} className=" cursor-pointer border-b border-[#eee] px-4 py-5 capitalize dark:border-strokedark">
-        <p
-              className={
-                item?.payment_mode == "cash" &&
-                item?.payment_status == "pending"
-                  ? "text-blue-500 "
-                  : "text-black dark:text-white"
-              }
-            >
-           {item?.payment_mode ?? "online"}
-            </p>
-        </td>):( <td  onClick={(e)=>{
-              window.location.href = `/schedule/transfer?driver_id=${item.driver_id}&id=${item?.schedule._id}`;
-                
-            }} className="border-b cursor-pointer border-[#eee] px-4 py-5 dark:border-strokedark">
-            <p className="text-blue-600 dark:text-white">
-           Transfer
-            </p>
-        </td>)
-      }
-      {!searchParams.get("type") && 
-        <td  onClick={(e) => {
-            if (!searchParams.get("type")) {
-              window.location.href = `/schedule/${item._id}`;
-            }
-          }} className=" cursor-pointer border-b border-[#eee] px-4 py-5 capitalize dark:border-strokedark">
-         <p
-              className={
-                item?.payment_mode == "cash" &&
-                item?.payment_status == "pending"
-                  ? "text-blue-500 "
-                  : "text-black dark:text-white"
-              }
-            >
-             
-              {Math.round(item?.payment)}
-            </p>
-        </td>
-      }
-         {!searchParams.get("type") && 
-        <td  onClick={(e) => {
-            if (!searchParams.get("type")) {
-              window.location.href = `/schedule/${item._id}`;
-            }
-          }} className="cursor-pointer border-b border-[#eee] px-4 py-5 capitalize dark:border-strokedark">
+          }}
+          className=" cursor-pointer border-b border-[#eee] px-4 py-5 capitalize dark:border-strokedark"
+        >
           <p
-              className="text-black dark:text-white"
-            >
-            {item?.payment_status ?? ""}
-            </p>
+            className={
+              item?.payment_mode == "cash" && item?.payment_status == "pending"
+                ? "text-blue-500 "
+                : "text-black dark:text-white"
+            }
+          >
+            {item?.payment_mode ?? "online"}
+          </p>
         </td>
-      }
+      ) : (
+        <td
+          onClick={(e) => {
+            window.location.href = `/schedule/transfer?driver_id=${item.driver_id}&id=${item?.schedule._id}`;
+          }}
+          className="cursor-pointer border-b border-[#eee] px-4 py-5 dark:border-strokedark"
+        >
+          <p className="text-blue-600 dark:text-white">Transfer</p>
+        </td>
+      )}
+      {!searchParams.get("type") && (
+        <td
+          onClick={(e) => {
+            if (!searchParams.get("type")) {
+              window.location.href = `/schedule/${item._id}`;
+            }
+          }}
+          className=" cursor-pointer border-b border-[#eee] px-4 py-5 capitalize dark:border-strokedark"
+        >
+          <p
+            className={
+              item?.payment_mode == "cash" && item?.payment_status == "pending"
+                ? "text-blue-500 "
+                : "text-black dark:text-white"
+            }
+          >
+            {Math.round(item?.payment)}
+          </p>
+        </td>
+      )}
+      {!searchParams.get("type") && (
+        <td
+          onClick={(e) => {
+            if (!searchParams.get("type")) {
+              window.location.href = `/schedule/${item._id}`;
+            }
+          }}
+          className="cursor-pointer border-b border-[#eee] px-4 py-5 capitalize dark:border-strokedark"
+        >
+          <p className="text-black dark:text-white">
+            {item?.payment_status == "completed"
+              ? "Paid"
+              : item?.payment_status == "pending"
+                ? "Un Paid"
+                : "Approved And Not Paid"}
+          </p>
+        </td>
+      )}
+      {!searchParams.get("type") && (
+        <td
+          onClick={(e) => {}}
+          className="cursor-pointer border-b border-[#eee] px-4 py-5 capitalize dark:border-strokedark"
+        >
+          <p className="text-black dark:text-white">
+            {item?.settlement_date
+              ? moment(item?.settlement_date).format("YYYY-MM-DD HH:mm:ss")
+              : "N/A"}
+          </p>
+        </td>
+      )}
       <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
         <p className="text-black dark:text-white">
           {searchParams.get("type") && searchParams.get("type") == "driver"
             ? moment(item?.schedule?.start_date).format("YYYY-MM-DD")
             : moment(item?.start_date).format("YYYY-MM-DD")}{" "}
-          <br />
+        </p>
+      </td>
+      <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
+        <p className="text-black dark:text-white">
           {searchParams.get("type") && searchParams.get("type") == "driver"
             ? moment(item?.schedule?.end_date).format("YYYY-MM-DD")
             : moment(item?.end_date).format("YYYY-MM-DD")}
         </p>
       </td>
       <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
-        {(item?.schedule?.time?? item?.time).length == 1 ? (
+        {(item?.schedule?.time ?? item?.time).length == 1 ? (
           <p className="text-black dark:text-white">
             {searchParams.get("type") && searchParams.get("type") == "driver"
               ? moment(item?.schedule.time[0]).utc().format("HH:mm:ss")
@@ -175,10 +199,19 @@ const ScheduleTableItemCard = ({
         }}
         className="cursor-pointer border-b border-[#eee] px-4 py-5 dark:border-strokedark"
       >
-       {
-         searchParams.get("type") &&
-         searchParams.get("type") == "driver"?<p className="text-blue-400 dark:text-white">{(item?.trips_trip_count??[]).length!=0?(item?.trips_trip_count??[])[0].count:  item?.schedule?.trip_count}</p>:<p className="text-blue-400 dark:text-white">{  (item?.trips_trip_count??[]).length!=0?(item?.trips_trip_count??[])[0].count: item?.trip_count}</p>
-       } 
+        {searchParams.get("type") && searchParams.get("type") == "driver" ? (
+          <p className="text-blue-400 dark:text-white">
+            {(item?.trips_trip_count ?? []).length != 0
+              ? (item?.trips_trip_count ?? [])[0].count
+              : item?.schedule?.trip_count}
+          </p>
+        ) : (
+          <p className="text-blue-400 dark:text-white">
+            {(item?.trips_trip_count ?? []).length != 0
+              ? (item?.trips_trip_count ?? [])[0].count
+              : item?.trip_count}
+          </p>
+        )}
       </td>
       <td
         onClick={(e) => {
@@ -225,21 +258,53 @@ const ScheduleTableItemCard = ({
         ))}
       </td>
       <td className="w-full border-b border-[#eee] px-4 py-5 dark:border-strokedark ">
-        <div className="flex h-full w-full cursor-pointer flex-wrap ">
-          {(item?.locations??item?.schedule?.locations??[]).map((e: any, index: number) => (
-            <p
-              onClick={(event) => {
-                navigateToMap(
-                  e.location.coordinates[0],
-                  e.location.coordinates[1],
-                );
-              }}
-              key={index}
-              className="cursor-pointer text-black dark:text-white"
-            >
-              {e?.name ?? ""}-(Type-{e?.type}),
-            </p>
-          ))}
+        <div className="flex h-full w-full cursor-pointer">
+          {(item?.locations ?? item?.schedule?.locations ?? [])
+            .filter((data: any, index: Number) =>
+              (item?.type ?? item.schedule.type) == "two_way" &&
+              (item?.locations ?? item?.schedule?.locations ?? []).length == 3
+                ? index == 0 || index == 1
+                : index == 0,
+            )
+            .map((e: any, index: number) => (
+              <p
+                onClick={(event) => {
+                  navigateToMap(
+                    e.location.coordinates[0],
+                    e.location.coordinates[1],
+                  );
+                }}
+                key={index}
+                className="cursor-pointer text-black dark:text-white"
+              >
+                {e?.name ?? ""}-(Type-{e?.type})
+              </p>
+            ))}
+        </div>
+      </td>
+      <td className="w-full border-b border-[#eee] px-4 py-5 dark:border-strokedark ">
+        <div className="flex h-full w-full cursor-pointer">
+          {(item?.locations ?? item?.schedule?.locations ?? [])
+            .filter((data: any, index: Number) =>
+              (item?.type ?? item.schedule.type) == "two_way" &&
+              (item?.locations ?? item?.schedule?.locations ?? []).length == 3
+                ? index == 1 || index == 2
+                : index == 1,
+            )
+            .map((e: any, index: number) => (
+              <p
+                onClick={(event) => {
+                  navigateToMap(
+                    e.location.coordinates[0],
+                    e.location.coordinates[1],
+                  );
+                }}
+                key={index}
+                className="cursor-pointer text-black dark:text-white"
+              >
+                {e?.name ?? ""}-(Type-{e?.type})
+              </p>
+            ))}
         </div>
       </td>
     </tr>
