@@ -95,7 +95,7 @@ const SchedulePage = () => {
   const [type, setType] = useState<any>(null);
   const [status, setStatus] = useState<any>(null);
   const [mode, setPaymentMode] = useState<any>(null);
-  const [time, setTime] = useState<any>("Today");
+  const [time, setTime] = useState<any>(null);
   useEffect(() => {
     fetchData();
   }, [currentPage, scheduleStatus, type, status, time, mode, paymentStatus]);
