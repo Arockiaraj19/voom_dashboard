@@ -21,7 +21,7 @@ const Notification = () => {
     }),
     onSubmit: async (values, { resetForm }) => {
       try {
-        await axiosPrivate.patch(`/v1/trip/transfer/${searchParams.get("id")}/${searchParams.get("driver_id")}`);
+        await axiosPrivate.patch(`/v1/trip/transfer/${searchParams.get("id")}/${values.userId}`);
           resetForm();
           toast.success("Trip transfer successfully.");
           setTimeout(()=>{
