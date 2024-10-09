@@ -56,7 +56,7 @@ const ScheduleTableItemCard = ({
       ) : (
         <td
           onClick={(e) => {
-            window.location.href = `/schedule/transfer?driver_id=${item.driver_id}&id=${item?.schedule._id}`;
+            window.location.href = `/schedule/transfer?driver_id=${item.driver_id}&id=${item?.schedule_id}`;
           }}
           className="cursor-pointer border-b border-[#eee] px-4 py-5 dark:border-strokedark"
         >

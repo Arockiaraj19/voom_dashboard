@@ -16,10 +16,10 @@ const TripComponent = ({payedAmount,setPayedAmount, data }: {payedAmount:any,set
                 Driver
               </th>
               <th className="min-w-[150px] px-4 py-4 font-medium text-black dark:text-white">
-                Pickup Time(UTC)
+                Pickup Time
               </th>
               <th className="min-w-[150px] px-4 py-4 font-medium text-black dark:text-white">
-                Drop Time(UTC)
+                Drop Time
               </th>
               <th className="min-w-[150px] px-4 py-4 font-medium text-black dark:text-white">
                 Pickup Location
@@ -62,6 +62,9 @@ const TripComponent = ({payedAmount,setPayedAmount, data }: {payedAmount:any,set
               </th>
               <th className="min-w-[150px] px-4 py-4 font-medium text-black dark:text-white">
                 Cancel
+              </th>
+              <th className="min-w-[200px] px-4 py-4 font-medium text-black dark:text-white">
+               Status
               </th>
             </tr>
           </thead>
