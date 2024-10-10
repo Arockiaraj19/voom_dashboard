@@ -34,6 +34,9 @@ const CardDataStats: React.FC<CardDataStatsProps> = ({
       if (title == "Total Active Schedule") {
         url = "/v1/schedule/count?status=active";
       }
+      if(title=="Total Completed Schedule"){
+        url = "/v1/schedule/count?status=completed";
+      }
       if (title == "Total Cancelled Schedule") {
         url = "/v1/schedule/count?status=cancelled";
       }
@@ -49,6 +52,12 @@ const CardDataStats: React.FC<CardDataStatsProps> = ({
       if(title=="Cancelled Trips"){
         url = "/v1/trip/count?status=cancelled";
       }
+      if(title=="Number of users who have created schedules"){
+        url="/v1/user/schedule"
+      }
+      if(title=="Schedules are about to end in less than a week"){
+        url = "/v1/schedule/ending_soon";
+      }
       if (startDate) {
         params.startDate = startDate;
       }
@@ -58,7 +67,12 @@ const CardDataStats: React.FC<CardDataStatsProps> = ({
       const result = await axiosPrivate.get(url!, {
         params: params,
       });
-      setData(result?.data?.count ?? 0);
+      if(title=="Number of users who have created schedules"){
+        setData((result?.data??[]).length);
+      }else{
+        setData(result?.data?.count ?? 0);
+      }
+    
     } catch (error: any) {
     } finally {
     }

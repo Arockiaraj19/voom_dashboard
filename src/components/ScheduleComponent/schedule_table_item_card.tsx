@@ -79,7 +79,7 @@ const ScheduleTableItemCard = ({
                 : "text-black dark:text-white"
             }
           >
-            {Math.round(item?.payment)}
+            {item?.payment.toFixed(2)}
           </p>
         </td>
       )}
@@ -131,18 +131,18 @@ const ScheduleTableItemCard = ({
         {(item?.schedule?.time ?? item?.time).length == 1 ? (
           <p className="text-black dark:text-white">
             {searchParams.get("type") && searchParams.get("type") == "driver"
-              ? moment(item?.schedule.time[0]).utc().format("HH:mm:ss")
-              : moment(item?.time[0]).utc().format("HH:mm:ss")}
+              ? moment(item?.schedule.time[0]).format("HH:mm:ss")
+              : moment(item?.time[0]).format("HH:mm:ss")}
           </p>
         ) : (
           <p className="text-black dark:text-white">
             {searchParams.get("type") && searchParams.get("type") == "driver"
-              ? moment(item?.schedule.time[0]).utc().format("HH:mm:ss")
-              : moment(item?.time[0]).utc().format("HH:mm:ss")}{" "}
+              ? moment(item?.schedule.time[0]).format("HH:mm:ss")
+              : moment(item?.time[0]).format("HH:mm:ss")}{" "}
             <br />
             {searchParams.get("type") && searchParams.get("type") == "driver"
-              ? moment(item?.schedule.time[1]).utc().format("HH:mm:ss")
-              : moment(item?.time[1]).utc().format("HH:mm:ss")}
+              ? moment(item?.schedule.time[1]).format("HH:mm:ss")
+              : moment(item?.time[1]).format("HH:mm:ss")}
           </p>
         )}
       </td>
