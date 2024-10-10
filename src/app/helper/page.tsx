@@ -6,8 +6,11 @@ import { useFormik } from "formik";
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
+import { useSearchParams, useRouter } from "next/navigation";
 
 const HelperPage = () => {
+  const searchParams = useSearchParams();
+  const router = useRouter();
   const formik = useFormik({
     initialValues: {
       basefare: "",
@@ -19,9 +22,8 @@ const HelperPage = () => {
       driverPercentage: "",
       passengerPercentage: "",
       minimumCharge: "",
-  cancel_driver_charge:"",
-  cancel_user_charge:""
-
+      cancel_driver_charge: "",
+      cancel_user_charge: "",
     },
     validationSchema: Yup.object({
       minimumCharge: Yup.string().required("Required"),
@@ -33,26 +35,51 @@ const HelperPage = () => {
       other: Yup.string().required("Required"),
       driverPercentage: Yup.string().required("Required"),
       passengerPercentage: Yup.string().required("Required"),
-      cancel_driver_charge:Yup.string().required("Required"),
-      cancel_user_charge:Yup.string().required("Required"),
+      cancel_driver_charge: Yup.string().required("Required"),
+      cancel_user_charge: Yup.string().required("Required"),
     }),
     onSubmit: async (values, { resetForm }) => {
       try {
-        await axiosPrivate.put("/v1/helper", {
-          minimumCharge: Number(values.minimumCharge),
-          basefare: Number(values.basefare),
-          timeRate: Number(values.timeRate),
-          distanceRate: Number(values.distanceRate),
-          bookingFee: Number(values.bookingFee),
-          surge: Number(values.surge),
-          other: Number(values.other),
-          driver_payment_charge: Number(values.driverPercentage),
-          passenger_payment_charge: Number(values.passengerPercentage),
-          cancel_driver_charge: Number(values.cancel_driver_charge),
-          cancel_user_charge: Number(values.cancel_user_charge)
-        });
-
-        toast.success("Payment updated successfully.");
+        if (searchParams.get("id")) {
+          await axiosPrivate.patch(
+            `/v1/schedule/payment_helper/${searchParams.get("id")}`,
+            {
+              minimumCharge: Number(values.minimumCharge),
+              basefare: Number(values.basefare),
+              timeRate: Number(values.timeRate),
+              distanceRate: Number(values.distanceRate),
+              bookingFee: Number(values.bookingFee),
+              surge: Number(values.surge),
+              other: Number(values.other),
+              driver_payment_charge: Number(values.driverPercentage),
+              passenger_payment_charge: Number(values.passengerPercentage),
+              cancel_driver_charge: Number(values.cancel_driver_charge),
+              cancel_user_charge: Number(values.cancel_user_charge),
+            },
+          );
+        }else{
+          await axiosPrivate.put("/v1/helper", {
+            minimumCharge: Number(values.minimumCharge),
+            basefare: Number(values.basefare),
+            timeRate: Number(values.timeRate),
+            distanceRate: Number(values.distanceRate),
+            bookingFee: Number(values.bookingFee),
+            surge: Number(values.surge),
+            other: Number(values.other),
+            driver_payment_charge: Number(values.driverPercentage),
+            passenger_payment_charge: Number(values.passengerPercentage),
+            cancel_driver_charge: Number(values.cancel_driver_charge),
+            cancel_user_charge: Number(values.cancel_user_charge),
+          });
+        }
+    
+        if (searchParams.get("id")) {
+          toast.success("Schedule Payment helper updated successfully.");
+          router.back();
+        }else{
+          toast.success("Payment helper updated successfully.");
+        }
+        
       } catch (error: any) {
         console.log(error);
         toast.error(error?.error?.message ?? "Something went wrong");
@@ -64,8 +91,17 @@ const HelperPage = () => {
 
   const fetchData = async () => {
     try {
-      const result = await axiosPrivate.get("/v1/helper");
-let paymentHelper=result.data[0];
+      let paymentHelper;
+      if (searchParams.get("id")) {
+        const result = await axiosPrivate.get(
+          `/v1/schedule/${searchParams.get("id")}`,
+        );
+        paymentHelper = result.data.payment_helper;
+      } else {
+        const result = await axiosPrivate.get("/v1/helper");
+        paymentHelper = result.data[0];
+      }
+
       formik.setValues({
         basefare: paymentHelper.basefare.toString(),
         bookingFee: paymentHelper.bookingFee.toString(),
@@ -80,13 +116,13 @@ let paymentHelper=result.data[0];
           ? paymentHelper?.passenger_payment_charge.toString()
           : "",
         minimumCharge: paymentHelper?.minimumCharge
-          ?paymentHelper?.minimumCharge.toString()
+          ? paymentHelper?.minimumCharge.toString()
           : "",
-          cancel_driver_charge: paymentHelper?.cancel_driver_charge
-          ?paymentHelper?.cancel_driver_charge.toString()
+        cancel_driver_charge: paymentHelper?.cancel_driver_charge
+          ? paymentHelper?.cancel_driver_charge.toString()
           : "",
-          cancel_user_charge: paymentHelper?.cancel_user_charge
-          ?paymentHelper?.cancel_user_charge.toString()
+        cancel_user_charge: paymentHelper?.cancel_user_charge
+          ? paymentHelper?.cancel_user_charge.toString()
           : "",
       });
     } catch (error: any) {
@@ -262,7 +298,7 @@ let paymentHelper=result.data[0];
                 </div>
                 <div className="mb-4.5">
                   <label className="mb-3 block text-sm font-medium text-black dark:text-white">
-                  Parent percentage when the user cancels the trip
+                    Parent percentage when the user cancels the trip
                   </label>
                   <input
                     {...formik.getFieldProps("cancel_user_charge")}
@@ -278,7 +314,7 @@ let paymentHelper=result.data[0];
                 </div>
                 <div className="mb-4.5">
                   <label className="mb-3 block text-sm font-medium text-black dark:text-white">
-                  Driver percentage when the user cancels the trip
+                    Driver percentage when the user cancels the trip
                   </label>
                   <input
                     {...formik.getFieldProps("cancel_driver_charge")}

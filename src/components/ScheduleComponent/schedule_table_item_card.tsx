@@ -1,6 +1,7 @@
 import navigateToMap from "@/helper/navigateToMap";
 import moment from "moment";
 import { useSearchParams } from "next/navigation";
+import { toast } from "react-toastify";
 
 const ScheduleTableItemCard = ({
   item,
@@ -307,6 +308,37 @@ const ScheduleTableItemCard = ({
             ))}
         </div>
       </td>
+
+      {/* <td
+        onClick={(e) => {
+          window.location.href = `/settings/${item?.user[0]._id}`;
+        }}
+        className="cursor-pointer border-b border-[#eee] px-4 py-5 dark:border-strokedark"
+      >
+        <p className="text-black dark:text-white">
+          {searchParams.get("type") && searchParams.get("type") == "driver"
+            ? item?.schedule.user.length == 0
+              ? "Account Deleted"
+              : item?.schedule.user[0].first_name
+            : item?.user.length == 0
+              ? "Account Deleted"
+              : item?.user[0].first_name}
+        </p>
+      </td> */}
+      {!searchParams.get("type") && (
+        <td
+          onClick={(event) => {
+            if (item.schedule_status == "Both") {
+              return toast.error("Driver already accepted");
+            }
+
+            window.location.href = `/helper?id=${item._id}`;
+          }}
+          className="cursor-pointer border-b border-[#eee] px-4 py-5 dark:border-strokedark"
+        >
+          <p className="text-blue-400 dark:text-white">Payment Helper</p>
+        </td>
+      )}
     </tr>
   );
 };
