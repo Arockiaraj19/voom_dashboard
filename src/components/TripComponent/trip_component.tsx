@@ -16,6 +16,9 @@ const TripComponent = ({payedAmount,setPayedAmount, data }: {payedAmount:any,set
                 Driver
               </th>
               <th className="min-w-[150px] px-4 py-4 font-medium text-black dark:text-white">
+               Date
+              </th>
+              <th className="min-w-[150px] px-4 py-4 font-medium text-black dark:text-white">
                 Pickup Time
               </th>
               <th className="min-w-[150px] px-4 py-4 font-medium text-black dark:text-white">

@@ -12,15 +12,17 @@ import { toast } from "react-toastify";
 const SchedulePaymentMode = ({ data }: { data: any }) => {
   const router = useRouter();
   const pathname = usePathname();
-  const submit = async () => {
-    if (status == null) {
-      return;
-    }
+  const [isLoading, setLoading] = useState(false);
+  const submit = async (e: string) => {
     try {
+      if (isLoading) {
+        return;
+      }
+      setLoading(true);
       await axiosPrivate.put("/v1/schedule/payment", {
         user_id: data.user_id._id.toString(),
         schedule_id: data._id.toString(),
-        payment_status: status,
+        payment_status: e,
       });
 
       toast.success(
@@ -28,8 +30,11 @@ const SchedulePaymentMode = ({ data }: { data: any }) => {
           ? "Schedule approved successfully"
           : "Cash received successfully",
       );
+      setLoading(false);
       router.back();
-    } catch (error) {}
+    } catch (error) {
+      setLoading(false);
+    }
   };
   const [status, setStatus] = useState(data?.status);
   return (
@@ -104,31 +109,29 @@ const SchedulePaymentMode = ({ data }: { data: any }) => {
 
           {data?.payment_mode == "cash" && (
             <form action="#">
-              <div className="mb-5.5">
-                <Dropdown
-                  heading="Update your cash transaction"
-                  title="Select Status"
-                  onSelect={(e) => {
-                    console.log("what is the onselect");
-                    console.log(e);
-                    setStatus(e);
-                  }}
-                  options={["approved", "completed"]}
-                  selected={status}
-                />
-              </div>
-
-              <div className="flex justify-end gap-4.5">
-                <button
-                  onClick={(e) => {
-                    e.preventDefault();
-                    submit();
-                  }}
-                  className="flex justify-center rounded bg-primary px-6 py-2 font-medium text-gray hover:bg-opacity-90"
-                  type="submit"
-                >
-                  Save
-                </button>
+              <div className="m-5 flex w-full gap-10">
+                {data?.payment_status == "pending" && (
+                  <button
+                    onClick={(e) => {
+                      submit("approved");
+                    }}
+                    className="flex justify-center rounded bg-primary px-6 py-2 font-medium text-gray hover:bg-opacity-90"
+                    type="submit"
+                  >
+                    Approved and UnPaid
+                  </button>
+                )}
+                {data?.payment_status != "completed" && (
+                  <button
+                    onClick={(e) => {
+                      submit("completed");
+                    }}
+                    className="flex justify-center rounded bg-primary px-10 py-2 font-medium text-gray hover:bg-opacity-90"
+                    type="submit"
+                  >
+                    Paid
+                  </button>
+                )}
               </div>
             </form>
           )}

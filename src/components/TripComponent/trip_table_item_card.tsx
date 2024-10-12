@@ -102,19 +102,26 @@ const TripTableItemCard = ({
       </td>
       <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
         <p className="text-black dark:text-white">
-          {moment(tripItem?.pickup_time).format("LLL")}
+          {moment(tripItem?.pickup_time).format("dddd, MMMM Do YYYY")}
         </p>
       </td>
       <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
         <p className="text-black dark:text-white">
-          {moment(tripItem?.drop_time).format("LLL")}
+          {moment(tripItem?.pickup_time).format("hh:mm A")}
+        </p>
+      </td>
+      <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
+        <p className="text-black dark:text-white">
+          {moment(tripItem?.drop_time).format("hh:mm A")}
         </p>
       </td>
       <td
         onClick={(event) => {
+        
           navigateToMap(
-            tripItem?.locations[0].coordinates[0],
-            tripItem?.locations[0].coordinates[1],
+           
+            tripItem?.locations[0].location.coordinates[0],
+            tripItem?.locations[0].location.coordinates[1],
           );
         }}
         className="cursor-pointer border-b border-[#eee] px-4 py-5 dark:border-strokedark"
@@ -126,8 +133,8 @@ const TripTableItemCard = ({
       <td
         onClick={(event) => {
           navigateToMap(
-            tripItem?.locations[1].coordinates[0],
-            tripItem?.locations[1].coordinates[1],
+            tripItem?.locations[1].location.coordinates[0],
+            tripItem?.locations[1].location.coordinates[1],
           );
         }}
         className="cursor-pointer border-b border-[#eee] px-4 py-5 dark:border-strokedark"
@@ -150,14 +157,14 @@ const TripTableItemCard = ({
         <p className="text-black dark:text-white">
           {tripItem?.start_time == null
             ? ""
-            : moment(tripItem?.start_time).format("LLL")}
+            : moment(tripItem?.start_time).format("hh:mm A")}
         </p>
       </td>
       <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
         <p className="text-black dark:text-white">
           {tripItem?.end_time == null
             ? ""
-            : moment(tripItem?.end_time).format("LLL")}
+            : moment(tripItem?.end_time).format("hh:mm A")}
         </p>
       </td>
       <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">

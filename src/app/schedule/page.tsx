@@ -93,7 +93,7 @@ const SchedulePage = () => {
   const [scheduleStatus, setScheduleStatus] = useState<any>(null);
   const [paymentStatus, setPaymentStatus] = useState<any>(null);
   const [type, setType] = useState<any>(null);
-  const [status, setStatus] = useState<any>(null);
+  const [status, setStatus] = useState<any>("Active");
   const [mode, setPaymentMode] = useState<any>(null);
   const [time, setTime] = useState<any>(null);
   useEffect(() => {

@@ -80,6 +80,11 @@ const ScheduleComponent = ({ data }: { data: any }) => {
               <th className="min-w-[200px] px-4 py-4 font-medium text-black dark:text-white">
                 Drop off location
               </th>
+              {!searchParams.get("type") && (
+                <th className="min-w-[200px] px-4 py-4 font-medium text-black dark:text-white">
+                 Payment Helper
+                </th>
+              )}
             </tr>
           </thead>
           <tbody>
