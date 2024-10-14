@@ -117,9 +117,7 @@ const TripTableItemCard = ({
       </td>
       <td
         onClick={(event) => {
-        
           navigateToMap(
-           
             tripItem?.locations[0].location.coordinates[0],
             tripItem?.locations[0].location.coordinates[1],
           );
@@ -259,7 +257,7 @@ const TripTableItemCard = ({
       </td>
       <td
         onClick={(ev) => {
-          if (tripItem.status == "pending") {
+          if (tripItem.status == "pending" || tripItem.status == "started") {
             setIsOpen(true);
           }
         }}
