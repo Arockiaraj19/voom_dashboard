@@ -124,7 +124,9 @@ const Dashboard: React.FC = () => {
           </svg>
         </CardDataStats>
         <CardDataStats
-          onClick={() => {}}
+          onClick={() => {
+            window.location.href = "/schedule/ending";
+          }}
           title="Schedules are about to end in less than a week"
           startDate={startDate}
           endDate={endDate}

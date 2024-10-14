@@ -57,6 +57,17 @@ const SchedulePaymentMode = ({ data }: { data: any }) => {
             Alies Number
           </label>
           <p className="mb-3">{data?.alias_number ?? ""}</p>
+          <label className=" block text-sm font-medium text-black dark:text-white">
+            Payment Status
+          </label>
+          <p className="mb-3">
+            {" "}
+            {data?.payment_status == "completed"
+              ? "Paid"
+              : data?.payment_status == "pending"
+                ? "Un Paid"
+                : "Approved And Not Paid"}
+          </p>
           <label className="mb-3 block text-sm font-medium text-black dark:text-white">
             Transactions
           </label>
@@ -118,7 +129,7 @@ const SchedulePaymentMode = ({ data }: { data: any }) => {
                     className="flex justify-center rounded bg-primary px-6 py-2 font-medium text-gray hover:bg-opacity-90"
                     type="submit"
                   >
-                    Approved and UnPaid
+                    Approved
                   </button>
                 )}
                 {data?.payment_status != "completed" && (
