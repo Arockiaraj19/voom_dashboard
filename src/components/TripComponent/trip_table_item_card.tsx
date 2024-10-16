@@ -102,7 +102,7 @@ const TripTableItemCard = ({
       </td>
       <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
         <p className="text-black dark:text-white">
-          {moment(tripItem?.pickup_time).format("dddd, MMMM Do YYYY")}
+          {moment(tripItem?.pickup_time).local().format("dddd, MMMM Do YYYY")}
         </p>
       </td>
       <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
