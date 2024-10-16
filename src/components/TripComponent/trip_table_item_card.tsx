@@ -33,10 +33,10 @@ const TripTableItemCard = ({
         status: status,
       };
       if (status == "started") {
-        payload.startTime = moment(new Date()).format("YYYY-MM-DD HH:mm");
+        payload.startTime = moment.utc(new Date()).format("YYYY-MM-DD HH:mm");
       }
       if (status == "completed") {
-        payload.endTime = moment(new Date()).format("YYYY-MM-DD HH:mm");
+        payload.endTime = moment.utc(new Date()).format("YYYY-MM-DD HH:mm");
       }
       const result = await axiosPrivate.patch(
         `/v1/trip/${tripItem._id.toString()}`,
@@ -46,13 +46,13 @@ const TripTableItemCard = ({
         setItem({
           ...tripItem,
           status: status,
-          start_time: moment(new Date()).format("YYYY-MM-DD HH:mm"),
+          start_time: moment.utc(new Date()).format("YYYY-MM-DD HH:mm"),
         });
       } else if (status == "completed") {
         setItem({
           ...tripItem,
           status: status,
-          end_time: moment(new Date()).format("YYYY-MM-DD HH:mm"),
+          end_time: moment.utc(new Date()).format("YYYY-MM-DD HH:mm"),
         });
       } else {
         setItem({
@@ -102,17 +102,17 @@ const TripTableItemCard = ({
       </td>
       <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
         <p className="text-black dark:text-white">
-          {moment(tripItem?.pickup_time).local().format("dddd, MMMM Do YYYY")}
+          {moment.utc(tripItem?.pickup_time).format("dddd, MMMM Do YYYY")}
         </p>
       </td>
       <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
         <p className="text-black dark:text-white">
-          {moment(tripItem?.pickup_time).format("hh:mm A")}
+          {moment.utc(tripItem?.pickup_time).format("hh:mm A")}
         </p>
       </td>
       <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
         <p className="text-black dark:text-white">
-          {moment(tripItem?.drop_time).format("hh:mm A")}
+          {moment.utc(tripItem?.drop_time).format("hh:mm A")}
         </p>
       </td>
       <td
@@ -155,14 +155,14 @@ const TripTableItemCard = ({
         <p className="text-black dark:text-white">
           {tripItem?.start_time == null
             ? ""
-            : moment(tripItem?.start_time).format("hh:mm A")}
+            : moment.utc(tripItem?.start_time).format("hh:mm A")}
         </p>
       </td>
       <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
         <p className="text-black dark:text-white">
           {tripItem?.end_time == null
             ? ""
-            : moment(tripItem?.end_time).format("hh:mm A")}
+            : moment.utc(tripItem?.end_time).format("hh:mm A")}
         </p>
       </td>
       <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">

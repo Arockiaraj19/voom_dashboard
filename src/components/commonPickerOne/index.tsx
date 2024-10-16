@@ -11,7 +11,7 @@ const CommonPicker = ({value, heading,onChange}:{value:any, heading:any,onChange
       monthSelectorType: "static",
       onChange: (selectedDates:any) => {
       
-       onChange(moment(selectedDates[0]).format("YYYY-MM-DD"));
+       onChange(moment.utc(selectedDates[0]).format("YYYY-MM-DD"));
       },
       dateFormat: "Y-m-d",
       prevArrow:
