@@ -2,7 +2,15 @@ import { Package } from "@/types/package";
 import moment from "moment";
 import TripTableItemCard from "./trip_table_item_card";
 
-const TripComponent = ({payedAmount,setPayedAmount, data }: {payedAmount:any,setPayedAmount:any, data: any }) => {
+const TripComponent = ({
+  payedAmount,
+  setPayedAmount,
+  data,
+}: {
+  payedAmount: any;
+  setPayedAmount: any;
+  data: any;
+}) => {
   return (
     <div className="rounded-sm border border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
       <div className="max-w-full overflow-x-auto">
@@ -16,8 +24,9 @@ const TripComponent = ({payedAmount,setPayedAmount, data }: {payedAmount:any,set
                 Driver
               </th>
               <th className="min-w-[150px] px-4 py-4 font-medium text-black dark:text-white">
-               Date
+                Status
               </th>
+
               <th className="min-w-[150px] px-4 py-4 font-medium text-black dark:text-white">
                 Pickup Time
               </th>
@@ -25,17 +34,15 @@ const TripComponent = ({payedAmount,setPayedAmount, data }: {payedAmount:any,set
                 Drop Time
               </th>
               <th className="min-w-[150px] px-4 py-4 font-medium text-black dark:text-white">
+                Date
+              </th>
+              <th className="min-w-[150px] px-4 py-4 font-medium text-black dark:text-white">
                 Pickup Location
               </th>
               <th className="min-w-[150px] px-4 py-4 font-medium text-black dark:text-white">
                 Drop Location
               </th>
-              <th className="min-w-[150px] px-4 py-4 font-medium text-black dark:text-white">
-                Type
-              </th>
-              <th className="min-w-[150px] px-4 py-4 font-medium text-black dark:text-white">
-                Status
-              </th>
+
               <th className="min-w-[150px] px-4 py-4 font-medium text-black dark:text-white">
                 Start Time
               </th>
@@ -43,10 +50,13 @@ const TripComponent = ({payedAmount,setPayedAmount, data }: {payedAmount:any,set
                 End Time
               </th>
               <th className="min-w-[150px] px-4 py-4 font-medium text-black dark:text-white">
-               Trip Payment
+                Type
               </th>
               <th className="min-w-[150px] px-4 py-4 font-medium text-black dark:text-white">
-                Driver  Payment
+                Trip Payment
+              </th>
+              <th className="min-w-[150px] px-4 py-4 font-medium text-black dark:text-white">
+                Driver Payment
               </th>
               <th className="min-w-[150px] px-4 py-4 font-medium text-black dark:text-white">
                 Driver Payment Status
@@ -67,13 +77,19 @@ const TripComponent = ({payedAmount,setPayedAmount, data }: {payedAmount:any,set
                 Cancel
               </th>
               <th className="min-w-[200px] px-4 py-4 font-medium text-black dark:text-white">
-               Status
+                Status
               </th>
             </tr>
           </thead>
           <tbody>
             {data.map((item: any, index: number) => (
-              <TripTableItemCard payedAmount={payedAmount} setPayedAmount={setPayedAmount} key={item._id} index={index} item={item} />
+              <TripTableItemCard
+                payedAmount={payedAmount}
+                setPayedAmount={setPayedAmount}
+                key={item._id}
+                index={index}
+                item={item}
+              />
             ))}
           </tbody>
         </table>
