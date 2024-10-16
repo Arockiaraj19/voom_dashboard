@@ -33,10 +33,10 @@ const TripTableItemCard = ({
         status: status,
       };
       if (status == "started") {
-        payload.startTime = moment.utc(new Date()).format("YYYY-MM-DD HH:mm");
+        payload.startTime = moment(new Date()).format("YYYY-MM-DD HH:mm");
       }
       if (status == "completed") {
-        payload.endTime = moment.utc(new Date()).format("YYYY-MM-DD HH:mm");
+        payload.endTime = moment(new Date()).format("YYYY-MM-DD HH:mm");
       }
       const result = await axiosPrivate.patch(
         `/v1/trip/${tripItem._id.toString()}`,
@@ -46,13 +46,13 @@ const TripTableItemCard = ({
         setItem({
           ...tripItem,
           status: status,
-          start_time: moment.utc(new Date()).format("YYYY-MM-DD HH:mm"),
+          start_time: moment(new Date()).format("YYYY-MM-DD HH:mm"),
         });
       } else if (status == "completed") {
         setItem({
           ...tripItem,
           status: status,
-          end_time: moment.utc(new Date()).format("YYYY-MM-DD HH:mm"),
+          end_time: moment(new Date()).format("YYYY-MM-DD HH:mm"),
         });
       } else {
         setItem({
@@ -101,10 +101,11 @@ const TripTableItemCard = ({
         </p>
       </td>
       <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
-        <p className="text-black dark:text-white">
-          {moment.utc(tripItem?.pickup_time).format("dddd, MMMM Do YYYY")}
+        <p className="font-medium text-black dark:text-white">
+          {tripItem?.status.toUpperCase()}
         </p>
       </td>
+     
       <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
         <p className="text-black dark:text-white">
           {moment.utc(tripItem?.pickup_time).format("hh:mm A")}
@@ -113,6 +114,11 @@ const TripTableItemCard = ({
       <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
         <p className="text-black dark:text-white">
           {moment.utc(tripItem?.drop_time).format("hh:mm A")}
+        </p>
+      </td>
+      <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
+        <p className="text-black dark:text-white">
+          {moment.utc(tripItem?.pickup_time).format("dddd, MMMM Do YYYY")}
         </p>
       </td>
       <td
@@ -141,16 +147,8 @@ const TripTableItemCard = ({
           {tripItem?.locations[1].name}
         </p>
       </td>
-      <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
-        <p className="text-black dark:text-white">
-          {tripItem?.type.toUpperCase()}
-        </p>
-      </td>
-      <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
-        <p className="font-medium text-black dark:text-white">
-          {tripItem?.status.toUpperCase()}
-        </p>
-      </td>
+   
+   
       <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
         <p className="text-black dark:text-white">
           {tripItem?.start_time == null
@@ -163,6 +161,11 @@ const TripTableItemCard = ({
           {tripItem?.end_time == null
             ? ""
             : moment.utc(tripItem?.end_time).format("hh:mm A")}
+        </p>
+      </td>
+      <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
+        <p className="text-black dark:text-white">
+          {tripItem?.type.toUpperCase()}
         </p>
       </td>
       <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">

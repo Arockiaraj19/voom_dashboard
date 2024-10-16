@@ -13,6 +13,21 @@ const ScheduleTableItemCard = ({
   const searchParams = useSearchParams();
   return (
     <tr key={item._id}>
+         <td
+        onClick={(e) => {
+          if (!searchParams.get("type")) {
+            window.location.href = `/schedule/${item._id}`;
+          } else {
+          }
+        }}
+        className="cursor-pointer border-b border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11"
+      >
+        <p className="text-sm">
+          {searchParams.get("type") && searchParams.get("type") == "driver"
+            ? item?.schedule?._id ?? "N/A"
+            : item?._id ?? "N/A"}
+        </p>
+      </td>
       <td
         onClick={(e) => {
           if (!searchParams.get("type")) {
