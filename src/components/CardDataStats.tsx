@@ -56,7 +56,7 @@ const CardDataStats: React.FC<CardDataStatsProps> = ({
         url="/v1/user/schedule"
       }
       if(title=="Schedules are about to end in less than a week"){
-        url = "/v1/schedule/ending_soon";
+        url = "/v1/schedule/ending_soon/count";
       }
       if (startDate) {
         params.startDate = startDate;

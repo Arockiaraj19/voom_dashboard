@@ -203,7 +203,7 @@ const PersonalInformation = ({ data }: { data: any }) => {
                                     className="form-datepicker w-full rounded border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                                     placeholder="mm/dd/yyyy"
                                     data-class="flatpickr-right"
-                                    value={selectedDate==null?"":moment(selectedDate).format('YYYY-MM-DD')}
+                                    value={selectedDate==null?"":moment.utc(selectedDate).format('YYYY-MM-DD')}
                                 />
 
                                 <div className="pointer-events-none absolute inset-0 left-auto right-5 flex items-center">

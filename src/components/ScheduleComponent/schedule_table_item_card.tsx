@@ -109,7 +109,7 @@ const ScheduleTableItemCard = ({
         >
           <p className="text-black dark:text-white">
             {item?.settlement_date
-              ? moment(item?.settlement_date).format("YYYY-MM-DD HH:mm:ss")
+              ? moment.utc(item?.settlement_date).format("YYYY-MM-DD HH:mm:ss")
               : "N/A"}
           </p>
         </td>
@@ -117,39 +117,39 @@ const ScheduleTableItemCard = ({
       <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
         <p className="text-black dark:text-white">
           {searchParams.get("type") && searchParams.get("type") == "driver"
-            ? moment(item?.schedule?.start_date).format("YYYY-MM-DD")
-            : moment(item?.start_date).format("YYYY-MM-DD")}{" "}
+            ? moment.utc(item?.schedule?.start_date).format("YYYY-MM-DD")
+            : moment.utc(item?.start_date).format("YYYY-MM-DD")}{" "}
         </p>
       </td>
       <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
         <p className="text-black dark:text-white">
           {searchParams.get("type") && searchParams.get("type") == "driver"
-            ? moment(item?.schedule?.end_date).format("YYYY-MM-DD")
-            : moment(item?.end_date).format("YYYY-MM-DD")}
+            ? moment.utc(item?.schedule?.end_date).format("YYYY-MM-DD")
+            : moment.utc(item?.end_date).format("YYYY-MM-DD")}
         </p>
       </td>
       <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
         {(item?.schedule?.time ?? item?.time).length == 1 ? (
           <p className="text-black dark:text-white">
             {searchParams.get("type") && searchParams.get("type") == "driver"
-              ? moment(item?.schedule.time[0]).format("HH:mm:ss")
-              : moment(item?.time[0]).format("HH:mm:ss")}
+              ? moment.utc(item?.schedule.time[0]).format("HH:mm:ss")
+              : moment.utc(item?.time[0]).format("HH:mm:ss")}
           </p>
         ) : (
           <p className="text-black dark:text-white">
             {searchParams.get("type") && searchParams.get("type") == "driver"
-              ? moment(item?.schedule.time[0]).format("HH:mm:ss")
-              : moment(item?.time[0]).format("HH:mm:ss")}{" "}
+              ? moment.utc(item?.schedule.time[0]).format("HH:mm:ss")
+              : moment.utc(item?.time[0]).format("HH:mm:ss")}{" "}
             <br />
             {searchParams.get("type") && searchParams.get("type") == "driver"
-              ? moment(item?.schedule.time[1]).format("HH:mm:ss")
-              : moment(item?.time[1]).format("HH:mm:ss")}
+              ? moment.utc(item?.schedule.time[1]).format("HH:mm:ss")
+              : moment.utc(item?.time[1]).format("HH:mm:ss")}
           </p>
         )}
       </td>
       <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
         <p className="text-black dark:text-white">
-          {moment(item.createdAt).format("YYYY-MM-DD")}
+          {moment.utc(item.createdAt).format("YYYY-MM-DD")}
         </p>
       </td>
       <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">

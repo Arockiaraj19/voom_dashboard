@@ -24,12 +24,12 @@ const UserTableItemCard=({item,index}:{item:any,index:number})=>{
     </td>
     <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
         <p className="text-black dark:text-white">
-            {item?.date_of_birth == null ? "" : moment(item?.date_of_birth).format('YYYY-MM-DD')}
+            {item?.date_of_birth == null ? "" : moment.utc(item?.date_of_birth).format('YYYY-MM-DD')}
         </p>
     </td>
     <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
         <p className="text-black dark:text-white">
-            {moment(item.createdAt).format('YYYY-MM-DD')}
+            {moment.utc(item.createdAt).format('YYYY-MM-DD')}
         </p>
     </td>
     <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
