@@ -10,11 +10,11 @@ const ScheduleComponent = ({ data }: { data: any }) => {
         <table className="w-full table-auto">
           <thead>
             <tr className="bg-gray-2 text-left dark:bg-meta-4">
-            <th className="min-w-[80px] px-4 py-4 font-medium text-black dark:text-white xl:pl-11">
-               Schedule ID
+              <th className="min-w-[80px] px-4 py-4 font-medium text-black dark:text-white xl:pl-11">
+                Schedule ID
               </th>
               <th className="min-w-[150px] px-4 py-4 font-medium text-black dark:text-white xl:pl-11">
-               Schedule Name
+                Schedule Name
               </th>
               <th className="min-w-[150px] px-4 py-4 font-medium text-black dark:text-white">
                 Notes
@@ -35,6 +35,34 @@ const ScheduleComponent = ({ data }: { data: any }) => {
               )}
               {!searchParams.get("type") && (
                 <th className="min-w-[200px] px-4 py-4 font-medium text-black dark:text-white">
+                  Driver payment
+                </th>
+              )}
+               {!searchParams.get("type") && (
+                <th className="min-w-[200px] px-4 py-4 font-medium text-black dark:text-white">
+                  Driver payment until now 
+                </th>
+              )}
+              <th className="min-w-[100px] px-4 py-4 font-medium text-black dark:text-white">
+                All Trips
+              </th>
+              {!searchParams.get("type") && (
+                <th className="min-w-[100px] px-4 py-4 font-medium text-black dark:text-white">
+                  Pending trips
+                </th>
+              )}
+              {!searchParams.get("type") && (
+                <th className="min-w-[100px] px-4 py-4 font-medium text-black dark:text-white">
+                  Cancelled trips
+                </th>
+              )}
+              {!searchParams.get("type") && (
+                <th className="min-w-[100px] px-4 py-4 font-medium text-black dark:text-white">
+                  Completed Trips
+                </th>
+              )}
+              {!searchParams.get("type") && (
+                <th className="min-w-[200px] px-4 py-4 font-medium text-black dark:text-white">
                   Payment Status
                 </th>
               )}
@@ -51,7 +79,7 @@ const ScheduleComponent = ({ data }: { data: any }) => {
                 End Dates
               </th>
               <th className="min-w-[100px] px-4 py-4 font-medium text-black dark:text-white">
-                Pickup Time (UTC)
+                Pickup Time 
               </th>
               <th className="min-w-[150px] px-4 py-4 font-medium text-black dark:text-white">
                 CreatedAt
@@ -65,9 +93,7 @@ const ScheduleComponent = ({ data }: { data: any }) => {
               <th className="min-w-[100px] px-4 py-4 font-medium text-black dark:text-white">
                 Schedule status
               </th>
-              <th className="min-w-[100px] px-4 py-4 font-medium text-black dark:text-white">
-                Trips
-              </th>
+
               <th className="min-w-[150px] px-4 py-4 font-medium text-black dark:text-white">
                 User
               </th>
@@ -85,7 +111,7 @@ const ScheduleComponent = ({ data }: { data: any }) => {
               </th>
               {!searchParams.get("type") && (
                 <th className="min-w-[200px] px-4 py-4 font-medium text-black dark:text-white">
-                 Payment Helper
+                  Payment Helper
                 </th>
               )}
             </tr>

@@ -13,15 +13,7 @@ const ScheduleTableItemCard = ({
   const searchParams = useSearchParams();
   return (
     <tr key={item._id}>
-         <td
-        onClick={(e) => {
-          if (!searchParams.get("type")) {
-            window.location.href = `/schedule/${item._id}`;
-          } else {
-          }
-        }}
-        className="cursor-pointer border-b border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11"
-      >
+      <td className="cursor-pointer border-b border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11">
         <p className="text-sm">
           {searchParams.get("type") && searchParams.get("type") == "driver"
             ? item?.schedule?._id ?? "N/A"
@@ -96,6 +88,92 @@ const ScheduleTableItemCard = ({
             }
           >
             {item?.payment.toFixed(2)}
+          </p>
+        </td>
+      )}
+      {!searchParams.get("type") && (
+        <td className=" cursor-pointer border-b border-[#eee] px-4 py-5 capitalize dark:border-strokedark">
+          <p className={"text-black dark:text-white"}>
+            {item?.driver_payment.toFixed(2)}
+          </p>
+        </td>
+      )}
+      {!searchParams.get("type") && (
+        <td className=" cursor-pointer border-b border-[#eee] px-4 py-5 capitalize dark:border-strokedark">
+          <p className={"text-black dark:text-white"}>
+            {(item?.payed_amount ?? []).length == 0
+              ? item?.driver_payment.toFixed(2)
+              : item?.driver_payment -
+                (item?.payed_amount ?? [])[0].total_driver_payment}
+          </p>
+        </td>
+      )}
+      <td
+        onClick={(event) => {
+          if (
+            searchParams.get("type") &&
+            searchParams.get("type") == "driver"
+          ) {
+            window.location.href = `/trip?type=schedule&id=${item.schedule._id}&name=${item.schedule.name}`;
+            return;
+          }
+          window.location.href = `/trip?type=schedule&id=${item._id}&name=${item.name}`;
+        }}
+        className="cursor-pointer border-b border-[#eee] px-4 py-5 dark:border-strokedark"
+      >
+        {searchParams.get("type") && searchParams.get("type") == "driver" ? (
+          <p className="text-blue-400 dark:text-white">
+            {(item?.trips_trip_count ?? []).length != 0
+              ? (item?.trips_trip_count ?? [])[0].count +
+                ((item?.cancelled_trip_count ?? []).length == 0
+                  ? 0
+                  : (item?.cancelled_trip_count ?? [])[0].count)
+              : item?.schedule?.trip_count}
+          </p>
+        ) : (
+          <p className="text-blue-400 dark:text-white">
+            {(item?.trips_trip_count ?? []).length != 0
+              ? (item?.trips_trip_count ?? [])[0].count +
+                ((item?.cancelled_trip_count ?? []).length == 0
+                  ? 0
+                  : (item?.cancelled_trip_count ?? [])[0].count)
+              : item?.trip_count}
+          </p>
+        )}
+      </td>
+      {!searchParams.get("type") && (
+        <td
+          onClick={(e) => {}}
+          className="cursor-pointer border-b border-[#eee] px-4 py-5 capitalize dark:border-strokedark"
+        >
+          <p className="text-black dark:text-white">
+            {(item?.pending_trip_count ?? []).length != 0
+              ? (item?.pending_trip_count ?? [])[0].count
+              : 0}
+          </p>
+        </td>
+      )}
+      {!searchParams.get("type") && (
+        <td
+          onClick={(e) => {}}
+          className="cursor-pointer border-b border-[#eee] px-4 py-5 capitalize dark:border-strokedark"
+        >
+          <p className="text-black dark:text-white">
+            {(item?.cancelled_trip_count ?? []).length != 0
+              ? (item?.cancelled_trip_count ?? [])[0].count
+              : 0}
+          </p>
+        </td>
+      )}
+      {!searchParams.get("type") && (
+        <td
+          onClick={(e) => {}}
+          className="cursor-pointer border-b border-[#eee] px-4 py-5 capitalize dark:border-strokedark"
+        >
+          <p className="text-black dark:text-white">
+            {(item?.completed_trip_count ?? []).length != 0
+              ? (item?.completed_trip_count ?? [])[0].count
+              : 0}
           </p>
         </td>
       )}
@@ -202,33 +280,7 @@ const ScheduleTableItemCard = ({
               : "Non Accepted"}
         </p>
       </td>
-      <td
-        onClick={(event) => {
-          if (
-            searchParams.get("type") &&
-            searchParams.get("type") == "driver"
-          ) {
-            window.location.href = `/trip?type=schedule&id=${item.schedule._id}&name=${item.schedule.name}`;
-            return;
-          }
-          window.location.href = `/trip?type=schedule&id=${item._id}&name=${item.name}`;
-        }}
-        className="cursor-pointer border-b border-[#eee] px-4 py-5 dark:border-strokedark"
-      >
-        {searchParams.get("type") && searchParams.get("type") == "driver" ? (
-          <p className="text-blue-400 dark:text-white">
-            {(item?.trips_trip_count ?? []).length != 0
-              ? (item?.trips_trip_count ?? [])[0].count
-              : item?.schedule?.trip_count}
-          </p>
-        ) : (
-          <p className="text-blue-400 dark:text-white">
-            {(item?.trips_trip_count ?? []).length != 0
-              ? (item?.trips_trip_count ?? [])[0].count
-              : item?.trip_count}
-          </p>
-        )}
-      </td>
+
       <td
         onClick={(e) => {
           window.location.href = `/settings/${item?.user[0]._id}`;
