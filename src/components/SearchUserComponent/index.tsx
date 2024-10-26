@@ -21,7 +21,7 @@ const Index = ({  submit }: {  submit: (value: any | null) => void }) => {
         params: {
           offset: 0,
           limit: 30,
-          type: "driver",
+          type: "user",
           status:'approved',
           name:query
       }

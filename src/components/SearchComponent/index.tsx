@@ -21,7 +21,7 @@ const Index = ({  submit }: {  submit: (value: any | null) => void }) => {
         params: {
           offset: 0,
           limit: 30,
-          type: "user",
+          type: "driver",
           status:'approved',
           name:query
       }
@@ -64,7 +64,7 @@ const Index = ({  submit }: {  submit: (value: any | null) => void }) => {
             className="w-full rounded border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
             placeholder="Search user"
             maxLength={50}
-            displayValue={(user:any) => user?.first_name??""}
+            displayValue={(user:any) => `${user?.first_name??""} ${user?.last_name??""}`}
             onChange={handleQueryChange}
           />
         </div>
@@ -88,7 +88,7 @@ const Index = ({  submit }: {  submit: (value: any | null) => void }) => {
                        "text-gray-700"
                       }`}
                     >
-                      {user.first_name}
+                      {user.first_name}{" "}{user?.last_name??""}
                     </div>
                   )}
                 </Combobox.Option>
