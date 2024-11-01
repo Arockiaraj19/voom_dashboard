@@ -17,7 +17,7 @@ const TripTableItemCard = ({
   item: any;
   index: number;
 }) => {
-  console.log("trip table", item);
+ 
   const [tripItem, setItem] = useState({
     ...item,
   });

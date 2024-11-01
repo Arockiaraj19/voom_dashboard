@@ -161,9 +161,10 @@ const SchedulePage = () => {
 
   const exportToExcel = (data: any) => {
     console.log("excel", data);
-    // Sample data
+  
+    // Process data and flatten ScheduleTransactions
     const result = data.map((item: any) => {
-      return {
+      const baseData = {
         Id: item._id,
         Name: item?.name ?? "",
         Notes: item?.note ?? "",
@@ -173,8 +174,7 @@ const SchedulePage = () => {
         DriverPaymentUntilNow:
           (item?.payed_amount ?? []).length == 0
             ? item?.driver_payment.toFixed(2)
-            : item?.driver_payment -
-              (item?.payed_amount ?? [])[0].total_driver_payment,
+            : item?.driver_payment - (item?.payed_amount ?? [])[0].total_driver_payment,
         AllTrips:
           (item?.trips_trip_count ?? []).length != 0
             ? (item?.trips_trip_count ?? [])[0].count +
@@ -217,39 +217,49 @@ const SchedulePage = () => {
           item.schedule_status == "Both" ? "Accepted" : "Non Accepted",
         User:
           item?.user.length == 0 ? "Account Deleted" : item?.user[0].first_name,
-        Drivers: JSON.stringify(
-          item?.schedule_assignments.map(
-            (e: any, index: number) => e?.driver?.first_name ?? "",
-          ),
-        ),
+        Drivers: (item?.schedule_assignments ?? [])
+          .map((e: any) => e?.driver?.first_name ?? "")
+          .join(", "),
         WeekDays: JSON.stringify(
-          (item.schedule ?? item).week_days.map((e: any) => e),
+          (item.schedule ?? item).week_days.map((e: any) => e)
         ),
       };
+  
+      // Flatten ScheduleTransactions into separate columns
+      const transactionFields = {};
+      item.transactions.forEach((transaction: any, index: number) => {
+        transactionFields[`Transaction_${index + 1}_Amount`] = transaction.amount;
+        transactionFields[`Transaction_${index + 1}_Type`] = transaction.type;
+        transactionFields[`Transaction_${index + 1}_Mode`] = transaction.mode;
+        transactionFields[`Transaction_${index + 1}_PaymentStatus`] = transaction.payment_status;
+      });
+  
+      return { ...baseData, ...transactionFields };
     });
-
+  
     // Create a new workbook and add data
     const worksheet = XLSX.utils.json_to_sheet(result);
     const workbook = XLSX.utils.book_new();
     worksheet["!cols"] = Array(result.length).fill({ wch: 25 });
     XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
-
+  
     // Generate Excel file and trigger download
     const excelBuffer = XLSX.write(workbook, {
       bookType: "xlsx",
       type: "array",
     });
     const blob = new Blob([excelBuffer], { type: "application/octet-stream" });
-
+  
     const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
     link.download = `${moment().format("YYYY-MM-DD HH:mm:ss")}.xlsx`;
     link.click();
-
+  
     // Clean up URL object
     URL.revokeObjectURL(link.href);
   };
-const [show,setShow]=useState(false)
+  
+  const [show, setShow] = useState(false);
   return (
     <DefaultLayout>
       <Breadcrumb
@@ -259,7 +269,7 @@ const [show,setShow]=useState(false)
             : `Schedule`
         }
       />
-      <div className="flex gap-5 items-center">
+      <div className="flex items-center gap-5">
         <input
           value={search}
           onChange={(e) => setSearch(e.target.value)}
@@ -269,113 +279,114 @@ const [show,setShow]=useState(false)
         />
         <button
           onClick={(e) => {
-           setShow(!show);
+            setShow(!show);
           }}
           className="inline-flex h-10 w-30 items-center justify-center rounded-md border border-primary text-center font-medium text-primary hover:bg-opacity-90"
         >
-         {show? "Hide Filters":"Show Filters"}
+          {show ? "Hide Filters" : "Show Filters"}
         </button>
       </div>
-  {show&&   <div>
-     {searchParams.get("type") && searchParams.get("type") == "driver" ? (
-        <></>
-      ) : (
-        <div className="grid w-full grid-cols-4 gap-5">
-          <Dropdown
-            onSelect={(e) => {
-              console.log("what is the onSelect");
-              console.log(e);
-              setScheduleStatus(e);
-            }}
-            options={["Accepted", "Non Accepted"]}
-            title="Select Schedule Status"
-            heading="Schedule Status"
-            selected={scheduleStatus ?? ""}
-          />
-          <Dropdown
-            onSelect={(e) => {
-              console.log("what is the onSelect");
-              console.log(e);
-              setType(e);
-            }}
-            options={["One way", "Two Way"]}
-            title="Select type"
-            heading="Type"
-            selected={type ?? ""}
-          />
-          <Dropdown
-            onSelect={(e) => {
-              console.log("what is the onSelect");
-              console.log(e);
-              setTime(e);
-            }}
-            options={["Upcoming", "Past", "Today"]}
-            title="Select time"
-            heading="Time"
-            selected={time ?? ""}
-          />
-          <Dropdown
-            onSelect={(e) => {
-              console.log("what is the onSelect");
-              console.log(e);
-              setPaymentMode(e);
-            }}
-            options={["online", "cash"]}
-            title="Select Payment Mode"
-            heading="Payment Mode"
-            selected={mode ?? ""}
-          />
-          <Dropdown
-            onSelect={(e) => {
-              console.log("what is the onSelect");
-              console.log(e);
-              setStatus(e);
-            }}
-            options={["Active", "Cancelled"]}
-            title="Select Status"
-            heading="Status"
-            selected={status ?? ""}
-          />
-          <Dropdown
-            onSelect={(e) => {
-              console.log("what is the onSelect");
-              console.log(e);
-              setPaymentStatus(e);
-            }}
-            options={["UnPaid", "Paid", "cancelled", "Approved and UnPaid"]}
-            title="Select Payment Status"
-            heading="Payment Status"
-            selected={paymentStatus ?? ""}
-          />
-          <div className="flex flex-col gap-2">
-            <button
-              onClick={(e) => {
-                setSearch("");
-                setCurrentPage(0);
-                setScheduleStatus(null);
-                setType(null);
-                setStatus(null);
-                setTime(null);
-                setPaymentMode(null);
-                setPaymentStatus(null);
-              }}
-              className="inline-flex h-10 w-30 items-center justify-center rounded-md border border-primary text-center font-medium text-primary hover:bg-opacity-90"
-            >
-              Clear
-            </button>
-            <button
-              onClick={(e) => {
-                download();
-              }}
-              className="inline-flex h-10 w-30 items-center justify-center rounded-md border border-primary text-center font-medium text-primary hover:bg-opacity-90"
-            >
-              Download
-            </button>
-          </div>
+      {show && (
+        <div>
+          {searchParams.get("type") && searchParams.get("type") == "driver" ? (
+            <></>
+          ) : (
+            <div className="grid w-full grid-cols-4 gap-5">
+              <Dropdown
+                onSelect={(e) => {
+                  console.log("what is the onSelect");
+                  console.log(e);
+                  setScheduleStatus(e);
+                }}
+                options={["Accepted", "Non Accepted"]}
+                title="Select Schedule Status"
+                heading="Schedule Status"
+                selected={scheduleStatus ?? ""}
+              />
+              <Dropdown
+                onSelect={(e) => {
+                  console.log("what is the onSelect");
+                  console.log(e);
+                  setType(e);
+                }}
+                options={["One way", "Two Way"]}
+                title="Select type"
+                heading="Type"
+                selected={type ?? ""}
+              />
+              <Dropdown
+                onSelect={(e) => {
+                  console.log("what is the onSelect");
+                  console.log(e);
+                  setTime(e);
+                }}
+                options={["Upcoming", "Past", "Today"]}
+                title="Select time"
+                heading="Time"
+                selected={time ?? ""}
+              />
+              <Dropdown
+                onSelect={(e) => {
+                  console.log("what is the onSelect");
+                  console.log(e);
+                  setPaymentMode(e);
+                }}
+                options={["online", "cash"]}
+                title="Select Payment Mode"
+                heading="Payment Mode"
+                selected={mode ?? ""}
+              />
+              <Dropdown
+                onSelect={(e) => {
+                  console.log("what is the onSelect");
+                  console.log(e);
+                  setStatus(e);
+                }}
+                options={["Active", "Cancelled"]}
+                title="Select Status"
+                heading="Status"
+                selected={status ?? ""}
+              />
+              <Dropdown
+                onSelect={(e) => {
+                  console.log("what is the onSelect");
+                  console.log(e);
+                  setPaymentStatus(e);
+                }}
+                options={["UnPaid", "Paid", "cancelled", "Approved and UnPaid"]}
+                title="Select Payment Status"
+                heading="Payment Status"
+                selected={paymentStatus ?? ""}
+              />
+              <div className="flex flex-col gap-2">
+                <button
+                  onClick={(e) => {
+                    setSearch("");
+                    setCurrentPage(0);
+                    setScheduleStatus(null);
+                    setType(null);
+                    setStatus(null);
+                    setTime(null);
+                    setPaymentMode(null);
+                    setPaymentStatus(null);
+                  }}
+                  className="inline-flex h-10 w-30 items-center justify-center rounded-md border border-primary text-center font-medium text-primary hover:bg-opacity-90"
+                >
+                  Clear
+                </button>
+                <button
+                  onClick={(e) => {
+                    download();
+                  }}
+                  className="inline-flex h-10 w-30 items-center justify-center rounded-md border border-primary text-center font-medium text-primary hover:bg-opacity-90"
+                >
+                  Download
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       )}
-
-     </div>}
       {
         <div className="my-5 flex flex-row items-center justify-end">
           <Pagination
