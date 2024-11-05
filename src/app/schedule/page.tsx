@@ -226,7 +226,7 @@ const SchedulePage = () => {
       };
   
       // Flatten ScheduleTransactions into separate columns
-      const transactionFields = {};
+      const transactionFields :any= {};
       item.transactions.forEach((transaction: any, index: number) => {
         transactionFields[`Transaction_${index + 1}_Amount`] = transaction.amount;
         transactionFields[`Transaction_${index + 1}_Type`] = transaction.type;
