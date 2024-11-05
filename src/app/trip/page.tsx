@@ -305,6 +305,7 @@ const TripPage = () => {
         </button>
         <button
           onClick={(e) => {
+            console.log("download");
             download();
           }}
           className="inline-flex h-10 w-30 items-center justify-center rounded-md border border-primary text-center font-medium text-primary hover:bg-opacity-90"
