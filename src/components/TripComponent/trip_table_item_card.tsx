@@ -79,6 +79,9 @@ const TripTableItemCard = ({
         setIsOpen={setIsOpen}
         id={tripItem?._id}
       />
+      <td className="cursor-pointer border-b border-[#eee] px-4 py-5 dark:border-strokedark">
+        <p className="text-black dark:text-white">{tripItem?._id.toString()}</p>
+      </td>
       <td
         onClick={(e) => {
           window.location.href = `/settings/${tripItem?.user?._id}`;
