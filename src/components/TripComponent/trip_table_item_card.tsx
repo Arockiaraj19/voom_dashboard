@@ -94,6 +94,7 @@ const TripTableItemCard = ({
       </td>
       <td
         onClick={(e) => {
+          console.log("onclick");
           window.location.href = `/settings/${tripItem?.driver?._id}`;
         }}
         className="cursor-pointer border-b border-[#eee] px-4 py-5 dark:border-strokedark"
