@@ -165,7 +165,10 @@ const TripPage = () => {
         ScheduleId: item.schedule_id.toString(),
         User: item?.user?.first_name ?? "",
         Driver: item?.driver?.first_name ?? "",
-        Status: item?.status.toUpperCase(),
+        Status:
+          item?.status == "pending" && item?.obsolete
+            ? "Cancelled"
+            : item?.status.toUpperCase(),
         PickupTime: moment.utc(item?.pickup_time).format("hh:mm A"),
         DropTime: moment.utc(item?.drop_time).format("hh:mm A"),
         Date: moment.utc(item?.pickup_time).format("dddd, MMMM Do YYYY"),

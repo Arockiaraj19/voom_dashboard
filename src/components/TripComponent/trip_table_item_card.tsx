@@ -17,7 +17,6 @@ const TripTableItemCard = ({
   item: any;
   index: number;
 }) => {
- 
   const [tripItem, setItem] = useState({
     ...item,
   });
@@ -102,10 +101,12 @@ const TripTableItemCard = ({
       </td>
       <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
         <p className="font-medium text-black dark:text-white">
-          {tripItem?.status.toUpperCase()}
+          {tripItem.status == "pending" && tripItem.obsolete
+            ? "Cancelled"
+            : tripItem?.status.toUpperCase()}
         </p>
       </td>
-     
+
       <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
         <p className="text-black dark:text-white">
           {moment.utc(tripItem?.pickup_time).format("hh:mm A")}
@@ -147,8 +148,7 @@ const TripTableItemCard = ({
           {tripItem?.locations[1].name}
         </p>
       </td>
-   
-   
+
       <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
         <p className="text-black dark:text-white">
           {tripItem?.start_time == null
@@ -267,7 +267,10 @@ const TripTableItemCard = ({
         className="cursor-pointer border-b border-[#eee] px-4 py-5 dark:border-strokedark"
       >
         <p className="text-red dark:text-white">
-          {tripItem.status == "cancelled" ? "Already Cancelled" : "Cancel"}
+          {tripItem.status == "cancelled" ||
+          (tripItem.status == "pending" && tripItem.obsolete)
+            ? "Already Cancelled"
+            : "Cancel"}
         </p>
       </td>
       <td className="cursor-pointer border-b border-[#eee] px-4 py-5 dark:border-strokedark">
