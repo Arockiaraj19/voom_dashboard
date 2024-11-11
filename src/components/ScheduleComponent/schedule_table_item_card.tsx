@@ -187,11 +187,21 @@ const ScheduleTableItemCard = ({
           className="cursor-pointer border-b border-[#eee] px-4 py-5 capitalize dark:border-strokedark"
         >
           <p className="text-black dark:text-white">
-            {item?.payment_status == "completed"
-              ? "Paid"
-              : item?.payment_status == "pending"
-                ? "Un Paid"
-                : "Approved And Not Paid"}
+            {item?.payment_status == "completed" ? "Paid" : "Un Paid"}
+          </p>
+        </td>
+      )}
+      {!searchParams.get("type") && (
+        <td
+          onClick={(e) => {
+            if (!searchParams.get("type")) {
+              window.location.href = `/schedule/${item._id}`;
+            }
+          }}
+          className="cursor-pointer border-b border-[#eee] px-4 py-5 capitalize dark:border-strokedark"
+        >
+          <p className="text-black dark:text-white">
+            {item?.payment_status == "approved" ? "Approved" : "Un Approved"}
           </p>
         </td>
       )}

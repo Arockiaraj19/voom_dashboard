@@ -47,7 +47,7 @@ const Dashboard: React.FC = () => {
       <div className="mb-10 grid cursor-pointer grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
         <CardDataStats
           onClick={() => {
-            window.location.href = "/schedule";
+            window.location.href = "/schedule?status=Active";
           }}
           title="Total Active Schedule"
           startDate={startDate}
@@ -73,7 +73,7 @@ const Dashboard: React.FC = () => {
         </CardDataStats>
         <CardDataStats
           onClick={() => {
-            window.location.href = "/schedule";
+            window.location.href = "/schedule?status=Cancelled";
           }}
           title="Total Cancelled Schedule"
           startDate={startDate}
@@ -99,7 +99,7 @@ const Dashboard: React.FC = () => {
         </CardDataStats>
         <CardDataStats
           onClick={() => {
-            window.location.href = "/schedule";
+            window.location.href = "/schedule?status=Completed";
           }}
           title="Total Completed Schedule"
           startDate={startDate}
@@ -154,7 +154,7 @@ const Dashboard: React.FC = () => {
       <div className="mb-10 grid cursor-pointer grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
         <CardDataStats
           onClick={() => {
-            window.location.href = "/trip";
+            window.location.href = "/trip?time=Today";
           }}
           title="Today Trips"
           startDate={startDate}
@@ -180,7 +180,7 @@ const Dashboard: React.FC = () => {
         </CardDataStats>
         <CardDataStats
           onClick={() => {
-            window.location.href = "/trip";
+            window.location.href = "/trip?trip=all";
           }}
           title="Total Trips"
           startDate={startDate}
@@ -206,7 +206,7 @@ const Dashboard: React.FC = () => {
         </CardDataStats>
         <CardDataStats
           onClick={() => {
-            window.location.href = "/trip";
+            window.location.href = "/trip?time=Upcoming";
           }}
           title="Upcoming Trips"
           startDate={startDate}
@@ -232,7 +232,7 @@ const Dashboard: React.FC = () => {
         </CardDataStats>
         <CardDataStats
           onClick={() => {
-            window.location.href = "/trip";
+            window.location.href = "/trip?status=Cancelled";
           }}
           title="Cancelled Trips"
           startDate={startDate}
@@ -351,7 +351,9 @@ const Dashboard: React.FC = () => {
         </CardDataStats>
 
         <CardDataStats
-          onClick={() => {}}
+          onClick={() => {
+            window.location.href = "/profile/user?schedule=true";
+          }}
           title="Number of users who have created schedules"
           startDate={startDate}
           endDate={endDate}

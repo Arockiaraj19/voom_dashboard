@@ -131,14 +131,30 @@ const TripPage = () => {
   };
 
   const [type, setType] = useState<any>(null);
-  const [status, setStatus] = useState<any>(null);
-  const [time, setTime] = useState<any>("Today");
+  const [status, setStatus] = useState<any>(
+    searchParams.get("status") ? searchParams.get("status") : null,
+  );
+  const [time, setTime] = useState<any>(
+    searchParams.get("time") ? searchParams.get("time") : "Today",
+  );
   const [paymentStatus, setPaymentStatus] = useState<any>(null);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [payedAmount, setPayedAmount] = useState(null);
   useEffect(() => {
     fetchData();
+    if (searchParams.get("trip")) {
+      setCurrentPage(0);
+      setStartDate(null);
+      setEndDate(null);
+      setType(null);
+      setStatus(null);
+      setTime(null);
+      setPaymentStatus(null);
+    }
+    if (searchParams.get("status")) {
+      setTime(null);
+    }
   }, [currentPage, type, status, time, paymentStatus, startDate, endDate]);
   const exportToExcel = (data: any) => {
     console.log("excel", data);

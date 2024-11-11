@@ -59,7 +59,7 @@ const SchedulePage = () => {
         params.type = type == "One way" ? "one_way" : "two_way";
       }
       if (status) {
-        params.status = status == "Active" ? "active" : "cancelled";
+        params.status = status.toLowerCase();
       }
       if (time) {
         params.time = time!.toString().toLowerCase();
@@ -126,7 +126,7 @@ const SchedulePage = () => {
         params.type = type == "One way" ? "one_way" : "two_way";
       }
       if (status) {
-        params.status = status == "Active" ? "active" : "cancelled";
+        params.status = status.toLowerCase();
       }
       if (time) {
         params.time = time!.toString().toLowerCase();
@@ -143,7 +143,9 @@ const SchedulePage = () => {
   const [scheduleStatus, setScheduleStatus] = useState<any>(null);
   const [paymentStatus, setPaymentStatus] = useState<any>(null);
   const [type, setType] = useState<any>(null);
-  const [status, setStatus] = useState<any>("Active");
+  const [status, setStatus] = useState<any>(
+    searchParams.get("status") ? searchParams.get("status") : "Active",
+  );
   const [mode, setPaymentMode] = useState<any>(null);
   const [time, setTime] = useState<any>(null);
   useEffect(() => {
@@ -161,7 +163,7 @@ const SchedulePage = () => {
 
   const exportToExcel = (data: any) => {
     console.log("excel", data);
-  
+
     // Process data and flatten ScheduleTransactions
     const result = data.map((item: any) => {
       const baseData = {
@@ -174,7 +176,8 @@ const SchedulePage = () => {
         DriverPaymentUntilNow:
           (item?.payed_amount ?? []).length == 0
             ? item?.driver_payment.toFixed(2)
-            : item?.driver_payment - (item?.payed_amount ?? [])[0].total_driver_payment,
+            : item?.driver_payment -
+              (item?.payed_amount ?? [])[0].total_driver_payment,
         AllTrips:
           (item?.trips_trip_count ?? []).length != 0
             ? (item?.trips_trip_count ?? [])[0].count +
@@ -194,12 +197,9 @@ const SchedulePage = () => {
           (item?.completed_trip_count ?? []).length != 0
             ? (item?.completed_trip_count ?? [])[0].count
             : 0,
-        PaymentStatus:
-          item?.payment_status == "completed"
-            ? "Paid"
-            : item?.payment_status == "pending"
-              ? "Un Paid"
-              : "Approved And Not Paid",
+        PaymentStatus: item?.payment_status == "completed" ? "Paid" : "Un Paid",
+        ApprovalStatus:
+          item?.payment_status == "approved" ? "Approved" : "Un Approved",
         SettlementDate: item?.settlement_date
           ? moment.utc(item?.settlement_date).format("YYYY-MM-DD HH:mm:ss")
           : "N/A",
@@ -221,44 +221,46 @@ const SchedulePage = () => {
           .map((e: any) => e?.driver?.first_name ?? "")
           .join(", "),
         WeekDays: JSON.stringify(
-          (item.schedule ?? item).week_days.map((e: any) => e)
+          (item.schedule ?? item).week_days.map((e: any) => e),
         ),
       };
-  
+
       // Flatten ScheduleTransactions into separate columns
-      const transactionFields :any= {};
+      const transactionFields: any = {};
       item.transactions.forEach((transaction: any, index: number) => {
-        transactionFields[`Transaction_${index + 1}_Amount`] = transaction.amount;
+        transactionFields[`Transaction_${index + 1}_Amount`] =
+          transaction.amount;
         transactionFields[`Transaction_${index + 1}_Type`] = transaction.type;
         transactionFields[`Transaction_${index + 1}_Mode`] = transaction.mode;
-        transactionFields[`Transaction_${index + 1}_PaymentStatus`] = transaction.payment_status;
+        transactionFields[`Transaction_${index + 1}_PaymentStatus`] =
+          transaction.payment_status;
       });
-  
+
       return { ...baseData, ...transactionFields };
     });
-  
+
     // Create a new workbook and add data
     const worksheet = XLSX.utils.json_to_sheet(result);
     const workbook = XLSX.utils.book_new();
     worksheet["!cols"] = Array(result.length).fill({ wch: 25 });
     XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
-  
+
     // Generate Excel file and trigger download
     const excelBuffer = XLSX.write(workbook, {
       bookType: "xlsx",
       type: "array",
     });
     const blob = new Blob([excelBuffer], { type: "application/octet-stream" });
-  
+
     const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
     link.download = `${moment().format("YYYY-MM-DD HH:mm:ss")}.xlsx`;
     link.click();
-  
+
     // Clean up URL object
     URL.revokeObjectURL(link.href);
   };
-  
+
   const [show, setShow] = useState(false);
   return (
     <DefaultLayout>
@@ -269,23 +271,27 @@ const SchedulePage = () => {
             : `Schedule`
         }
       />
-      <div className="flex items-center gap-5">
-        <input
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          type="text"
-          placeholder="Search Schedule by ID(Need valid ID)"
-          className="mb-2 w-1/2 rounded border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-        />
-        <button
-          onClick={(e) => {
-            setShow(!show);
-          }}
-          className="inline-flex h-10 w-30 items-center justify-center rounded-md border border-primary text-center font-medium text-primary hover:bg-opacity-90"
-        >
-          {show ? "Hide Filters" : "Show Filters"}
-        </button>
-      </div>
+      {searchParams.get("type") && searchParams.get("type") == "driver" ? (
+        <></>
+      ) : (
+        <div className="flex items-center gap-5">
+          <input
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            type="text"
+            placeholder="Search Schedule by ID(Need valid ID)"
+            className="mb-2 w-1/2 rounded border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+          />
+          <button
+            onClick={(e) => {
+              setShow(!show);
+            }}
+            className="inline-flex h-10 w-30 items-center justify-center rounded-md border border-primary text-center font-medium text-primary hover:bg-opacity-90"
+          >
+            {show ? "Hide Filters" : "Show Filters"}
+          </button>
+        </div>
+      )}
       {show && (
         <div>
           {searchParams.get("type") && searchParams.get("type") == "driver" ? (
@@ -342,7 +348,7 @@ const SchedulePage = () => {
                   console.log(e);
                   setStatus(e);
                 }}
-                options={["Active", "Cancelled"]}
+                options={["Active", "Cancelled", "Completed"]}
                 title="Select Status"
                 heading="Status"
                 selected={status ?? ""}

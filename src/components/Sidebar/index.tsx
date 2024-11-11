@@ -23,7 +23,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   const [sidebarExpanded, setSidebarExpanded] = useState(
     storedSidebarExpanded === null ? false : storedSidebarExpanded === "true",
   );
-const {userData,isLoading}= useUserData();
+  const { userData, isLoading } = useUserData();
   // close on click outside
   useEffect(() => {
     const clickHandler = ({ target }: MouseEvent) => {
@@ -112,40 +112,34 @@ const {userData,isLoading}= useUserData();
             </h3>
 
             <ul className="mb-6 flex flex-col gap-1.5">
-            <li>
+              <li>
                 <Link
                   href="/"
                   className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    pathname=="/" &&
-                    "bg-graydark dark:bg-meta-4"
+                    pathname == "/" && "bg-graydark dark:bg-meta-4"
                   }`}
                 >
-                 
-               Dashboard
+                  Dashboard
                 </Link>
               </li>
               <li>
                 <Link
                   href="/transaction"
                   className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    pathname=="/transaction" &&
-                    "bg-graydark dark:bg-meta-4"
+                    pathname == "/transaction" && "bg-graydark dark:bg-meta-4"
                   }`}
                 >
-                 
-              Transactions
+                  Transactions
                 </Link>
               </li>
               <li>
                 <Link
                   href="/promo"
                   className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    pathname=="/promo" &&
-                    "bg-graydark dark:bg-meta-4"
+                    pathname == "/promo" && "bg-graydark dark:bg-meta-4"
                   }`}
                 >
-                 
-            Promotion
+                  Promotion
                 </Link>
               </li>
               {/* <!-- Menu Item Dashboard --> */}
@@ -159,8 +153,7 @@ const {userData,isLoading}= useUserData();
                     "bg-graydark dark:bg-meta-4"
                   }`}
                 >
-                 
-                 Schedule
+                  Schedule
                 </Link>
               </li>
               <li>
@@ -171,8 +164,7 @@ const {userData,isLoading}= useUserData();
                     "bg-graydark dark:bg-meta-4"
                   }`}
                 >
-                 
-               Complaints
+                  Complaints
                 </Link>
               </li>
               <li>
@@ -183,19 +175,27 @@ const {userData,isLoading}= useUserData();
                     "bg-graydark dark:bg-meta-4"
                   }`}
                 >
-                
-              Verification Code
+                  Verification Code
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/cancelAlert"
+                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                    pathname.includes("/cancelAlert") &&
+                    "bg-graydark dark:bg-meta-4"
+                  }`}
+                >
+                  Admin Notification
                 </Link>
               </li>
               <li>
                 <Link
                   href="/trip"
                   className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    pathname.includes("trip") &&
-                    "bg-graydark dark:bg-meta-4"
+                    pathname.includes("trip") && "bg-graydark dark:bg-meta-4"
                   }`}
                 >
-                
                   Trip
                 </Link>
               </li>
@@ -203,12 +203,10 @@ const {userData,isLoading}= useUserData();
                 <Link
                   href="/request"
                   className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    pathname.includes("request") &&
-                    "bg-graydark dark:bg-meta-4"
+                    pathname.includes("request") && "bg-graydark dark:bg-meta-4"
                   }`}
                 >
-                  
-                Driver Request
+                  Driver Request
                 </Link>
               </li>
               <li>
@@ -219,46 +217,41 @@ const {userData,isLoading}= useUserData();
                     "bg-graydark dark:bg-meta-4"
                   }`}
                 >
-                
-               Notification
+                  Notification
                 </Link>
               </li>
-              {
-                userData?.type=="superAdmin"? <li>
-                <Link
-                  href="/helper"
-                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    pathname.includes("helper") &&
-                    "bg-graydark dark:bg-meta-4"
-                  }`}
-                >
-               
-              Payment Helper
-                </Link>
-              </li>:<></>
-              }
-             
+              {userData?.type == "superAdmin" ? (
+                <li>
+                  <Link
+                    href="/helper"
+                    className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                      pathname.includes("helper") &&
+                      "bg-graydark dark:bg-meta-4"
+                    }`}
+                  >
+                    Payment Helper
+                  </Link>
+                </li>
+              ) : (
+                <></>
+              )}
+
               {/* <!-- Menu Item Calendar --> */}
 
-          
-
-
-               {/* <!-- Menu Item Profile --> */}
-               <li>
+              {/* <!-- Menu Item Profile --> */}
+              <li>
                 <Link
                   href="/car"
                   className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                     pathname.includes("car") && "bg-graydark dark:bg-meta-4"
                   }`}
                 >
-                
-                 Car
+                  Car
                 </Link>
               </li>
-            
-              
-   {/* <!-- Menu Item Profile --> */}
-   <SidebarLinkGroup
+
+              {/* <!-- Menu Item Profile --> */}
+              <SidebarLinkGroup
                 activeCondition={
                   pathname === "/profile" || pathname.includes("profile")
                 }
@@ -280,9 +273,8 @@ const {userData,isLoading}= useUserData();
                             : setSidebarExpanded(true);
                         }}
                       >
-                     
-                      Profile
-                      <svg
+                        Profile
+                        <svg
                           className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${
                             open && "rotate-180"
                           }`}
@@ -307,40 +299,39 @@ const {userData,isLoading}= useUserData();
                         }`}
                       >
                         <ul className="mb-5.5 mt-4 flex flex-col gap-2.5 pl-6">
-                          {
-                             userData?.type=="superAdmin"?<li>
-                             <Link
-                               href="/profile/admin"
-                               className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
-                                 pathname === "/profile/admin" &&
-                                 "text-white"
-                               }`}
-                             >
-                             Admin
-                             </Link>
-                           </li>:<></>
-                          }
-                          
+                          {userData?.type == "superAdmin" ? (
+                            <li>
+                              <Link
+                                href="/profile/admin"
+                                className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
+                                  pathname === "/profile/admin" && "text-white"
+                                }`}
+                              >
+                                Admin
+                              </Link>
+                            </li>
+                          ) : (
+                            <></>
+                          )}
+
                           <li>
                             <Link
                               href="/profile/user"
                               className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
-                                pathname === "/profile/user" &&
-                                "text-white"
+                                pathname === "/profile/user" && "text-white"
                               } `}
                             >
-                             User
+                              User
                             </Link>
                           </li>
                           <li>
                             <Link
                               href="/profile/driver"
                               className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
-                                pathname === "/profile/driver" &&
-                                "text-white"
+                                pathname === "/profile/driver" && "text-white"
                               } `}
                             >
-                            Driver
+                              Driver
                             </Link>
                           </li>
                         </ul>
@@ -350,14 +341,8 @@ const {userData,isLoading}= useUserData();
                   );
                 }}
               </SidebarLinkGroup>
-              
-        
-
-        
             </ul>
           </div>
-
-        
         </nav>
         {/* <!-- Sidebar Menu --> */}
       </div>

@@ -1,6 +1,6 @@
 import { axiosPrivate } from "@/helper/axiosPrivate";
 import React, { ReactNode, useState, useEffect } from "react";
-
+import { LIMIT } from "@/helper/constants";
 interface CardDataStatsProps {
   title: string;
   startDate: string | null;
@@ -54,6 +54,10 @@ const CardDataStats: React.FC<CardDataStatsProps> = ({
       }
       if(title=="Number of users who have created schedules"){
         url="/v1/user/schedule"
+        params={
+          offset:0,
+          limit: LIMIT,
+        }
       }
       if(title=="Schedules are about to end in less than a week"){
         url = "/v1/schedule/ending_soon/count";
@@ -67,11 +71,7 @@ const CardDataStats: React.FC<CardDataStatsProps> = ({
       const result = await axiosPrivate.get(url!, {
         params: params,
       });
-      if(title=="Number of users who have created schedules"){
-        setData((result?.data??[]).length);
-      }else{
-        setData(result?.data?.count ?? 0);
-      }
+      setData(result?.data?.count ?? 0);
     
     } catch (error: any) {
     } finally {

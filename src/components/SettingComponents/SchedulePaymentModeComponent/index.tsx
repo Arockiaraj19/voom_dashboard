@@ -62,11 +62,14 @@ const SchedulePaymentMode = ({ data }: { data: any }) => {
           </label>
           <p className="mb-3">
             {" "}
-            {data?.payment_status == "completed"
-              ? "Paid"
-              : data?.payment_status == "pending"
-                ? "Un Paid"
-                : "Approved And Not Paid"}
+            {data?.payment_status == "completed" ? "Paid" : "Un Paid"}
+          </p>
+          <label className=" block text-sm font-medium text-black dark:text-white">
+            Appproval Status
+          </label>
+          <p className="mb-3">
+            {" "}
+            {data?.payment_status == "approved" ? "Approved" : "Un Approved"}
           </p>
           <label className="mb-3 block text-sm font-medium text-black dark:text-white">
             Transactions
@@ -121,7 +124,8 @@ const SchedulePaymentMode = ({ data }: { data: any }) => {
           {data?.payment_mode == "cash" && (
             <form action="#">
               <div className="m-5 flex w-full gap-10">
-                {data?.payment_status == "pending" && (
+                {(data?.payment_status == "pending" ||
+                  data?.payment_status == "completed") && (
                   <button
                     onClick={(e) => {
                       submit("approved");
